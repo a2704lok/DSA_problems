@@ -1,0 +1,949 @@
+Q1. Negative Integers
+
+Problem Description
+Write a program to print all negative numbers from input array A of size N. Take integer N and N elements of the array as input from user.
+
+Problem Constraints
+1 <= N <= 1000  
+-1000 <= A <= 1000
+
+Input Format
+A single line representing N followed by N integers of the array A
+
+Output Format
+A single line containing elements from the input array which are negative in the same order.
+Note: Keep a space character (' ') at the end of the line.
+
+Example Input
+Input 1:
+5 1 -5 2 -8 -4
+Input 2:
+4 -1 0 -8 -1
+
+Example Output
+Output 1:
+-5 -8 -4 
+Output 2:
+-1 -8 -1 
+
+Example explanation:
+Output 1:
+all the negative elements of [5 1 -5 2 -8 -4] are [-5 -8 -4]
+Output 2:
+all the negative elements of [4 -1 0 -8 -1] are [-1 -8 -1]
+Note:
+This question requires you to read a list of integers from input and convert them using the map() function.
+Since this concept will be covered later in the module, we encourage you to do some independent research and write your code accordingly.
+You may also refer to the following article for further guidance: link
+
+Solution -
+
+l = input().split()
+l.pop(0)
+l_new = []
+for i in l:
+    l_new.append(int(i))
+
+l_final = []
+for i in l_new:
+    if i<0:
+        l_final.append(i)
+
+for i in l_final:
+    print(i, end = " ")
+
+######################################################################################################################
+
+Q2. Sum the Array
+
+Problem Description
+Write a program to print sum of elements of the input array A of size N.
+Note: User is supposed to write a program from scratch to add the elements of the input array and print the result.
+
+Problem Constraints
+1 <= N <= 1000
+1 <= A <= 1000
+
+Input Format
+- The first integer N denotes the number of integers in the array.
+- The next N integers denotes the element of the array A.
+
+Output Format
+A single integer containing sum of elements from the input array.
+
+Example Input
+Input 1:
+5 1 2 3 4 5
+Input 2:
+4 10 50 40 80
+
+Example Output
+Output 1:
+15
+Output 2:
+180
+
+Example Explanation
+Input-1:
+N = 5 , A = [1, 2, 3, 4, 5]
+here the first integer is the size of A and the remaining elements are [1, 2, 3, 4, 5]
+which all sum to 15 
+Input-2:
+N = 4 , A = [10, 50, 40, 80]
+here the first integer is the size of A and the remaining elements are [10, 50, 40, 80]
+which all sum to 180
+
+Solution -
+
+l = input().split()
+l.pop(0)
+l_new = []
+
+for i in l:
+    l_new.append(int(i))
+
+sum_l = 0
+for i in l_new:
+    sum_l += i
+
+print(sum_l)
+
+######################################################################################################################
+
+Q3. Remove that
+
+Problem Description
+Write a program to input N numbers array, A from the user and an integer X and print the array by deleting element at specified position X.
+Note: The first element is located at position 1, the second element is located at position 2, and so on.
+
+Problem Constraints
+2 <= N <= 100
+1 <= A[i] <= 1000
+1 <= X <= N
+
+Input Format
+First line is N which means number of elements.
+Second line contains N space separated integers.
+Third line is X position which has to be deleted.
+
+Output Format
+N-1 space separated integers of the input array after deleting the element at required position.
+
+Example Input
+Input 1:
+5
+2 3 1 4 2
+3
+Input 2:
+2
+4 5
+2
+
+Example Output
+Output 1:
+2 3 4 2
+Output 2:
+4
+
+Example Explanation
+Explanation 1:
+Clearly after removing the element at position 3 (2 3 1 4 2), the remaining array is 2 3 4 2.
+Explanation 2:
+After removing the element at position 2 (4 5), the remaining array is 4.
+
+Solution -
+
+n = int(input())
+l = input().split()
+p = int(input())
+l_new = []
+
+for i in l:
+    l_new.append(int(i))
+
+l_new.pop(p-1)
+
+for i in l_new:
+    print(i,end = " ")
+
+######################################################################################################################
+
+Q4. Insert that
+
+Problem Description
+Write a program to input N numbers array, a number X and a number Y from user and insert an element Y in it at specified position X. X is based on 1-based indexing
+Note: When an element is inserted at position X, all elements that were already present at position >= X, gets shifted to one position right, not replaced.
+
+Problem Constraints
+1 <= N <= 100
+1 <= A[i] <= 1000
+1 <= X <= N
+1 <= Y <= 1000
+
+Input Format
+First line is N which represents number of elements.
+Second line contains N space separated integers.
+Third line is X position where Y has to be inserted.
+Fourth line is Y which is the value to be inserted.
+
+Output Format
+N+1 space separated integers of the input array after inserting the element at required position.
+
+Example Input
+Input 1:
+5
+2 3 1 4 2
+3
+5
+Example Output
+Output 1:
+2 3 5 1 4 2
+Example Explanation
+Explanation 1:
+Clearly after inserting 5 at 3rd position, new array is 2 3 5 1 4 2.
+
+Solution -
+
+n = int(input())
+l = input().split()
+p = int(input())
+v = int(input())
+
+l_new = []
+for i in l:
+    l_new.append(int(i))
+
+l_new.insert(p-1,v)
+
+for i in l_new:
+    print(i,end = " ")
+
+######################################################################################################################
+
+Q5. Print in Reverse
+
+Problem Description
+Write a program to print the input array A of size N in reverse order where you have to take integer N and further N elements as input from user.
+
+Problem Constraints
+1 <= N <= 1000  
+1 <= A <= 1000
+
+Input Format
+A single line representing **N** followed by N integers of the array **A**
+
+Output Format
+A single line containing N space separated integers representing elements of the input array in reverse order.  
+**Note** - Keep a space character (' ') at the end of the line.
+
+Example Input
+Input 1:
+5 1 2 3 4 5
+Input 2:
+4 10 50 40 80
+
+Example Output
+Output 1:
+5 4 3 2 1 
+Output 2:
+80 40 50 10
+
+Solution - 
+
+l = input().split()
+l.pop(0)
+
+int_l = []
+for i in l:
+    int_l.append(int(i))
+
+rev_l = int_l[::-1]
+
+for i in rev_l:
+    print(i,end = " ")
+
+######################################################################################################################
+
+Q6. Consecutive Duplicate
+
+Problem Description
+Write a function to check if the given array A has consecutive duplicate elements or not.
+Return True if there are consecutive duplicate elements in the list else return False.
+Here by consecutive duplicates, we mean duplicates that are present at consecutive indices in the array
+
+Problem Constraints
+1 <= N <= 105
+1 <= A[i] <= 109
+
+Input Format
+An integer array A as the function argument.
+
+Output Format
+Return True or False
+
+Example Input
+Input 1:
+1
+4
+1 2 3 3
+Input 2:
+1
+2
+1 2
+
+Example Output
+Output 1:
+True
+Output 2:
+False
+
+Example Explanation
+Explanation 1:
+As there are 3 3 in the list i.e. at indices 2 and 3, there True is returned.
+Explanation 2:
+There are no consecutive duplicate elements in the list.
+
+Solution -
+
+def duplicate(ls,n):
+    ans = None
+    if n==1:
+        ans = False
+    for i in range(n-1):
+        if ls[i]==ls[i+1]:
+            ans = True
+            break
+        else:
+            ans = False    
+    return ans
+
+######################################################################################################################
+
+Q7. Difference of even and odd
+
+Problem Description
+Write a program to find the difference between the sum of all even elements and the sum of all odd elements from the given array, A.
+Note: The array of elements will be passed as an argument to the function. You don't need to take any input of array.
+
+Problem Constraints
+1 <= len(A) <= 105
+1 <= A[i] <= 105
+
+Input Format
+The only argument is the array of integers, A.
+
+Output Format
+The difference of the even and odd elements sum in integer format.
+
+Example Input
+Input 1:
+1
+56 63 87 24 32 13 15 19 44 52
+Input 2:
+1
+2 8 4 6
+
+Example Output
+Output 1:
+11
+Output 2:
+20
+
+Example Explanation
+Explanation 1:
+The sum of even elements is: 56 + 24 + 32 + 44 + 52 = 208. 
+The sum of odd elements is: 63 + 87 + 13 + 15 + 19 = 197. 
+Difference between even elements and odd elements sum is 208 - 197 = 11.
+Explanation 2:
+The sum of even elements is: 2 + 8 + 4 + 6 = 20. 
+There is no odd elements. 
+Difference between even elements and odd elements sum is 20 - 0 = 20.
+
+Solution -
+
+def even_odd(lst):
+    sum_odd = 0
+    sum_even = 0
+
+    for i in lst:
+        if i%2 == 0:
+            sum_even += i
+        else:
+            sum_odd += i
+    diff =  sum_even - sum_odd
+    return diff
+
+######################################################################################################################
+
+Q8. First Multiple
+
+Problem Description
+Write a program for a given integer x and a list ls to return the first multiple of x that occurs in the list,
+and if there isn’t any multiple of x in the list then return -1.
+Note: The list with elements and the integer x is already passed as an argument to the function. User don't need to take any input. Just perform the task on the passed arguments and return the required result.
+
+Problem Constraints
+1 <= len(ls) <= 103
+1 <= ls[i] <= 105
+1 <= x <= 105
+
+Input Format
+First line of input is number of test cases t.
+The remaining lines contain the test cases.
+For each test case-
+First line of input is the integer x.
+Second line of input contains the elements of ls, separated by spaces.
+
+Output Format
+Return the first multiple of x from the list in integer format, else return -1.
+
+Example Input
+Input 1:
+ls = [2, 1, 2, 4, 3, 5]
+x  = 4
+Input 2:
+ls = [7, 5, 3, 17]
+x  = 2
+
+Example Output
+Output 1:
+4
+Output 2:
+-1
+
+Example Explanation
+Explanation 1:
+In the list, the first element that is a multiple of 4 is 4.
+Explanation 2:
+There is no multiple of 2, So return -1
+
+Solution -
+
+def first_multiple(ls,x):
+    ans = -1
+    for i in range(len(ls)):
+        if ls[i]%x == 0:
+            ans = ls[i]
+            break
+    
+    return ans
+
+######################################################################################################################
+
+Q9. Linear Search - Multiple Occurences
+
+Problem Description
+Given an array A and an integer B, find the number of occurrences of B in A.
+
+Problem Constraints
+1 <= B, Ai <= 109
+1 <= length(A) <= 105
+
+Input Format
+Given an integer array A and an integer B.
+
+Output Format
+Return an integer, number of occurrences of B in A.
+
+Example Input
+Input 1:
+A = [1, 2, 2], B = 2 
+Input 2:
+A = [1, 2, 1], B = 3 
+
+Example Output
+Output 1:
+2
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+Element at index 2, 3 is equal to 2 hence count is 2.
+Explanation 2:
+There is no element equal to 3 in the array.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        count = 0
+        for i in A:
+            if i==B:
+                count+=1
+        return count
+
+######################################################################################################################
+
+Q10. Product of elements
+
+Problem Description:
+Write a program that returns the product of all elements present in the array.
+Note: The list with elements is already passed as an argument to the function. User don't need to take any input. Just perform the task on the passed arguments and return the required result.
+
+Constraints:
+1 <= |A| <= 100
+1 <= A <= 100
+Note: It is guaranteed that the resultant product will be <= 1015
+
+Input Format:
+An integer array **A** as the function argument.
+
+Output Format:
+Product of elements in integer format
+
+Sample Input:
+A = [7, 9, 2, 51]
+
+Sample Output:
+6426
+
+Sample explanation:
+The product of all the elements is 7 * 9 * 2 * 51 = 6426 is returned.
+
+Solution -
+
+def product(lst):
+    result = 1
+    for i in lst:
+        result = result*i
+    return result
+
+######################################################################################################################
+
+Q11. Max and Min of an Array
+
+Problem Description
+Take input an array A of size N and write a program to print maximum and minimum elements of the input. The only line of the input would contain a single integer N that represents the length of the array followed by the N elements of the input array A.
+
+Problem constraints
+1 <= N <= 1000
+1 <= A <= 1000
+
+Input Format
+The first line contains a single integer N representing the length of the array A followed by N elements of the array A.
+
+Output Format
+A single line output containing two space-separated integers.
+The first integer is the maximum value of the array.
+The second integer is the minimum value of the array. 
+There is **no space** after the minimum value in the output format. 
+There is only a **single space** between the maximum and minimum value.
+
+Example Input
+Input 1:
+5 1 2 3 4 5
+Input 2:
+4 10 50 40 80
+
+Example Output
+Output 1:
+5 1
+Output 2:
+80 10
+Note: There is no space after the minimum value in the output format.
+There is only a single space between the maximum and minimum value.
+
+Solution -
+
+def main():
+    inp = list(map(int,input().split()))
+    N = inp[0]
+    mi = inp[1]
+    ma = inp[1]
+    for i in range(1, N+1):
+        if mi > inp[i]:
+            mi = inp[i]
+        if ma < inp[i]:
+            ma = inp[i]
+    print(ma,end=' ')
+    print(mi,end='')
+    return 0
+
+if __name__ == '__main__':
+    main()
+
+######################################################################################################################
+
+Q12. Shopping list items
+
+Problem Description:
+Write a program that will keep track of items for a shopping list. The program should keep asking for new items as input until “end” is entered, print the full shopping list at the end.
+
+Input Format:
+Input is taken from the user for different elements until end is input.
+
+Output Format:
+The list of all elements of the shopping list
+
+Sample Input:
+Fruits
+Notebooks
+Perfume
+Shoes
+end
+
+Sample Output:
+['Fruits', 'Notebooks', 'Perfume', 'Shoes']
+
+Sample explanation:
+Fruits, Notebooks, Perfume, and Shoes strings are only added to the shopping list because after Shoes end is input therefore it shouldn't be included in the output list.
+
+Solution -
+
+shoplist = []
+
+while True:
+    ls = input()
+    if ls =="end":
+        break
+    shoplist.append(ls)    
+
+print(shoplist)
+
+######################################################################################################################
+
+Q13. Second Largest
+
+Problem Description
+You are given an integer array A. You have to find the second largest element/value in the array or report that no such element exists.
+
+Problem Constraints
+1 <= |A| <= 105
+0 <= A[i] <= 109
+
+Input Format
+The first argument is an integer array A.
+
+Output Format
+Return the second largest element. If no such element exist then return -1.
+
+Example Input
+Input 1:
+A = [2, 1, 2] 
+Input 2:
+A = [2]
+
+Example Output
+Output 1:
+1 
+Output 2:
+-1
+
+Example Explanation
+Explanation 1:
+First largest element = 2
+Second largest element = 1
+Explanation 2:
+There is no second largest element in the array.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        A.sort()
+        if len(A)==1:
+            return -1
+        return A[-2]
+
+######################################################################################################################
+
+Q14. Search Element
+
+Problem Description
+You are given an integer T (number of test cases). You are given array A and an integer B for each test case. You have to tell whether B is present in array A or not.
+
+Problem Constraints
+1 <= T <= 10
+1 <= A <= 105
+1 <= A[i], B <= 109
+
+Input Format
+First line of the input contains number of test cases as single integer T .
+Next, each of the test case consists of 3 lines:
+First line contains a single integer A denoting the length of array
+Second line contains A integers denoting the array elements
+Third line contains a single integer B
+
+Output Format
+For each test case, print on a separate line 1 if the element exists, else print 0.
+
+Example Input
+Input 1:
+1 
+5 
+4 1 5 9 1
+5
+Input 2:
+1
+3 
+7 7 2
+1 
+
+Example Output
+Output 1:
+1 
+Output 2:
+0 
+
+Example Explanation
+Explanation 1:
+B = 5  is present at position 3 in A 
+Explanation 2:
+B = 1  is not present in A. 
+
+Solution -
+
+N = int(input())
+for i in range(N):
+    ARR = input().split()
+    ARR_l = []
+    for i in ARR:
+        ARR_l.append(int(i))
+    B = int(input())
+    if B in ARR_l:
+        print(1)
+    else:
+        print(0)    
+
+######################################################################################################################
+
+Q15. Divisible by 5 and 7
+
+Problem Description
+Write a program that returns the list of elements that are present in the given list and are divisible by 5 and 7.
+
+Problem Constraints
+1 <= A.size() <= 105
+1 <= A[i] <= 105
+
+Input Format
+The only argument is an Integer Array A.
+
+Output Format
+Return an Integer Array, denoting the elements that are divisible by 5 and 7 from the given list.
+
+Example Input
+Input 1:
+A = [5, 7, 70, 50, 35]
+Input 2:
+A = [105, 57]
+
+Example Output
+Output 1:
+[70, 35]
+Output 2:
+[105]
+
+Example Explanation
+Explanation 1:
+Only 35 and 70 are divisible by 5 and 7 from the list [5, 7, 70, 50, 35]
+Therefore the list consisting of only these two elements is returned.
+Explanation 2:
+105 is divisible by (5 and 7).
+
+solution -
+
+def divisible(lst):
+    ''' input:lst-List of elements in integer format
+         output:Return the list of elements divisible by 5 and 7'''
+    
+    elements=[]
+    for i in lst:
+         if (i%5==0) & (i%7==0):
+              elements.append(i)
+
+    return elements
+
+######################################################################################################################
+
+Q16. Add the matrices
+
+Problem Description
+You are given two matrices A & B of same size, you have to return another matrix which is the sum of A and B.
+Note: Matrices are of same size means the number of rows and number of columns of both matrices are equal.
+The Following will give you an idea of matrix addition:
+
+Problem Constraints
+1 <= A.size(), B.size() <= 1000 1 <= A[i].size(), B[i].size() <= 1000 1 <= A[i][j], B[i][j] <= 1000
+
+Input Format
+The first argument is the 2D integer array A The second argument is the 2D integer array B
+
+Output Format
+You have to return a vector of vector of integers after doing required operations.
+
+Example Input
+Input 1:
+A = [[1, 2, 3],   
+     [4, 5, 6],   
+     [7, 8, 9]]  
+
+B = [[9, 8, 7],   
+     [6, 5, 4],   
+     [3, 2, 1]]
+
+Input 2:
+A = [[1, 2, 3],   
+     [4, 1, 2],   
+     [7, 8, 9]]  
+
+B = [[9, 9, 7],   
+     [1, 2, 4],   
+     [4, 6, 3]]
+ 
+Example Output
+Output 1:
+[[10, 10, 10],   
+ [10, 10, 10],   
+ [10, 10, 10]]
+Output 2:
+[[10, 11, 10],   
+ [5,   3,  6],   
+ [11, 14, 12]]
+Example Explanation
+
+Explanation 1:
+A + B = [[1+9, 2+8, 3+7],  
+         [4+6, 5+5, 6+4],  
+         [7+3, 8+2, 9+1]]   
+      = [[10, 10, 10],   
+         [10, 10, 10],   
+         [10, 10, 10]].
+Explanation 2:
+A + B = [[1+9, 2+9, 3+7],  
+         [4+1, 1+2, 2+4],  
+         [7+4, 8+6, 9+3]]   
+      = [[10, 11, 10],   
+         [5,   3,  6],   
+         [11, 14, 12]]
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    # @param B : list of list of integers
+    # @return a list of list of integers
+    def solve(self, A, B):
+        final_lst = []
+       
+        for i in range(len(A)):
+            sum_lst=[]
+            for j in range(len(A[i])):
+                
+                val = A[i][j]+B[i][j]
+                sum_lst.append(val)
+            final_lst.append(sum_lst) 
+
+######################################################################################################################
+
+Q17. Right Shift an Array
+
+Problem Description
+Write a program that reads an integer array A from input and modifies the array by shifting each element to the right by one position and by shifting the last element to the first position. After performing the shifting operation, print the modified array.
+**Note:** Ensure there is a space character (' ') at the end of the line.
+
+Problem Constraints
+1 <= N <= 105 1 <= A[i] <= 109
+
+Input Format
+The first line of the input is the size of the array N. The second line of the input is N integers of the array separated by space.
+
+Output Format
+Print each element of the array, followed by a space (including the last element).
+
+Example Input
+Input 1:
+5
+1 2 3 4 5
+Input 2:
+3
+2 3 1
+
+Example Output
+Output 1:
+5 1 2 3 4
+Output 2:
+1 2 3
+
+Example Explanation
+For Input 1:
+The elements 1, 2, 3 and 4 have been shifted to the right by one position and 5 has been moved to the first position.
+For Input 2:
+The elements 2 and 3 have been shifted to the right by one position and 1 has been moved to the first position.
+
+Solution -
+
+n = int(input())
+
+arr = input().split()
+
+arr_int = []
+for i in arr:
+    arr_int.append(int(i))
+
+a = arr_int[n-1]
+
+arr_new = []
+arr_new.append(a) 
+
+for i in range(0,n-1):
+    arr_new.append(arr_int[i])
+
+for i in arr_new:
+    print(i,end = " ")
+
+######################################################################################################################
+
+Q18. Check if Array is Sorted
+
+Problem Description
+Given an array A, check if it is sorted in non-decreasing order or not.
+Non-decreasing order means that the numbers in a sequence can stay the same or increase, but they cannot decrease.
+
+Problem Constraints
+1 <= Ai <= 109
+1 <= |A| <= 105
+
+Input Format
+The first and only argument contains an integer array A.
+
+Output Format
+Return 1 if array is sorted else return 0.
+
+Example Input
+Input 1:
+A = [1, 2, 2] 
+Input 2:
+A = [1, 2, 1] 
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+We can see that the array elements are in non-decreasing order.
+Explanation 2:
+Second element is greater than the third element thus array is not in ascending order, hence not sorted.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        B = sorted(A)
+        res = None
+        if A==B:
+            res = 1
+        else:
+            res = 0
+        return res  
