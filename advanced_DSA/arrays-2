@@ -1,0 +1,255 @@
+Q1. Merge Intervals
+
+Problem Description
+You have a set of non-overlapping intervals. You are given a new interval [start, end], insert this new interval into the set of intervals (merge if necessary).
+You may assume that the intervals were initially sorted according to their start times.
+
+Problem Constraints
+0 <= |intervals| <= 105
+
+Input Format
+First argument is the vector of intervals
+second argument is the new interval to be merged
+
+Output Format
+Return the vector of intervals after merging
+
+Example Input
+Input 1:
+Given intervals [1, 3], [6, 9] insert and merge [2, 5] .
+Input 2:
+Given intervals [1, 3], [6, 9] insert and merge [2, 6] .
+
+Example Output
+Output 1:
+[ [1, 5], [6, 9] ]
+Output 2:
+[ [1, 9] ]
+
+Example Explanation
+Explanation 1:
+(2,5) does not completely merge the given intervals
+Explanation 2:
+(2,6) completely merges the given intervals
+
+Solution -
+
+class Solution:
+    # @param intervals, a list of Intervals
+    # @param newInterval, a Interval
+    # @return a list of Interval
+    def insert(self, intervals, newInterval):
+        outlist=[]
+        for i in range(len(intervals)):
+            # print(intervals)
+            si=intervals[i].start
+            ei=intervals[i].end
+            s=newInterval.start
+            e=newInterval.end
+            
+            l3=[]
+            if ei<s:
+                outlist.append(intervals[i])
+            elif e<si:
+                outlist.append(newInterval)
+                for j in range(i, len(intervals)):
+                    outlist.append(intervals[j])
+                return outlist
+            else:
+                newInterval.start=min(s,si)
+                newInterval.end=max(e,ei)
+        outlist.append(newInterval)
+        return outlist
+
+######################################################################################################################
+
+Q2. First Missing Integer
+
+Problem Description
+Given an unsorted integer array, A of size N. Find the first missing positive integer.
+Note: Your algorithm should run in O(n) time and use constant space.
+
+Problem Constraints
+1 <= N <= 1000000
+-109 <= A[i] <= 109
+
+Input Format
+First argument is an integer array A.
+
+Output Format
+Return an integer denoting the first missing positive integer.
+
+Example Input
+Input 1:
+[1, 2, 0]
+Input 2:
+[3, 4, -1, 1]
+Input 3:
+[-8, -7, -6]
+
+Example Output
+Output 1:
+3
+Output 2:
+2
+Output 3:
+1
+
+Example Explanation
+Explanation 1:
+A = [1, 2, 0]
+First positive integer missing from the array is 3.
+Explanation 2:
+A = [3, 4, -1, 1]
+First positive integer missing from the array is 2.
+Explanation 3:
+A = [-8, -7, -6]
+First positive integer missing from the array is 1.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    
+     def firstMissingPositive(self, A):
+        n=len(A)
+        i=0
+        while(i<n):
+            if(A[i]<1 or A[i]>n or A[i]==i+1):
+                i=i+1
+            else:
+                cind=A[i]-1
+                if (A[i]==A[cind]):
+                    i=i+1
+                else:
+                    A[i],A[cind]=A[cind],A[i]
+                    
+        for i in range(n):
+            if A[i]!=i+1:
+                return i+1
+    
+        return n+1
+
+######################################################################################################################
+
+Q3. Maximum Absolute Difference
+
+Problem Description
+You are given an array of N integers, A1, A2, .... AN.
+Return the maximum value of f(i, j) for all 1 ≤ i, j ≤ N. f(i, j) is defined as |A[i] - A[j]| + |i - j|, where |x| denotes absolute value of x.
+
+Problem Constraints
+1 <= N <= 100000
+-109 <= A[i] <= 109
+
+Input Format
+First argument is an integer array A of size N.
+
+Output Format
+Return an integer denoting the maximum value of f(i, j).
+
+Example Input
+Input 1:
+A = [1, 3, -1]
+Input 2:
+A = [2]
+
+Example Output
+Output 1:
+5
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+f(1, 1) = f(2, 2) = f(3, 3) = 0
+f(1, 2) = f(2, 1) = |1 - 3| + |1 - 2| = 3
+f(1, 3) = f(3, 1) = |1 - (-1)| + |1 - 3| = 4
+f(2, 3) = f(3, 2) = |3 - (-1)| + |2 - 3| = 5
+So, we return 5.
+Explanation 2:
+Only possibility is i = 1 and j = 1. That gives answer = 0.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def maxArr(self, A):
+        max1=A[0]
+        max2=A[0]
+        min1=A[0]
+        min2=A[0]
+        for i in range(len(A)):
+            max1=max(max1,A[i]+i)
+            max2=max(max2,A[i]-i)
+            min1=min(min1,A[i]+i)
+            min2=min(min2,A[i]-i)
+        return max(max1-min1, max2-min2)
+
+######################################################################################################################
+
+Q4. Row with maximum number of ones
+
+Problem Description
+Given a binary sorted matrix A of size N x N. Find the row with the maximum number of 1.
+NOTE:
+If two rows have the maximum number of 1 then return the row which has a lower index.
+Rows are numbered from top to bottom and columns are numbered from left to right.
+Assume 0-based indexing.
+Assume each row to be sorted by values.
+Expected time complexity is O(rows + columns).
+
+Problem Constraints
+1 <= N <= 1000
+0 <= A[i] <= 1
+
+Input Format
+The only argument given is the integer matrix A.
+
+Output Format
+Return the row with the maximum number of 1.
+
+Example Input
+Input 1:
+A = [   [0, 1, 1]
+         [0, 0, 1]
+         [0, 1, 1]   ]
+Input 2:
+A = [   [0, 0, 0, 0]
+         [0, 0, 0, 1]
+         [0, 0, 1, 1]
+         [0, 1, 1, 1]    ]
+
+Example Output
+Output 1:
+0
+Output 2:
+3
+
+Example Explanation
+Explanation 1:
+Row 0 has maximum number of 1s.
+Explanation 2:
+Row 3 has maximum number of 1s.  
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    # @return an integer
+    def solve(self, A):
+        n = len(A)
+        m = len(A[0])
+        l = []
+        for i in range(n):
+            l.append(sum(A[i]))
+
+        ind = 0
+        max_1 = l[0]
+        for i in range(n):
+            if l[i]>max_1:
+                max_1 = l[i]
+                ind = i
+        return ind        
