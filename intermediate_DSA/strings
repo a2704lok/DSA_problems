@@ -1,0 +1,634 @@
+Q1. Reverse the String
+
+Problem Description
+You are given a string A of size N.
+Return the string A after reversing the string word by word.
+NOTE:
+A sequence of non-space characters constitutes a word.
+Your reversed string should not contain leading or trailing spaces, even if it is present in the input string.
+If there are multiple spaces between words, reduce them to a single space in the reversed string.
+
+Problem Constraints
+1 <= N <= 3 * 105
+
+Input Format
+The only argument given is string A.
+
+Output Format
+Return the string A after reversing the string word by word.
+
+Example Input
+Input 1:
+A = "the sky is blue"
+Input 2:
+A = "this is ib"
+
+Example Output
+Output 1:
+"blue is sky the"
+Output 2:
+"ib is this"    
+
+Example Explanation
+Explanation 1:
+We reverse the string word by word so the string becomes "blue is sky the".
+Explanation 2:
+We reverse the string word by word so the string becomes "ib is this".
+
+Solution -
+
+class Solution:
+    # @param A : string
+    # @return a strings
+    def solve(self, A):
+        l = A.split(" ")
+        x = " ".join(l[::-1])
+        return x.strip()
+
+########################################################################################################################
+
+Q2. Simple Reverse
+
+Problem Description
+Given a string A, you are asked to reverse the string and return the reversed string.
+
+Problem Constraints
+1 <= |A| <= 105
+String A consist only of lowercase characters.
+
+Input Format
+First and only argument is a string A.
+
+Output Format
+Return a string denoting the reversed string.
+
+Example Input
+Input 1:
+A = "scaler"
+Input 2:
+A = "academy"
+
+Example Output
+Output 1:
+"relacs"
+Output 2:
+"ymedaca"
+
+Example Explanation
+Explanation 1:
+Reverse the given string.
+
+Solution -
+
+class Solution:
+    # @param A : string
+    # @return a strings
+    def solve(self, A):
+        return A[::-1]
+
+########################################################################################################################
+
+Q3. tolower()
+
+Problem Description
+You are given a function to_lower() which takes a character array A as an argument.
+Convert each character of A into lowercase characters if it exists. If the lowercase of a character does not exist, it remains unmodified.
+The uppercase letters from A to Z are converted to lowercase letters from a to z respectively.
+Return the lowercase version of the given character array.
+
+Problem Constraints
+1 <= |A| <= 105
+
+Input Format
+The only argument is a character array A.
+
+Output Format
+Return the lowercase version of the given character array.
+
+Example Input
+Input 1:
+A = ['S', 'c', 'A', 'l', 'e', 'r', 'A', 'c', 'a', 'D', 'e', 'm', 'y']
+Input 2:
+A = ['S', 'c', 'a', 'L', 'e', 'r', '#', '2', '0', '2', '0']
+
+Example Output
+Output 1:
+['s', 'c', 'a', 'l', 'e', 'r', 'a', 'c', 'a', 'd', 'e', 'm', 'y']
+Output 2:
+['s', 'c', 'a', 'l', 'e', 'r', '#', '2', '0', '2', '0']
+
+Example Explanation
+Explanation 1:
+All the characters in the returned array are in lowercase alphabets.
+Explanation 2:
+Since there is no lowercase version for '#', '2'and '0'.  It remains unchanged.
+Rest of the Uppercase alphabets are converted to lowercase accordingly.
+
+Solution -
+
+class Solution:
+    # @param A : list of characters
+    # @return a list of characters
+    def to_lower(self, A):
+        l = []
+        for i in A:
+            l.append(i.lower())
+        return l
+
+########################################################################################################################
+
+Q4. toupper()
+Problem Description
+You are given a function to_upper() consisting of a character array A.
+Convert each character of A into Uppercase character if it exists. If the Uppercase of a character does not exist, it remains unmodified.
+The lowercase letters from a to z is converted to uppercase letters from A to Z respectively.
+Return the uppercase version of the given character array.
+
+Problem Constraints
+1 <= |A| <= 105
+
+Input Format
+Only argument is a character array A.
+
+Output Format
+Return the uppercase version of the given character array.
+
+Example Input
+Input 1:
+A = ['S', 'c', 'A', 'L', 'E', 'r', 'A', 'c', 'a', 'D', 'e', 'm', 'y']
+Input 2:
+A = ['S', 'c', 'a', 'L', 'e', 'R', '#', '2', '0', '2', '0']
+
+Example Output
+Output 1:
+['S', 'C', 'A', 'L', 'E', 'R', 'A', 'C', 'A', 'D', 'E', 'M', 'Y']
+Output 2:
+['S', 'C', 'A', 'L', 'E', 'R', '#', '2', '0', '2', '0']
+
+Example Explanation
+Explanation 1:
+All the characters in the returned array are in uppercase alphabets.
+Explanation 2:
+Since there is no Uppercase version for '#', '2'and '0'.  It remains unchanged.
+Rest of the Lowercase alphabets are converted to Uppercase accordingly.
+
+Solution -
+
+class Solution:
+    # @param A : list of characters
+    # @return a list of characters
+    def to_upper(self, A):
+        l = []
+        for i in A:
+            l.append(i.upper())
+
+        return l
+
+########################################################################################################################
+
+Q5. Isalnum()
+
+Problem Description
+You are given a function isalpha() consisting of a character array A.
+Return 1 if all the characters of a character array are alphanumeric (a-z, A-Z, and 0-9) else, return 0.
+
+Problem Constraints
+1 <= |A| <= 105
+
+Input Format
+Only argument is a character array A.
+
+Output Format
+Return 1 if all the characters of the character array are alphanumeric (a-z, A-Z and 0-9), else return 0.
+
+Example Input
+Input 1:
+A = ['S', 'c', 'a', 'l', 'e', 'r', 'A', 'c', 'a', 'd', 'e', 'm', 'y', '2', '0', '2', '0']
+Input 2:
+A = ['S', 'c', 'a', 'l', 'e', 'r', '#', '2', '0', '2', '0']
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+All the characters are alphanumeric.
+Explanation 2:
+All the characters are NOT alphabets i.e ('#').
+
+Solution -
+
+class Solution:
+    # @param A : list of characters
+    # @return an integer
+    def solve(self, A):
+        isalpha = True
+        for i in A:
+            if i.isalnum() == True:
+                continue
+            else:
+                isalpha = False
+                break
+        if isalpha == True:
+            return 1        
+        return 0
+
+########################################################################################################################
+
+Q6. Isalpha()
+
+Problem Description
+You are given a function isalpha() consisting of a character array A.
+Return 1 if all the characters of the character array are alphabetical (a-z and A-Z), else return 0.
+
+Problem Constraints
+1 <= |A| <= 105
+
+Input Format
+Only argument is a character array A.
+
+Output Format
+Return 1 if all the characters of the character array are alphabetical (a-z and A-Z), else return 0.
+Example Input
+Input 1:
+A = ['S', 'c', 'a', 'l', 'e', 'r', 'A', 'c', 'a', 'd', 'e', 'm', 'y']
+Input 2:
+A = ['S', 'c', 'a', 'l', 'e', 'r', '#', '2', '0', '2', '0']
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+All the characters are alphabets.
+Explanation 2:
+All the characters are NOT alphabets i.e ('#', '2', '0', '2', '0').
+
+Sloution -
+
+class Solution:
+    # @param A : list of characters
+    # @return an integer
+    def solve(self, A):
+        isalpha = True
+        for i in A:
+            if i.isalpha() == False:
+                isalpha = False
+                break
+        if isalpha == True:
+            return 1
+        else:
+            return 0            
+
+########################################################################################################################
+
+Q7. Longest Palindromic Substring
+
+Problem Description
+Given a string A of size N, find and return the longest palindromic substring in A.
+Substring of string A is A[i...j] where 0 <= i <= j < len(A)
+
+Palindrome string:
+A string which reads the same backwards. More formally, A is palindrome if reverse(A) = A.
+Incase of conflict, return the substring which occurs first ( with the least starting index).
+
+Problem Constraints
+1 <= N <= 6000
+
+Input Format
+First and only argument is a string A.
+
+Output Format
+Return a string denoting the longest palindromic substring of string A.
+
+Example Input
+Input 1:
+A = "aaaabaaa"
+Input 2:
+A = "abba
+
+Example Output
+Output 1:
+"aaabaaa"
+Output 2:
+"abba"
+
+Example Explanation
+Explanation 1:
+We can see that longest palindromic substring is of length 7 and the string is "aaabaaa".
+Explanation 2:
+We can see that longest palindromic substring is of length 4 and the string is "abba".
+
+Solution -
+
+class Solution:
+	# @param A : string
+	# @return a strings
+	def longestPalindrome(self, A):
+        N = len(A)
+        def helper(l,r):
+            while (l>= 0 and r < len(A) and A[l] == A[r]):
+                l -= 1
+                r += 1
+            return(A[l+1:r])
+
+        res = ''  
+        for i in range(len(A)):
+            test = helper(i,i)
+            if len(test) > len(res):
+                res = test
+            test = helper(i,i+1)
+            if len(test) > len(res):
+                res = test
+        return res
+
+########################################################################################################################
+
+Q8. Amazing Subarrays
+
+You are given a string S, and you have to find all the amazing substrings of S.
+An amazing Substring is one that starts with a vowel (a, e, i, o, u, A, E, I, O, U).
+
+Input
+Only argument given is string S.
+
+Output
+Return a single integer X mod 10003, here X is the number of Amazing Substrings in given the string.
+
+Constraints
+1 <= length(S) <= 1e6
+S can have special characters
+
+Example
+Input
+ABEC
+Output
+6
+
+Explanation
+Amazing substrings of given string are :
+1. A
+2. AB
+3. ABE
+4. ABEC
+5. E
+6. EC
+here number of substrings are 6 and 6 % 10003 = 6.
+
+Solution -
+
+class Solution:
+    # @param A : string
+    # @return an integer
+    def solve(self, A):
+        c = A.upper()
+        l = list(c)
+        n = len(l)
+        summ = 0
+        for i in range(n):
+            if l[i] == 'A' or l[i] == 'E' or l[i] == 'I' or l[i] == 'O' or l[i] == 'U':
+                summ += (n-i)
+    
+        return(summ % 10003)
+
+########################################################################################################################
+
+Q9. Count Occurrences
+
+Problem Description
+Find the number of occurrences of bob in string A consisting of lowercase English alphabets.
+
+Problem Constraints
+1 <= |A| <= 1000
+
+Input Format
+The first and only argument contains the string A, consisting of lowercase English alphabets.
+
+Output Format
+Return an integer containing the answer.
+
+Example Input
+Input 1:
+"abobc"
+Input 2:
+"bobob"
+
+Example Output
+Output 1:
+1
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+The only occurrence is at second position.
+Explanation 2:
+Bob occures at first and third position.
+
+Solution - 
+
+class Solution:
+    # @param A : string
+    # @return an integer
+    def solve(self, A):
+        n = len(A)
+        c = 0
+        for i in range(0,n-3+1):
+            if A[i:i+3] == 'bob':
+                c+=1
+        return c
+
+########################################################################################################################
+
+Q10. Change character
+
+Problem Description
+You are given a string A of size N consisting of lowercase alphabets.
+You can change at most B characters in the given string to any other lowercase alphabet such that the number of distinct characters in the string is minimized.
+Find the minimum number of distinct characters in the resulting string.
+
+Problem Constraints
+1 <= N <= 100000
+0 <= B <= N
+
+Input Format
+The first argument is a string A.
+The second argument is an integer B.
+
+Output Format
+Return an integer denoting the minimum number of distinct characters in the string.
+
+Example Input
+A = "abcabbccd"
+B = 3
+
+Example Output
+2
+
+Example Explanation
+We can change both 'a' and one 'd' into 'b'.So the new string becomes "bbcbbbccb".
+So the minimum number of distinct character will be 2.
+
+Solution -
+
+class Solution:
+    # @param A : string
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        hash = {}
+        for i in A:
+            if i not in hash:
+                hash[i] = 1
+            else:
+                hash[i] += 1
+               
+        count = []
+        for i in hash:
+            count.append(hash[i])
+        count.sort()
+
+        x = len(hash)
+        for i in count:
+            if i <= B:
+                B -= i
+                x -= 1
+        return(x)
+
+########################################################################################################################
+
+Q11. String operations
+
+Problem Description
+Akash likes playing with strings. One day he thought of applying following operations on the string in the given order:
+Concatenate the string with itself.
+Delete all the uppercase letters.
+Replace each vowel with '#'.
+You are given a string A of size N consisting of lowercase and uppercase alphabets. Return the resultant string after applying the above operations.
+NOTE: 'a' , 'e' , 'i' , 'o' , 'u' are defined as vowels.
+
+Problem Constraints
+1<=N<=100000
+
+Input Format
+First argument is a string A of size N.
+
+Output Format
+Return the resultant string.
+
+Example Input
+Input 1:
+A="aeiOUz"
+Input 2:
+A="AbcaZeoB"
+
+Example Output
+Output 1:
+"###z###z"
+Output 2:
+"bc###bc###"
+
+Example Explanation
+Explanatino 1:
+First concatenate the string with itself so string A becomes "aeiOUzaeiOUz".
+Delete all the uppercase letters so string A becomes "aeizaeiz".
+Now replace vowel with '#', A becomes "###z###z".
+Explanatino 2:
+First concatenate the string with itself so string A becomes "AbcaZeoBAbcaZeoB".
+Delete all the uppercase letters so string A becomes "bcaeobcaeo".
+Now replace vowel with '#', A becomes "bc###bc###".
+
+Solution -
+
+class Solution:
+    # @param A : string
+    # @return a strings
+    def solve(self, A):
+        A = list(A+A)
+        B = []
+        for i in A:
+            if i.isupper() == True:
+                continue
+            else:
+                B.append(i)
+
+        c = []
+        for i in B:
+            if (i == 'a') | (i == 'e') | (i == 'i') | (i == 'o') | (i == 'u'):
+                c.append("#")
+            else:
+                c.append(i)
+        return "".join(c)               
+
+########################################################################################################################
+
+Q12. Longest Common Prefix
+
+Problem Description
+Given the array of strings A, you need to find the longest string S, which is the prefix of ALL the strings in the array.
+The longest common prefix for a pair of strings S1 and S2 is the longest string S which is the prefix of both S1 and S2.
+Example: the longest common prefix of "abcdefgh" and "abcefgh" is "abc".
+
+Problem Constraints
+0 <= sum of length of all strings <= 1000000
+
+Input Format
+The only argument given is an array of strings A.
+
+Output Format
+Return the longest common prefix of all strings in A.
+
+Example Input
+Input 1:
+A = ["abcdefgh", "aefghijk", "abcefgh"]
+Input 2:
+A = ["abab", "ab", "abcd"];
+
+Example Output
+Output 1:
+"a"
+Output 2:
+"ab"
+
+Example Explanation
+Explanation 1:
+Longest common prefix of all the strings is "a".
+Explanation 2:
+Longest common prefix of all the strings is "ab".
+
+Solution -
+
+class Solution:
+	# @param A : list of strings
+	# @return a strings
+	def longestCommonPrefix(self, A):
+        # finding the smallest length string so as to restrict our substring check length
+        if len(A) == 1:
+            return A[0]
+
+        smallen = float('inf')
+        for i in A:
+            if len(i) < smallen:
+                smallen = len(i)
+        sub = ''
+        c = 0
+        for n in range(smallen):
+        #check for common chars
+            for i in A:
+                chrs = A[0][n]
+                if i[n] == chrs:
+                    c += 1
+            if c == len(A):
+                sub += chrs
+                c = 0
+            else:
+                return sub
+        return sub
+
+        
