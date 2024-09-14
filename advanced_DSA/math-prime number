@@ -1,0 +1,389 @@
+Q1. Count of divisors
+
+Problem Description
+Given an array of integers A, find and return the count of divisors of each element of the array.
+NOTE: The order of the resultant array should be the same as the input array.
+
+Problem Constraints
+1 <= length of the array <= 100000
+1 <= A[i] <= 106
+
+Input Format
+The only argument given is the integer array A.
+
+Output Format
+Return the count of divisors of each element of the array in the form of an array.
+
+Example Input
+Input 1:
+A = [2, 3, 4, 5]
+Input 2:
+A = [8, 9, 10]
+
+Example Output
+Output 1:
+[2, 2, 3, 2]
+Output 1:
+[4, 3, 4]
+
+Example Explanation
+Explanation 1:
+The number of divisors of 2 : [1, 2], 3 : [1, 3], 4 : [1, 2, 4], 5 : [1, 5]
+So the count will be [2, 2, 3, 2].
+Explanation 2:
+The number of divisors of 8 : [1, 2, 4, 8], 9 : [1, 3, 9], 10 : [1, 2, 5, 10]
+So the count will be [4, 3, 4].
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return a list of integers
+    def solve(self, A):
+        n = max(A)
+        spf = [0]*(n+1)
+        r = int(math.sqrt(n))+1
+
+        for i in range(2,r):
+            if spf[i] == 0:
+                spf[i] = i
+                for j in range(i*i,n+1,i):
+                    if spf[j] == 0:
+                        spf[j] = i
+
+        for i in range(2,len(spf)):
+            if spf[i] == 0: spf[i] = i
+            
+        r = len(A)
+        ans = []
+
+        for x in A:
+            f = 1
+            while(x>1):
+                no = spf[x]
+                power = 0
+                while( x % no == 0 ):
+                    x = x//no
+                    power+=1
+                f = f*(power+1)
+            ans.append(f)
+        return ans
+
+#######################################################################################################################
+
+Q2. Prime Sum
+
+Problem Description
+Given an even number A ( greater than 2 ), return two prime numbers whose sum will be equal to the given number.
+If there is more than one solution possible, return the lexicographically smaller solution.
+If [a, b] is one solution with a <= b, and [c,d] is another solution with c <= d, then 
+[a, b] < [c, d], If a < c OR a==c AND b < d. 
+NOTE: A solution will always exist. Read Goldbach's conjecture.
+
+Problem Constraints
+4 <= A <= 2*107
+
+Input Format
+First and only argument of input is an even number A.
+
+Output Format
+Return a integer array of size 2 containing primes whose sum will be equal to given number.
+
+Example Input
+4
+
+Example Output
+[2, 2]
+
+Example Explanation
+There is only 1 solution for A = 4.
+
+Solution -
+
+class Solution:
+	# @param A : integer
+	# @return a list of integers
+    def isprime(self,n):
+        prime = True
+        if n == 1:
+            prime = False
+        for i in range(2,n):
+            if n%i == 0:
+                prime = False
+        return prime
+                
+
+	def primesum(self, A):
+        for i in range(2,A):
+            n1 = i
+            n2 = A-i
+            if self.isprime(n1) and self.isprime(n2):
+                return [n1,n2]
+                
+#######################################################################################################################
+
+Q3. Lucky Numbers
+
+Problem Description
+A lucky number is a number that has exactly 2 distinct prime divisors.
+You are given a number A, and you need to determine the count of lucky numbers between the range 1 to A (both inclusive).
+
+Problem Constraints
+1 <= A <= 50000
+
+Input Format
+The first and only argument is an integer A.
+
+Output Format
+Return an integer i.e the count of lucky numbers between 1 and A, both inclusive.
+
+Example Input
+Input 1:
+A = 8
+Input 2:
+A = 12
+
+Example Output
+Output 1:
+1
+Output 2:
+3
+
+Example Explanation
+Explanation 1:
+Between [1, 8] there is only 1 lucky number i.e 6.
+6 has 2 distinct prime factors i.e 2 and 3.
+Explanation 2:
+Between [1, 12] there are 3 lucky number: 6, 10 and 12.
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @return an integer
+    def solve(self, A):
+        hm = {}
+        count = 0
+        for i in range(2,A+1):
+            
+            if i in hm :
+                if hm[i] ==2:
+                    count +=1
+                continue
+            j = i
+            while j <A+1:
+                if j in hm :
+                    hm[j] +=1
+                else:
+                    hm[j] =1
+                j +=i
+        return count
+        
+#######################################################################################################################
+
+Q4. Prime Subsequences
+
+Given an array A having N positive numbers. You have to find the number of Prime subsequences of A.
+A Prime subsequence is one that has only prime numbers, for example [2, 3], [5] are the Prime subsequences where [2, 4] and [1, 2, 3, 4] are not.
+
+Input Format
+The first argument given is an Array A, having N integers.
+
+Output Format
+Return an integer X, i.e number of Prime subsequences. 
+As X can be very large print X % (1000000007), here % is modulus operator.
+
+Constraints
+1 <= N <= 1e3
+1 <= A[i] <= 1e6
+
+For Example
+Input:
+A = [1, 2, 3]
+Output:
+3
+Explanation:
+no. Subsequences      Prime subsequences
+1.  [1]                     No
+2.  [1, 2]                  No
+3.  [1, 3]                  No
+4.  [1, 2, 3]               No
+5.  [2]                     Yes
+6.  [2, 3]                  Yes
+7.  [3]                     Yes
+8.  []                      No
+
+here we have 3 subsequences(5, 6, 7) those have only prime number(s). 
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def prime(self,N):
+        c=0
+        if N ==1:
+            return False
+        for i in range(2,int(math.sqrt(N))+1):
+            if N%i ==0:
+                c=c+1
+        if c==0:
+            return True
+        else: 
+            return False
+            
+    def solve(self, A):
+        l=[]
+        for i in A:
+            if self.prime(i) is True:
+                l.append(i)
+            
+        k=len(l)
+        c= 2**k -1
+        return int(c)%(1000000007)
+
+#######################################################################################################################
+
+Q5. Number Of Open Doors
+
+Problem Description
+Given an integer A, which denotes the number of doors in a row numbered 1 to A. All the doors are closed initially.
+A person moves to and fro, changing the states of the doors as follows: the person opens a door that is already closed and closes a door that is already opened.
+In the first go, he/she alters the states of doors numbered 1, 2, 3, … , A.
+In the second go, he/she alters the states of doors numbered 2, 4, 6 ….
+In the third go, he/she alters the states of doors numbered 3, 6, 9 …
+This continues till the A'th go in, which you alter the state of the door numbered A.
+Find and return the number of open doors at the end of the procedure.
+
+Problem Constraints
+1 <= A <= 109
+
+Input Format
+The only argument given is integer A.
+
+Output Format
+Return the number of open doors at the end of the procedure.
+
+Example Input
+Input 1:
+A = 5
+Input 2:
+A = 6
+
+Example Output
+Output 1:
+2
+Output 2:
+2 
+
+Example Explanation
+Input 1:
+In the first go, he/she alters the states of doors numbered 1, 2, 3, 4, 5. Now, all doors are open.
+In the second go, he/she closes the doors numbered 2, 4.
+In the third go, he/she closes the door numbered 3.
+In the fourth go, he/she open the door numbered 4.
+In the fifth go, he/she closes the door numbered 5.
+Doors opened at the end are 1 and 4.
+Input 2:
+In the first go, he/she alters the states of doors numbered 1, 2, 3, 4, 5, 6. Now, all doors are open.
+In the second go, he/she closes the doors numbered 2, 4, 6.
+In the third go, he/she closes the door numbered 3 and opens door 6.
+In the fourth go, he/she open the door numbered 4.
+In the fifth go, he/she closes the door numbered 5.
+In the sixth go, he/she closes the door numbered 6.
+Doors opened at the end are 1 and 4.
+
+Solution -
+
+import math
+class Solution:
+    # @param A : integer
+    # @return an integer
+    def solve(self, A):
+        return int(math.sqrt(A))
+
+#######################################################################################################################
+
+Q6. Prime Addition
+
+You are given an even number N and you need to represent the given number as the sum of primes. The prime numbers do not necessarily have to be distinct. It is guaranteed that at least one possible solution exists.
+You need to determine the minimum number of prime numbers needed to represent the given number.
+
+Input
+The first argument contains an integer N,the number you need to represent (2<=N<=10^9).
+
+Output
+Return an integer which is the minimum number of prime numbers needed to represent the given number N.
+
+Examples
+Input
+26
+Output
+2
+Explanation
+Testcase 1-
+You can represent 26 as: 13+13
+So we require minimum of 2 prime numbers to represent the number 26.
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @return an integer
+    def solve(self, A):
+        if A<=3:
+            return 1
+        return 2
+        
+#######################################################################################################################
+
+Q3. Distinct Primes
+
+You have given an array A having N integers. Let say G is the product of all elements of A.
+You have to find the number of distinct prime divisors of G.
+
+Input Format
+The first argument given is an Array A, having N integers.
+
+Output Format
+Return an Integer, i.e number of distinct prime divisors of G.
+
+Constraints
+1 <= N <= 1e5
+1 <= A[i] <= 1e5
+
+For Example
+Input:
+A = [1, 2, 3, 4]
+Output:
+2
+Explanation:
+here G = 1 * 2 * 3 * 4 = 24
+and distinct prime divisors of G are [2, 3]
+
+Solution -
+
+import math
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def prime_factors(n):
+        l = []
+        while n % 2 == 0:
+            l.append(2)
+            n = n / 2
+        for i in range(3,int(math.sqrt(n))+1,2):
+            while (n % i == 0):
+                l.append(i)
+                n = n / i
+        if n > 2:
+            l.append(int(n))
+        return l
+
+    def solve(self, A):
+        c = set()
+        for i in A:
+            a = Solution.prime_factors(i)
+            for i in a:
+                c.add(i)
+        return len(c)
