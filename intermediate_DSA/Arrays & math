@@ -1,0 +1,159 @@
+Q1. Majority Element
+
+Problem Description
+Given an array of size N, find the majority element. The majority element is the element that appears more than floor(n/2) times.
+You may assume that the array is non-empty and the majority element always exists in the array.
+
+Problem Constraints
+1 <= N <= 5*105
+1 <= num[i] <= 109
+
+Input Format
+Only argument is an integer array.
+
+Output Format
+Return an integer.
+
+Example Input
+Input 1:
+[2, 1, 2]
+Input 2:
+[1, 1, 1]
+
+Example Output
+Input 1:
+2
+Input 2:
+1
+
+Example Explanation
+For Input 1:
+2 occurs 2 times which is greater than 3/2.
+For Input 2:
+1 is the only element in the array, so it is majority
+
+Solution -
+
+class Solution:
+    # @param A : tuple of integers
+    # @return an integer
+    def majorityElement(self, A):
+        if len(A) == 1:
+            return A[0]
+        dic = {}
+        s = set(A)
+        for i in A:
+            if i in dic:
+                dic[i] +=1
+            else:
+                dic[i] = 1
+
+        for i in list(s):
+            if dic[i]>len(A)/2:
+                return i
+
+######################################################################################################################
+
+Q2. N/3 Repeat Number
+
+Problem Description
+You're given a read-only array of N integers. Find out if any integer occurs more than N/3 times in the array in linear time and constant additional space.
+If so, return the integer. If not, return -1.
+If there are multiple solutions, return any one.
+Note: Read-only array means that the input array should not be modified in the process of solving the problem
+
+Problem Constraints
+1 <= N <= 7*105
+1 <= A[i] <= 109
+
+Input Format
+The only argument is an integer array A.
+
+Output Format
+Return an integer.
+
+Example Input
+Input 1:
+[1 2 3 1 1]
+Input 2:
+[1 2 3]
+
+Example Output
+Output 1:
+1
+Output 2:
+-1
+
+Example Explanation
+Explanation 1:
+1 occurs 3 times which is more than 5/3 times.
+Explanation 2:
+No element occurs more than 3 / 3 = 1 times in the array.
+
+Solution -
+
+class Solution:
+    # @param A : tuple of integers
+    # @return an integer
+    def repeatedNumber(self, A):
+        if len(A) == 1:
+            return A[0]
+        dic = {}
+        s = set()
+        for i in A:
+            s.add(i)
+            if i in dic:
+                dic[i] +=1
+            else:
+                dic[i] = 1
+        for i in list(s):
+            if dic[i]>len(A)/3:
+                return i
+        return -1
+
+######################################################################################################################
+
+Q3. Find nth Magic Number
+
+Problem Description
+Given an integer A, find and return the Ath magic number.
+A magic number is defined as a number that can be expressed as a power of 5 or a sum of unique powers of 5.
+First few magic numbers are 5, 25, 30(5 + 25), 125, 130(125 + 5), ….
+
+Problem Constraints
+1 <= A <= 5000
+
+Input Format
+The only argument given is integer A.
+
+Output Format
+Return the Ath magic number.
+
+Example Input
+Example Input 1:
+A = 3
+Example Input 2:
+A = 10
+
+Example Output
+Example Output 1:
+30
+Example Output 2:
+650
+
+Example Explanation
+Explanation 1:
+Magic Numbers in increasing order are [5, 25, 30, 125, 130, ...]
+3rd element in this is 30
+Explanation 2:
+In the sequence shown in explanation 1, 10th element will be 650.
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @return an integer
+    def solve(self, A):
+        bi_2 = bin(A).replace("0b","")
+        N=int(bi_2,5)
+        return(N*5)
