@@ -1,0 +1,451 @@
+Q1. Hollow pyramid pattern
+
+Problem Description
+Take an integer N as input, print the corresponding pattern for N.
+For example if N = 5 then pattern will be like:
+********** // 0 spaces
+****__**** // 2 spaces
+***____*** // 4 spaces
+**______** // 6 spaces
+*________* // 8 spaces
+NOTE: Here '_' is used to represent spaces. You have to print spaces in your code.
+
+Problem Constraints
+2 <= N <= 100
+
+Input Format
+First and only line of input contains a single integer N.
+
+Output Format
+Output the Full Pyramid pattern corresponding to the given N.
+
+Example Input
+Input 1:
+2
+Input 2:
+3
+
+Example Output
+Output 1:
+**** // 0 spaces
+*__* // 2 spaces
+Output 2:
+****** // 0 spaces
+**__** // 2 spaces
+*____* // 4 spaces
+NOTE: Here '_' is used to represent spaces. You have to print spaces in your code.
+
+Example Explanation
+Print the pattern as described.
+
+Solution -
+
+N = int(input())
+
+for i in range(1,N+1):
+    print("*"*(N-(i-1)),end = "")
+    print(" "*(2*(i-1)),end = "")
+    print("*"*(N-(i-1)),end = "")
+    print()
+
+#######################################################################################################
+
+Q2. Hollow inverted pyramid pattern
+
+Problem Description
+Take an integer N as input, print the corresponding pattern for N.
+For example if N = 5 then pattern will be like:
+*________* // 8 spaces
+**______** // 6 spaces
+***____*** // 4 spaces
+****__**** // 2 spaces
+********** // 0 spaces
+NOTE: Here '_' is used to represent spaces. You have to print spaces in your code.
+
+Problem Constraints
+2 <= N <= 100
+
+Input Format
+First and only line of input contains a single integer N.
+
+Output Format
+Output the Full Pyramid pattern corresponding to the given N.
+
+Example Input
+Input 1:
+2
+Input 2:
+3
+
+Example Output
+Output 1:
+*__* // 2 spaces
+**** // 0 spaces
+Output 2:
+*____* // 4 spaces
+**__** // 2 spaces
+****** // 0 spaces
+NOTE: Here '_' is used to represent spaces. You have to print spaces in your code.
+
+Example Explanation
+Print the pattern as described.
+
+Solution -
+
+N = int(input())
+
+for i in range(1,N+1):
+    print("*"*i,end = "")
+    print(" "*(2*(N-i)),end = "")
+    print("*"*i,end = "")
+    print()
+
+
+#######################################################################################################
+
+Q3. Numeric Stair Pattern
+
+Problem Description
+Take an integer N as input, print the corresponding pattern for N.
+For example if N = 4 then pattern will be like:
+1
+1 2
+1 2 3
+1 2 3 4
+NOTE: There should be no extra spaces after last integer.
+
+Problem Constraints
+1 <= N <= 100
+
+Input Format
+First and only line of input contains a single integer N.
+
+Output Format
+Output the pattern corresponding to the given N.
+NOTE:
+There should be no extra spaces after last integer and before first integer in any row.
+All integers in any row in the pattern are space separated.
+
+Example Input
+Input 1:
+2
+Input 2:
+3
+
+Example Output
+Output 1:
+1
+1 2
+Output 2:
+1
+1 2
+1 2 3
+
+Example Explanation
+Print the pattern as described.
+
+Solution - 
+
+N = int(input())
+
+for i in range(1,N+1):
+    print(*range(1,i+1),sep = " ",end = "\n")
+
+#######################################################################################################
+
+Q4. Inverse Half Pyramid Pattern
+
+Problem Description
+Take an Integer N as input. Print an Inverse half pyramid of N lines using *.
+For example for N = 5, the output should be the following pattern:-
+*****
+****
+***
+**
+*
+Note: There should be no space after the last * in each line of the output.
+
+Input Format
+The input contains a single integer N.
+
+Output Format
+The output contains the pattern described.
+
+Sample Input
+3
+
+Sample Output
+***
+**
+*
+
+Solution -
+
+N = int(input())
+
+for i in range(0,N):
+    for j in range(N-i):
+        print("*",end = "")
+    print()
+
+#######################################################################################################
+
+Q5. Two Line Star Pattern
+
+Problem Description
+Print a pattern consisting of N rows, where each row contains an asterisk (*) at the beginning and end of the line, with N-2 spaces in between.
+The Pattern should look like:
+*<N-2 Spaces>*
+Print the above pattern for a total of N Rows.
+Refer Example ouput, for better clarification.
+
+Problem Constraints
+2 <= N <= 100
+
+Input Format
+First and only line of input contains a single integer N.
+
+Output Format
+Output the pattern corresponding to the given N.
+
+Example Input
+Input 1:
+2
+Input 2:
+4
+
+Example Output
+Output 1:
+**
+**
+Output 2:
+*  *
+*  *
+*  *
+*  *
+
+Example Explanation
+Explanation 1:
+Here N = 2,  So each row should have N - 2 spaces which is 0.
+Thus the N rows(i.e, 2 rows) should be in the form (asterisk)(0 spaces)(asterisk)
+Explanation 2:
+Here N = 4,  So each row should have N - 2 spaces which is 2.
+Thus the N rows(i.e, 4 rows) should be in the form (asterisk)(2 spaces)(asterisk)
+
+Solution -
+
+N = int(input())
+
+
+for i in range(1,N+1):
+    print("*",end = "")
+    for j in range(N-2):
+        print(" ",end = "")
+    print("*")
+
+#######################################################################################################
+
+Q6. Half Diamond
+Problem Description
+Take an integer N as input, print the corresponding Half Diamond pattern with 2*N - 1 rows.
+For example if N = 5 then pattern will be like:
+* 
+**
+***
+****
+*****
+****
+***
+**
+*
+NOTE: There should be no spaces after any * .
+
+Problem Constraints
+2 <= N <= 100
+
+Input Format
+First and only line of input contains a single integer N.
+
+Output Format
+Output the Half Diamond pattern corresponding to the given N.
+
+Example Input
+Input 1:
+2
+Input 2:
+3
+
+Example Output
+Output 1:
+ * 
+ **
+ *
+Output 2:
+ *
+ **
+ ***
+ **
+ *
+
+Example Explanation
+Print the pattern as described.
+
+Solution -
+
+N = int(input())
+
+for i in range(1,N+1):
+    for j in range(1,i+1):
+        print("*",end = "")
+    print()
+
+for i in range(N,1,-1):
+    for j in range(1,i):
+        print("*",end = "")
+    print()
+
+#######################################################################################################
+
+Q7. Skip Even Numbers Half Pyramid
+
+Problem Description
+Take an integer N as input, print the corresponding pattern for N.
+For example if N = 5 then pattern will be like:
+1
+1_
+1_3
+1_3_
+1_3_5
+Note : Here '_' represents space for explanation purpose only. You have to print space in your code.
+
+Problem Constraints
+1 <= N <= 100
+
+Input Format
+First and only line of input contains a single integer N.
+
+Output Format
+Output the pattern corresponding to the given N.
+
+Example Input
+Input 1:
+2
+Input 2:
+3
+
+Example Output
+Output 1:
+1
+1 
+Output 2:
+1
+1 
+1 3
+
+Example Explanation
+Print the pattern as described.
+
+Solution - 
+
+N = int(input())
+
+for i in range(1,N+1):
+    for j in range(1,i+1):
+        if j%2 != 0:
+            print(j, end = "")
+        else:
+            print(" ",end = "") 
+    print()
+
+#######################################################################################################
+
+Q8. Pattern 20826
+
+Problem Description
+Take an integer N as input. Print the following pattern of N lines. For N = 5 The following pattern is printed.
+*     *
+
+*    *
+
+*   *
+
+*  *
+
+* *
+The first line has 5 blank spaces between the stars.
+The second line has 4 blank spaces between the stars, and so on.
+
+Input Format
+The input will be a single integer N.
+
+Output Format
+The output will be the pattern according to the given N value as described in the problem description.
+
+Sample Input
+3
+
+Sample Output
+*   *
+*  *
+* *
+
+Solution -
+
+N = int(input())
+
+for i in range(1,N+1):
+    print("*",end = "")
+    # for j in range(1,i+1):
+    print(" "*(N+1-i),end = "")
+    print("*")
+
+#######################################################################################################
+
+Q9. Leading spaces pyramid
+
+Problem Description
+Take an integer N as input, print the corresponding pattern for N.
+For example if N = 5 then pattern will be like:
+____*
+___**
+__***
+_****
+*****
+Note : Here '_' represents space for explanation purpose only. You have to print space in your code.
+
+Problem Constraints
+1 <= N <= 100
+
+Input Format
+First and only line of input contains a single integer N.
+
+Output Format
+Output the pattern corresponding to the given N.
+
+Example Input
+Input 1:
+2
+Input 2:
+3
+
+Example Output
+Output 1:
+
+ *
+**
+Output 2:
+
+ *
+**
+***
+
+Example Explanation
+Print the pattern as described.
+
+Solution -
+
+n = int(input())
+
+for i in range(1,n+1):
+    print(" "*(n-i),end = "")
+    print("*"*i)
