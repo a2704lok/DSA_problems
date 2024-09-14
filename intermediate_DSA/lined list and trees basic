@@ -1,0 +1,796 @@
+Q1. Linked-List
+
+Problem Description
+Design and implement a Linked List data structure.
+A node in a linked list should have the following attributes - an integer value and a pointer to the next node.
+It should support the following operations:
+insert_node(position, value) - To insert the input value at the given position in the linked list.
+delete_node(position) - Delete the value at the given position from the linked list.
+print_ll() - Print the entire linked list, such that each element is followed by a single space (no trailing spaces).
+Note:
+If an input position does not satisfy the constraint, no action is required.
+Each print query has to be executed in a new line.
+
+Problem Constraints
+1 <= value <= 105
+1 <= position <= n where, n is the size of the linked-list.
+
+Input Format
+First line contains an integer denoting number of cases, let's say t. Next t line denotes the cases.
+
+Output Format
+When there is a case of print_ll(), Print the entire linked list, such that each element is followed by a single space.
+There should not be any trailing space.
+NOTE: You don't need to return anything.
+
+Example Input
+Input 1:
+5
+i 1 23
+i 2 24
+p
+d 1
+p
+Input 2:
+3
+i 1 54
+d 10
+p
+
+Example Output
+Output 1:
+23 24
+24
+Output 2:
+54
+
+Example Explanation
+Explanation 1:
+After first two cases linked list contains two elements 23 and 24.
+At third case print: 23 24.
+At fourth case delete value at first position, only one element left 24.
+At fifth case print: 24.
+Explanation 2:
+After the first case,  linked list contains: 54
+At second case delete value at 10th position,  
+Since the position is higher than the length of the linkedlist. 
+It does not satisfy the constraint, So no action is required.
+At third case print: 54.
+
+Solution -
+
+class Node:
+    def __init__(self,data,next= None):
+        self.data = data
+        self.next = next
+
+class LL:
+    def __init__(self):
+        self.head = None
+        self.length = 0
+
+    def insert_node(self,position, value):
+        if position > (self.length + 1):
+            return
+           
+        newNode = Node(value)
+        temp = self.head
+        if position == 1:
+            newNode.next = temp
+            self.head = newNode
+        else:            
+            c = 1
+            while c < position -1:
+                temp = temp.next
+                c += 1
+            newNode.next = temp.next
+            temp.next = newNode
+        self.length += 1      
+       
+    def delete_node(self,position):
+        if position > (self.length):
+            return
+        else:
+            temp = self.head
+            if position == 1:
+                newHead = temp.next
+                self.head = newHead
+
+            else:
+                count = 1
+                while count < position - 1:
+                    temp = temp.next
+                    count +=1
+
+                new_node = temp.next.next
+                temp.next = new_node
+                   
+            self.length -= 1
+
+    def print_ll(self):
+        if self.head:
+            temp = self.head
+            while temp.next:
+                print(temp.data,end= " ")
+                temp = temp.next
+
+            if temp:
+                print(temp.data,end= "")
+            print()
+
+
+ll  = LL()
+
+def insert_node(position, value):
+    return ll.insert_node(position,value)
+
+def delete_node(position):
+    return ll.delete_node(position)
+
+def print_ll():
+    return ll.print_ll()
+
+######################################################################################################################
+
+Q2. Design Linked list
+
+Problem Description
+Given a matrix A of size Nx3 representing operations. Your task is to design the linked list based on these operations.
+There are four types of operations:
+0 x -1: Add a node of value x before the first element of the linked list. After the insertion, the new node will be the first node of the linked list.
+1 x -1: Append a node of value x to the last element of the linked list.
+2 x index: Add a node of value x before the indexth node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted.
+3 index -1: Delete the indexth node in the linked list, if the index is valid.
+A[i][0] represents the type of operation.
+A[i][1], A[i][2] represents the corresponding elements with respect to type of operation.
+Note: Indexing is 0 based.
+
+Problem Constraints
+1 <= Number of operations <= 1000
+1 <= All node values <= 109
+
+Input Format
+The only argument given is matrix A.
+
+Output Format
+Return the pointer to the starting of the linked list.
+
+Example Input
+Input 1:
+A = [   [0, 1, -1]
+        [1, 2, -1]
+        [2, 3, 1]   ]
+Input 2:
+A = [   [0, 1, -1]
+        [1, 2, -1]
+        [2, 3, 1]
+        [0, 4, -1]
+        [3, 1, -1]
+        [3, 2, -1]  ]
+
+Example Output
+Output 1:
+1->3->2->NULL
+
+Output 2:
+4->3->NULL
+
+Solution -
+
+# Definition for singly-linked list.
+class ListNode:
+   def __init__(self, x):
+       self.val = x
+       self.next = None
+class LL:
+    def __init__(self):
+        self.head = None
+        self.length = 0
+       
+    def insertfront(self,val):
+        newNode = ListNode(val)
+        if self.head:
+            newNode.next = self.head
+            self.head = newNode
+            self.length += 1
+        else:
+            self.head = newNode
+            self.length += 1
+           
+    def insertend(self,val):
+        newNode = ListNode(val)
+        if self.head:
+            temp = self.head
+            while temp.next:
+                temp = temp.next
+            temp.next = newNode
+            self.length += 1
+        else:
+            self.head = newNode
+            self.length += 1
+           
+    def getlen(self):
+        return self.length
+       
+    def insertpos(self,pos,val):
+        newNode = ListNode(val)
+        if pos > self.getlen():
+            return
+        if pos == 0:
+            self.insertfront(val)
+            return
+
+        c = 0
+        temp = self.head
+        while c < pos -1:
+            temp = temp.next
+            c += 1
+        newNode.next = temp.next
+        temp.next = newNode
+        self.length += 1
+       
+    def delete(self,pos):
+        if pos > self.getlen():
+            return
+        temp = self.head
+        if pos == 0:
+            newhead = temp.next
+            self.head = newhead
+            self.length -= 1
+        else:
+            c = 0
+            while c < pos-1:
+                temp = temp.next
+                c += 1
+            newval = temp.next.next
+            temp.next = newval
+            self.length -= 1
+       
+
+class Solution:
+    # @param A : list of list of integers
+    # @return the head node in the linked list
+    def solve(self, A):
+        ll = LL()
+        row = len(A)
+        for i in range(row):
+            if A[i][0] == 0 and A[i][2] == -1:
+                ll.insertfront(A[i][1])
+           
+            elif A[i][0] == 1 and A[i][2] == -1:
+                ll.insertend(A[i][1])
+
+            elif A[i][0] == 2:
+                ll.insertpos(A[i][2],A[i][1])
+
+            elif A[i][0] == 3 and A[i][2] == -1:
+                ll.delete(A[i][1])
+
+        return ll.head
+
+######################################################################################################################
+
+Q3. Flatten Nested List Iterator
+
+You are given a nested list of integers nestedList. Each element is either an integer or a list whose elements may also be integers or other lists. Implement an iterator to flatten it.
+Implement the NestedIterator class:
+NestedIterator(List nestedList) Initializes the iterator with the nested list nestedList.
+int next() Returns the next integer in the nested list.
+boolean hasNext() Returns true if there are still some integers in the nested list and false otherwise.
+
+Example 1:
+Input: nestedList = [[1,1],2,[1,1]]
+Output: [1,1,2,1,1]
+Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,1,2,1,1].
+Example 2:
+Input: nestedList = [1,[4,[6]]]
+Output: [1,4,6]
+Explanation: By calling next repeatedly until hasNext returns false, the order of elements returned by next should be: [1,4,6].
+Constraints:
+The sum of integers in all cases does not exceed 1e5.
+The values of the integers in the nested list are in the range [-1e6, 1e6].
+
+Solution -
+
+class NestedIterator:
+    def __init__(self, nestedList):
+        def flatten(nestedlst): #recursively calling function to flatten the list
+            res = [] #blank list for storing the elements
+            for i in nestedlst:
+                if i.isInteger():
+                    res.append(i.getInteger())
+                else:
+                    res.extend(flatten(i.getList()))
+            return res
+        self.l = flatten(nestedList) #storing the flattend list
+        self.n = len(self.l) #length of the flattened list
+        self.i = 0 #index value
+   
+    def next(self):
+        temp = self.l[self.i]
+        self.i+=1
+        return temp
+   
+    def hasNext(self):
+        return self.i<self.n
+
+######################################################################################################################
+
+Q4. Inorder Traversal
+
+Problem Description
+Given a binary tree, return the inorder traversal of its nodes' values.
+
+Problem Constraints
+1 <= number of nodes <= 105
+
+Input Format
+First and only argument is root node of the binary tree, A.
+
+Output Format
+Return an integer array denoting the inorder traversal of the given binary tree.
+
+Example Input
+Input 1:
+   1
+    \
+     2
+    /
+   3
+Input 2:
+   1
+  / \
+ 6   2
+    /
+   3
+
+Example Output
+Output 1:
+[1, 3, 2]
+Output 2:
+[6, 1, 3, 2]
+
+Example Explanation
+Explanation 1:
+The Inorder Traversal of the given tree is [1, 3, 2].
+Explanation 2:
+The Inorder Traversal of the given tree is [6, 1, 3, 2].
+
+Solution -
+
+class Solution:
+	# @param A : root node of tree
+	# @return a list of integers
+	def inorderTraversal(self, A):
+		return self.inorderTraversal(A.left) + [A.val] + self.inorderTraversal(A.right) if A else []
+
+######################################################################################################################
+
+Q5. Preorder Traversal
+
+Problem Description
+Given a binary tree, return the preorder traversal of its nodes values.
+
+Problem Constraints
+1 <= number of nodes <= 105
+
+Input Format
+First and only argument is root node of the binary tree, A.
+
+Output Format
+Return an integer array denoting the preorder traversal of the given binary tree.
+
+Example Input
+Input 1:
+   1
+    \
+     2
+    /
+   3
+Input 2:
+   1
+  / \
+ 6   2
+    /
+   3
+
+Example Output
+Output 1:
+[1, 2, 3]
+Output 2:
+[1, 6, 2, 3]
+
+Example Explanation
+Explanation 1:
+The Preoder Traversal of the given tree is [1, 2, 3].
+Explanation 2:
+The Preoder Traversal of the given tree is [1, 6, 2, 3].
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+class Solution:
+	# @param A : root node of tree
+	# @return a list of integers
+# USING STACK
+    def preorderTraversal(self, A):  
+        stack = []
+        stack.append(A)
+        res = []
+        while len(stack) != 0:
+            node = stack.pop()
+            res.append(node.val)
+            if node.right: stack.append(node.right)
+            if node.left:  stack.append(node.left)
+        return(res)
+
+    # USING RECURSION
+    def preorderTraversal(self, A,stack=[]):       
+        stack = []
+        def preorder(root):
+            stack.append(root.val)
+            if not root:
+                return
+            if root.left:
+                preorder(root.left)
+
+            if root.right:
+                preorder(root.right)
+
+        preorder(A)
+        return stack
+
+######################################################################################################################
+
+Q6. Postorder Traversal
+
+Problem Description
+Given a binary tree, return the Postorder traversal of its nodes values.
+
+Problem Constraints
+1 <= number of nodes <= 105
+
+Input Format
+First and only argument is root node of the binary tree, A.
+
+Output Format
+Return an integer array denoting the Postorder traversal of the given binary tree.
+
+Example Input
+Input 1:
+   1
+    \
+     2
+    /
+   3
+Input 2:
+   1
+  / \
+ 6   2
+    /
+   3
+
+Example Output
+Output 1:
+[3, 2, 1]
+Output 2:
+[6, 3, 2, 1]
+
+Example Explanation
+Explanation 1:
+The Preoder Traversal of the given tree is [3, 2, 1].
+Explanation 2:
+The Preoder Traversal of the given tree is [6, 3, 2, 1].
+
+Solution - 
+
+# Definition for a  binary tree node
+# class TreeNode:
+#   def __init__(self, x):
+#       self.val = x
+#       self.left = None
+#       self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @return a list of integers
+    def postorderTraversal(self, A):
+        output, nodeStack = [], []
+        # push the root node into the node stack first
+        nodeStack.append(A)
+        while nodeStack:
+            """
+            Solution approach: We have 2 stacks, first TreeNode stack, second output list stack 
+            we pop the top of the node stack and add its value to the output stack.
+            The order in which the node values are added to the output stack is - 
+            add root , pop it out add its value to output stack, then add its left and right children to stack
+            next time the top of the stack will be right child, then left child.
+            nodestack = [root]
+            loop begin ->
+            curr = nodeStack.pop() ==> nodeStack = []
+            output.add[root.val] => output = [root.val]
+            nodeStack.append(left) => nodeStack = [left]
+            nodeStack.append(right) => nodeStack = [left, right]
+            loop end <-
+            output = [root, right, left]
+            Finally, reverse the output => [left, right, root]
+            """
+            # Main Logic
+            # retrieve the top node from the node stack
+            currNode = nodeStack.pop()
+            # add the value of root node to the output list
+            output.append(currNode.val)
+            # add the left child of root to the node stack
+            if currNode.left:
+                nodeStack.append(currNode.left)
+            # add the right child of root to the node stack
+            if currNode.right:
+                nodeStack.append(currNode.right)
+        return output[::-1]
+
+######################################################################################################################
+
+Q7. Tree Height
+
+Problem Description
+You are given the root node of a binary tree A. You have to find the height of the given tree.
+A binary tree's height is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+Problem Constraints
+1 <= Number of nodes in the tree <= 105
+0 <= Value of each node <= 109
+
+Input Format
+The first and only argument is a tree node A.
+
+Output Format
+Return an integer denoting the height of the tree.
+
+Example Input
+Input 1:
+Values =  1 
+        / \     
+       4   3                        
+Input 2:
+Values =  1      
+        / \     
+       4   3                       
+      /         
+     2                                     
+
+
+Example Output
+Output 1:
+2 
+Output 2:
+3 
+
+Example Explanation
+Explanation 1:
+Distance of node having value 1 from root node = 1
+Distance of node having value 4 from root node = 2 (max)
+Distance of node having value 3 from root node = 2 (max)
+Explanation 2:
+Distance of node having value 1 from root node = 1
+Distance of node having value 4 from root node = 2
+Distance of node having value 3 from root node = 2
+Distance of node having value 2 from root node = 3 (max)
+
+Solution -
+
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+import sys
+sys.setrecursionlimit(10**6)
+class Solution:
+    # @param A : root node of tree
+    # @return an integer
+    def solve(self, root):
+        if(root == None):
+            return 0
+        return 1 + max(self.solve(root.left),self.solve(root.right))
+
+######################################################################################################################
+
+Q8. Identical Binary Trees
+
+Problem Description
+Given two binary trees, check if they are equal or not.
+Two binary trees are considered equal if they are structurally identical and the nodes have the same value.
+
+Problem Constraints
+1 <= number of nodes <= 105
+
+Input Format
+The first argument is a root node of the first tree, A.
+The second argument is a root node of the second tree, B.
+
+Output Format
+Return 0 / 1 ( 0 for false, 1 for true ) for this problem.
+
+Example Input
+Input 1:
+   1       1
+  / \     / \
+ 2   3   2   3
+Input 2:
+   1       1
+  / \     / \
+ 2   3   3   3
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+Both trees are structurally identical and the nodes have the same value.
+Explanation 2:
+Values of the left child of the root node of the trees are different.
+
+Soluion -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+class Solution:
+	# @param A : root node of tree
+	# @param B : root node of tree
+	# @return an integer
+	def isSameTree(self, A, B):
+        if A is None and B is None:
+            return 1
+        if A==None or B==None or A.val!=B.val:
+            return 0
+        return(self.isSameTree(A.left,B.left) and self.isSameTree(A.right,B.right))
+
+######################################################################################################################
+
+Q9. Counting the Nodes
+
+Problem Description
+Given the root of a tree A with each node having a certain value, find the count of nodes with more value than all its ancestors.
+Ancestor means that every node that occurs before the current node in the path from root to the node.
+
+Problem Constraints
+1 <= Number of Nodes <= 200000
+1 <= Value of Nodes <= 2000000000
+
+Input Format
+The first and only argument of input is a tree node.
+
+Output Format
+Return a single integer denoting the count of nodes that have more value than all of its ancestors.
+
+Example Input
+Input 1:
+     3
+Input 2:
+    4
+   / \
+  5   2
+     / \
+    3   6
+
+Example Output
+Output 1:
+1 
+Output 2:
+3
+
+Example Explanation
+Explanation 1:
+There's only one node in the tree that is the valid node.
+Explanation 2:
+The valid nodes are 4, 5 and 6.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @return an integer
+    def solve(self, A):
+        self.c = 0
+        def dfs(node, max_val):
+            if not node:
+                return 0
+
+            if node.val > max_val:
+                self.c += 1
+            max_val = max(node.val, max_val)          
+            dfs(node.left, max_val)
+            dfs(node.right, max_val)
+       
+        dfs(A,float('-inf'))
+        return self.c
+
+######################################################################################################################
+
+Q10. Nodes Count
+
+Problem Description
+You are given the root node of a binary tree A. You have to find the number of nodes in this tree.
+
+Problem Constraints
+1 <= Number of nodes in the tree <= 105
+0 <= Value of each node <= 107
+
+Input Format
+The first and only argument is a tree node A.
+
+Output Format
+Return an integer denoting the number of nodes of the tree.
+
+Example Input
+Input 1:
+Values =  1 
+        / \     
+       4   3                        
+Input 2:
+Values =  1      
+        / \     
+       4   3                       
+      /         
+     2                                     
+
+Example Output
+Output 1:
+3
+Output 2:
+4 
+
+Example Explanation
+Explanation 1:
+Clearly, there are 3 nodes 1, 4 and 3.
+Explanation 2:
+Clearly, there are 4 nodes 1, 4, 3 and 2.
+
+Solution -
+
+import sys
+
+# increase the recursion limit
+sys.setrecursionlimit(10**8)
+
+# Definition for a  binary tree node
+# class TreeNode:
+#    def init(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @return an integer
+    def solve(self, A):
+        def nodescount(root):
+            if not root:
+                return 0
+            leftcount =  nodescount(root.left)
+            rightcount = nodescount(root.right)
+            return leftcount + rightcount + 1
+
+        c = nodescount(A)
+        return c
