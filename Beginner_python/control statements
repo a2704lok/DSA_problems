@@ -1,0 +1,830 @@
+Q1. A Simple Calculator
+
+Problem Description
+Given two numbers A and B. Print A+B, A*B, A-B, A/B in the same order.
+
+Problem Constraints
+1 <= A, B <= 104
+
+Input Format
+There are two input lines
+The first line has a single integer A.
+The second line has a single integer B.
+
+Output Format
+Print in a single line separated by space A+B, A*B, A-B, A/B in the same order.
+
+Example Input
+Input 1:-
+4
+5
+Input 2:-
+16
+2
+
+Example Output
+Output 1:-
+9 20 -1 0
+Output 2:-
+18 32 14 8
+
+Example Explanation
+Explanation 1:-
+4 + 5 = 9, 4 * 5 = 20, 4 - 5 = -1, 4 / 5 = 0
+Explanation 2:-
+16 + 2 = 18, 16 * 2 = 32, 16 - 2 = 14, 16 / 2 = 8
+
+Solution -
+A = int(input())
+B = int(input())
+print((A+B), (A*B), (A-B), int(A/B))
+
+####################################################################################
+
+Q2. Floor of A/B
+
+Problem Description
+Given two numbers A and B. Print the floor of A/B.
+
+Problem Constraints
+1 <= A, B <= 104
+
+Input Format
+There are two input lines
+The first line has a single integer A.
+The second line has a single integer B.
+
+Output Format
+Print the floor of A/B in a single line.
+
+Example Input
+Input 1:-
+4
+5
+Input 2:-
+16
+2
+
+Example Output
+Output 1:-
+0
+Output 2:-
+8
+
+Example Explanation
+Explanation 1:-
+floor(4/5) = 0
+Explanation 2:-
+floor(16/2) = 8
+
+Solution -
+A = int(input())
+B = int(input())
+
+print(A//B)
+
+####################################################################################
+
+Q3. Max of two
+
+Problem Description
+Write a program to input two numbers(A & B) from user and print the maximum element among A & B.
+
+Problem Constraints
+1 <= A <= 1000000
+1 <= B <= 1000000
+
+Input Format
+First line is a single integer A.
+Second line is a single integer B.
+
+Output Format
+One line containing the greater integer A or B.
+
+Example Input
+Input 1:
+5 
+6
+Input 2:
+1000 
+10000
+
+Example Output
+Output 1:
+6
+Output 2:
+10000
+
+Example Explanation
+Explanation 1:
+Clearly, among 5 and 6, 6 is maximum.
+Explanation 2:
+Clearly, among 1000 and 10000, 10000 is maximum.
+
+Solution -
+
+A = int(input())
+B = int(input())
+
+if A>B:
+    print(A)
+else:
+    print(B)        
+
+####################################################################################
+
+Q4. Check even/odd
+
+Problem Description
+Write a program to input an integer from user and print 1 if it is odd otherwise print 0.
+
+Problem Constraints
+1 <= N <= 1000000
+
+Input Format
+One line containing an integer N.
+
+Output Format
+Print either 1 or 0 as per the question.
+
+Example Input
+Input 1:
+5
+Input 2:
+1000
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+Clearly, 5 is odd.
+Explanation 2:
+Clearly, 1000 is even.
+
+Solution -
+
+n = int(input())
+if n%2 != 0:
+    print(1)
+else:
+    print(0)
+
+####################################################################################
+
+Q5. Categories the number
+
+Problem Description
+Write a program to input a number(A) from user and print 1 if it is positive, -1 if it is negative, 0 if it's neither positive nor negative.
+
+Problem Constraints
+1 <= A <= 1000000
+
+Input Format
+One line containing an integer A.
+
+Output Format
+One line each 0/1/-1 as per the question.
+
+Example Input
+Input 1:
+50
+Input 2:
+-101
+Input 3:
+0
+
+Example Output
+Output 1:
+1
+Output 2:
+-1
+Output 3:
+0
+
+Example Explanation
+Explanation 1:
+Clearly, 50 is positive.
+Explanation 2:
+Clearly, -101 is negative.
+Explanation 3:
+Clearly, 0 is neither positive nor negative.
+
+Solution - 
+
+A = int(input())
+if A==0:
+    print(0)
+elif A>0:
+    print(1)
+else:
+    print(-1)
+
+####################################################################################
+
+Q6. Angles Of Valid Triangle?
+
+Problem Description
+You are given 3 integer angles(in degrees) A, B and C of a triangle. You have to tell whether the triangle is valid or not.
+A triangle is valid if sum of its angles equals to 180.
+NOTE: You have to take the input of 3 sides of triangle from the user.
+
+Problem Constraints
+1 <= A, B, C <= 180
+
+Input Format
+First line of the input contains an integer A.
+Second line of the input contains an integer B.
+Third line of the input contains an integer C.
+
+Output Format
+Print 1 if the triangle having given sides is valid, else print 0.
+
+Example Input
+Input 1:
+60
+60
+60
+Input 2:
+30
+40
+50
+
+Example Output
+Output 1:
+1 
+Output 2:
+0 
+
+Example Explanation
+Explanation 1:
+Sum of angles = A + B + C = 60 + 60 + 60 = 180
+Hence, the given triangle is valid.
+Explanation 2:
+Sum of angles = A + B + C = 30 + 40 + 50 = 120
+As sum of angles is not equal to 180, the given triangle is not valid.
+
+Solution -
+
+A = int(input())
+B = int(input())
+C = int(input())
+
+if A+B+C == 180:
+    print(1)
+else:
+    print(0)
+
+####################################################################################
+
+Q7. Divisible by 2 numbers
+
+Problem Description
+Take an integer A as input. You have to tell whether A is divible by both 5 and 11 or not.
+
+Problem Constraints
+1 <= A <= 109
+
+Input Format
+The input contains a single integer A.
+
+Output Format
+Print 1 if A is divisible by both 5 and 11, else print 0.
+
+Example Input
+Input 1:
+55 
+Input 2:
+22 
+
+Example Output
+Output 1:
+1
+Output 2:
+0 
+
+Example Explanation
+Explanation 1:
+55 is divisible by both 5 (5 * 11 = 55) and 11 (11 * 5 = 55).
+Explanation 2:
+22 is divisble by 11 (11 * 2 = 22),but it is not divisible by 5.
+
+Solution - 
+
+A = int(input())
+if A%55==0:
+    print(1)
+
+####################################################################################
+
+Q8. Min of two
+
+Problem Description
+Write a program to input two numbers(A & B) from user and print the minimum element among A & B in each line.
+
+Problem Constraints
+1 <= A <= 1000000
+1 <= B <= 1000000
+
+Input Format
+First line is a single integer A.
+Second line is a single integer B.
+
+Output Format
+One line containing an integer as per the question.
+
+Example Input
+Input 1:
+5 
+6
+Input 2:
+1000 
+10000
+
+Example Output
+Output 1:
+5
+Output 2:
+1000
+
+Example Explanation
+Explanation 1:
+Clearly, among 5 and 6, 5 is minimum.
+Explanation 2:
+Clearly, among 1000 and 10000, 1000 is minimum.
+
+Solution - 
+
+A = int(input())
+B = int(input())
+
+if A>B:
+    print(B)
+else:
+    print(A)
+
+####################################################################################
+
+Q9. Profit Or Loss
+
+Problem Description
+You are given the Cost Price C and Selling Price S of a Product. You have to tell whether there is a Profit or Loss. Also, calculate total profit or loss.
+NOTE: It is guaranteed that Cost Price and Selling Price are not equal.
+NOTE: You have to take input of the Cost Price(C) and Selling Price(S) from the user.
+
+Problem Constraints
+1 <= C, S <= 109
+C ≠ S
+
+Input Format
+First line of the input contains a single integer C.
+Second line of the input contains a single integer S.
+
+Output Format
+Print two integers in separate lines.
+First integer denotes whether there is a profit or loss. If there is a profit, print 1, else print -1.
+Second integer is a non-negative integer denoting the absolute value of total profit or loss.
+
+Example Input
+Input 1:
+2
+4
+Input 2:
+4
+1
+
+Example Output
+Output 1:
+1
+2
+Output 2:
+-1
+3
+
+Example Explanation
+Explanation 1:
+Cost Price = 2
+Selling Price = 4
+As Cost Price < Selling Price, there is a profit.
+Total Profit = Selling Price - Cost Price = 4 - 2 = 2
+Explanation 2:
+Cost Price = 4
+Selling Price = 1
+As Cost Price > Selling Price, there is a loss.
+Total Loss = Cost Price - Selling Price = 4 - 1 = 3
+
+Solution -
+
+C = int(input())
+S = int(input())
+
+if S>C:
+    print(1)
+    print(S-C)
+else:
+    print(-1)
+    print(C-S)
+
+####################################################################################
+
+Q10. Is It Special Year?
+
+Problem Description
+Given an integer A as input representing a year, print 1 if it is a special year else print 0.
+A year is a special year if year is multiple of 4 but not multiple of 100.
+
+
+Input Format
+The single line of the input contains a single integer A.
+
+Output Format
+Print 1 if it is a Special year, else print 0.
+
+Example Input
+Input 1 -
+2020
+Input 2 -
+200
+
+Example Output
+Output 1 -
+1
+Output 2 -
+0
+
+Solution -
+
+def leap_year(yr):
+    if (yr%400 == 0) | ((yr%4 == 0) & (yr%100 != 0)):
+        print(1)
+    else:
+        print(0)
+
+####################################################################################
+  
+Q11. From top to down
+
+Problem Description
+Write a program that takes a positive integer N as input from the user and prints all natural numbers from 1 to N, with each number followed by a space (including the last number).
+
+Problem Constraints
+1 <= N <= 1000000
+  
+Input Format
+A single line representing N
+
+Output Format
+N space separated integers from 1 to N, with each number followed by a space, including the last number.
+
+Example Input
+Input 1:
+5
+Input 2:
+10
+
+Example Output
+Output 1:
+1 2 3 4 5 
+Output 2:
+1 2 3 4 5 6 7 8 9 10
+  
+Solution - 
+
+n = int(input())
+for i in range(n):
+    print(i+1, end = " ")
+
+####################################################################################
+
+Q12. Odd Game
+
+Problem Description
+Write a program to print all odd numbers from 1 to N where you have to take N as input from user. Here N is inclusive.
+Note:
+Each number should be followed by a space, including the last number.
+
+Problem Constraints
+1 <= N <= 2000000
+
+Input Format
+A single line representing N
+
+Output Format
+All odd numbers from 1 to N, each number followed by a space, including the last number.
+
+Example Input
+Input 1:
+5
+Input 2:
+10
+
+Example Output
+Output 1:
+1 3 5 
+Output 2:
+1 3 5 7 9
+
+Solution -
+
+n = int(input())
+for i in range(1,n+1):
+    if i%2 != 0:
+        print(i, end = " ")
+
+####################################################################################
+
+Q13. Check even/odd
+
+Problem Description
+Write a program to input an integer from user and print 1 if it is odd otherwise print 0.
+
+Problem Constraints
+1 <= N <= 1000000
+
+Input Format
+One line containing an integer N.
+
+Output Format
+Print either 1 or 0 as per the question.
+
+Example Input
+Input 1:
+5
+Input 2:
+1000
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+Clearly, 5 is odd.
+Explanation 2:
+Clearly, 1000 is even.
+
+Solution - 
+
+n = int(input())
+if n%2 != 0:
+    print(1)
+else:
+    print(0)
+
+####################################################################################
+
+Q14. Which Month?
+
+Problem Description
+Write a program to input an integer(A) from user and print the Ath month of the year.
+Months list: {January, February, March, April, May, June, July, August, September, October, November, December}
+
+Problem Constraints
+1 <= A <= 12
+
+Input Format
+One line containing an integer integer A.
+
+Output Format
+One line containing the Ath month of the year.
+
+Example Input
+Input 1:
+1
+Input 2:
+6
+
+Example Output
+Output 1:
+January
+Output 1:
+June
+
+Example Explanation
+Explanation 1:
+Clearly, January is the 1st month.
+Explanation 2:
+Clearly, June is the 6th month.
+
+Solution - 
+
+n = int(input())
+my_dict = {1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',7:'July', 
+             8:'August',9:'September',10:'October',11:'November',12:'December'}
+
+print(my_dict[n])
+
+####################################################################################
+
+Q15. Summation Game
+
+Problem Description
+Write a program to find sum all Natural numbers from 1 to N where you have to take N as input from user
+
+Problem Constraints
+1 <= N <= 1000
+
+Input Format
+A single line representing N
+
+Output Format
+A single integer showing sum of all Natural numbers from 1 to N
+
+Example Input
+Input 1:
+5
+Input 2:
+10
+
+Example Output
+Output 1:
+15
+Output 2:
+55
+
+Solution -
+
+n = int(input())
+sum = 0
+for i in range(1,n+1):
+    sum += i
+print(sum)
+
+####################################################################################
+
+Q16. Sum of evens!
+
+Problem Description
+You are given an integer A, you need to find and return the sum of all the even numbers between 1 and A.
+Even numbers are those numbers that are divisible by 2.
+
+Problem Constraints
+1 <= N <= 500
+
+Input Format
+First and only argument is an integer A.
+
+Output Format
+Return an integer denoting the sum of even numbers between [1, A] (both inclusive).
+
+Example Input
+Input 1:
+5
+Input 2:
+2
+
+Example Output
+Output 1:
+6
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+Even numbers between [1, 5] are (2, 4).
+Explanation 2:
+Even numbers between [1, 2] are (2)
+
+Expected Output
+Provide sample input and click run to see the correct output for the provided input. Use this to improve your problem understanding and test edge cases
+Arg 1: A single Integer, For e.g 9
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @return an integer
+    def solve(self, A):
+        sum = 0
+        for i in range(1,A+1):
+            if i%2==0:
+                sum+=i
+        return sum
+
+####################################################################################
+
+Q17. Sum of Odds - Easy
+
+Problem Description
+Take an integer A as input. You have to print the sum of all odd numbers in the range [1, A].
+
+Problem Constraints
+1 <= A <= 1000
+
+Input Format
+First and only line contains a single positive integer A.
+
+Output Format
+Print the required sum in a single line.
+
+Example Input
+Input 1:
+1
+Input 2:
+4
+
+Example Output
+Output 1:
+1 
+Output 2:
+4 
+
+Example Explanation
+Explanation 1:
+For A = 1, 1 is the only odd number which lies in the range [1, 1].
+Explanation 2:
+For A = 4, Odd numbers 1 and 3 lie in the range [1, 4]. 
+Sum = 1 + 3 = 4.
+
+Solution -
+
+n = int(input())
+sum = 0
+for i in range(1,n+1):
+    if i%2 != 0:
+        sum+=i
+print(sum)
+
+####################################################################################
+
+Q18. From down to top
+
+Problem Description
+Write a program to print all Natural numbers from N to 1 where you have to take N as input from user
+
+Problem Constraints
+1 <= N <= 10000000
+
+Input Format
+A single line representing N
+
+Output Format
+N space separated integers from N to 1.
+
+Example Input
+Input 1:
+5
+Input 2:
+10
+
+Example Output
+Output 1:
+5 4 3 2 1 
+Output 2:
+10 9 8 7 6 5 4 3 2 1 
+
+Solution - 
+
+n = int(input())
+for i in range(n,0,-1):
+    print(i, end = " ")
+
+####################################################################################
+
+Q19. Even Game
+
+Problem Description
+Write a program to print all even numbers from 1 to N where you have to take N as input from the user.
+Note: Use while-loop OR for-loop, according to session flow.\
+Note: You can use int(input()) for obtaining user input of number N.
+
+Problem Constraints
+1 <= N <= 1000000
+
+Input Format
+A single line representing N
+
+Output Format
+All even numbers from 1 to N are separated by spaces.
+
+Example Input
+Input 1:
+5
+Input 2:
+10
+
+Example Output
+Output 1:
+2 4
+Output 2:
+2 4 6 8 10
+
+Example Explanation
+Sample 1:
+2 4
+The even numbers between 1 to 5 are 2 and 4. So the numbers 2 and 4 are printed separated by space.
+Output 2:
+2 4 6 8 10
+The even numbers between 1 to 10 are 2, 4, 6, 8 and 10. So the numbers 2, 4, 6, 8, 10 are printed separated by space.
+
+Solution -
+
+n = int(input())
+for i in range(1,n+1):
+    if i%2 == 0:
+        print(i, end = " ")
