@@ -1,0 +1,906 @@
+Q1. Add the matrices
+
+Problem Description
+You are given two matrices A & B of same size, you have to return another matrix which is the sum of A and B.
+Note: Matrices are of same size means the number of rows and number of columns of both matrices are equal.
+The Following will give you an idea of matrix addition:
+
+Problem Constraints
+1 <= A.size(), B.size() <= 1000 1 <= A[i].size(), B[i].size() <= 1000 1 <= A[i][j], B[i][j] <= 1000
+
+Input Format
+The first argument is the 2D integer array A The second argument is the 2D integer array B
+
+Output Format
+You have to return a vector of vector of integers after doing required operations.
+
+Example Input
+Input 1:
+A = [[1, 2, 3],   
+     [4, 5, 6],   
+     [7, 8, 9]]  
+
+B = [[9, 8, 7],   
+     [6, 5, 4],   
+     [3, 2, 1]]
+
+Input 2:
+A = [[1, 2, 3],   
+     [4, 1, 2],   
+     [7, 8, 9]]  
+B = [[9, 9, 7],   
+     [1, 2, 4],   
+     [4, 6, 3]]
+ 
+Example Output
+Output 1:
+[[10, 10, 10],   
+ [10, 10, 10],   
+ [10, 10, 10]]
+Output 2:
+[[10, 11, 10],   
+ [5,   3,  6],   
+ [11, 14, 12]]
+Example Explanation
+Explanation 1:
+A + B = [[1+9, 2+8, 3+7],  
+         [4+6, 5+5, 6+4],  
+         [7+3, 8+2, 9+1]]   
+      = [[10, 10, 10],   
+         [10, 10, 10],   
+         [10, 10, 10]]
+Explanation 2:
+A + B = [[1+9, 2+9, 3+7],  
+         [4+1, 1+2, 2+4],  
+         [7+4, 8+6, 9+3]]   
+      = [[10, 11, 10],   
+         [5,   3,  6],   
+         [11, 14, 12]]
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    # @param B : list of list of integers
+    # @return a list of list of integers
+    def solve(self, A, B):
+        m = []
+        row = len(A)
+        column = len(A[0])
+        for i in range(row):
+            m.append([0]*column)
+
+        for i in range(row):
+            for j in range(column):
+                m[i][j] = A[i][j]+B[i][j]
+        return m
+
+#########################################################################################################################
+
+Q2. Anti Diagonals
+
+Problem Description
+Give a N * N square matrix A, return an array of its anti-diagonals. Look at the example for more details.
+
+Problem Constraints
+1<= N <= 1000
+1<= A[i][j] <= 1e9
+
+Input Format
+Only argument is a 2D array A of size N * N.
+
+Output Format
+Return a 2D integer array of size (2 * N-1) * N, representing the anti-diagonals of input array A.
+The vacant spaces in the grid should be assigned to 0.
+
+Example Input
+Input 1:
+1 2 3
+4 5 6
+7 8 9
+Input 2:
+1 2
+3 4
+
+Example Output
+Output 1:
+1 0 0
+2 4 0
+3 5 7
+6 8 0
+9 0 0
+Output 2:
+1 0
+2 3
+4 0
+
+Example Explanation
+For input 1:
+The first anti diagonal of the matrix is [1 ], the rest spaces shoud be filled with 0 making the row as [1, 0, 0].
+The second anti diagonal of the matrix is [2, 4 ], the rest spaces shoud be filled with 0 making the row as [2, 4, 0].
+The third anti diagonal of the matrix is [3, 5, 7 ], the rest spaces shoud be filled with 0 making the row as [3, 5, 7].
+The fourth anti diagonal of the matrix is [6, 8 ], the rest spaces shoud be filled with 0 making the row as [6, 8, 0].
+The fifth anti diagonal of the matrix is [9 ], the rest spaces shoud be filled with 0 making the row as [9, 0, 0].
+For input 2:
+The first anti diagonal of the matrix is [1 ], the rest spaces shoud be filled with 0 making the row as [1, 0, 0].
+The second anti diagonal of the matrix is [2, 4 ], the rest spaces shoud be filled with 0 making the row as [2, 4, 0].
+The third anti diagonal of the matrix is [3, 0, 0 ], the rest spaces shoud be filled with 0 making the row as [3, 0, 0].
+
+Solution -
+
+import copy
+class Solution:
+    # @param A : list of list of integers
+    # @return a list of list of integers
+    def diagonal(self, A):
+        row = len(A)
+        col = len(A[0])
+        ans = []
+        for i in range(2*row-1):
+            ans.append([0]*col)
+        # return A[0][0]
+
+        for i in range(row):
+            k=i
+            for j in range(i+1):               
+                ans[i][j]=A[j][k]
+                r=j 
+                s=k
+                k=k-1
+        for e in range(row,2*row-1):
+            p=r 
+            q=s
+            for t in range(2*row-1-e):
+                ans[e][t]=A[q+1][p]
+                r=q+1
+                s=p 
+                q=q+1
+                p=p-1
+        return ans
+
+#########################################################################################################################
+
+Q3. Column Sum
+
+Problem Description
+You are given a 2D integer matrix A, return a 1D integer array containing column-wise sums of original matrix.
+
+Problem Constraints
+1 <= A.size() <= 103
+1 <= A[i].size() <= 103
+1 <= A[i][j] <= 103
+
+Input Format
+First argument is a 2D array of integers.(2D matrix).
+
+Output Format
+Return an array containing column-wise sums of original matrix.
+
+Example Input
+Input 1:
+[1,2,3,4]
+[5,6,7,8]
+[9,2,3,4]
+
+Example Output
+Output 1:
+{15,10,13,16}
+
+Example Explanation
+Explanation 1
+Column 1 = 1+5+9 = 15
+Column 2 = 2+6+2 = 10
+Column 3 = 3+7+3 = 13
+Column 4 = 4+8+4 = 16
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    # @return a list of integers
+    def solve(self, A):
+        l = []
+        row = len(A)
+        col = len(A[0])
+        for j in range(col):
+            summ = 0
+            for i in range(row):
+                summ += A[i][j]
+            l.append(summ)
+        return l    
+
+#########################################################################################################################
+
+Q4. Matrix Multiplication
+
+Problem Description
+You are given two integer matrices A(having M X N size) and B(having N X P). You have to multiply matrix A with B and return the resultant matrix. (i.e. return the matrix AB).
+Matrix Multiplication 
+
+Problem Constraints
+1 <= M, N, P <= 100
+-100 <= A[i][j], B[i][j] <= 100
+
+Input Format
+The first argument given is the 2-D integer matrix A.
+The second argument given is the 2-D integer matrix B.
+
+Output Format
+Return a 2D integer matrix denoting AB.
+
+Example Input
+Input 1:
+A = [[1, 2],
+     [3, 4]]
+B = [[5, 6],
+     [7, 8]]
+Input 2:
+A = [[1, 1]]
+B = [[2],
+     [3]]
+
+Example Output
+Output 1:
+[[19, 22],
+[43, 50]]
+Output 2:
+[[5]]
+
+Example Explanation
+Explanation 1:
+*image
+Explanation 2:
+ [[1, 1]].[[2], [3]] = [[1 * 2 + 1 * 3]] = [[5]]
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    # @param B : list of list of integers
+    # @return a list of list of integers
+    def solve(self, A, B):
+        row_a, col_a = len(A),len(A[0])
+        row_b, col_b = len(B),len(B[0])
+
+        mat_mul = []
+        for i in range(row_a):
+            mat_mul.append([0]*col_b)
+
+        for i in range(len(A)):
+            for j in range(len(B[0])):
+                for k in range(len(B)):
+                    mat_mul[i][j] += A[i][k] * B[k][j]
+        return mat_mul
+
+#########################################################################################################################
+
+Q5. Matrix Subtraction
+
+Problem Description
+You are given two integer matrices A and B having same size(Both having same number of rows (N) and columns (M). You have to subtract matrix B from A and return the resultant matrix. (i.e. return the matrix A - B).
+If A and B are two matrices of the same order (same dimensions). Then A - B is a matrix of the same order as A and B and its elements are obtained by doing an element wise subtraction of A from B.
+
+Problem Constraints
+1 <= N, M <= 103
+-109 <= A[i][j], B[i][j] <= 109
+
+Input Format
+The first argument is the 2D integer array A
+The second argument is the 2D integer array B
+
+Output Format
+Return a 2D matrix denoting A - B.
+
+Example Input
+Input 1:
+A =  [[1, 2, 3], 
+      [4, 5, 6], 
+      [7, 8, 9]]
+B =  [[9, 8, 7], 
+      [6, 5, 4], 
+      [3, 2, 1]]
+Input 2:
+A = [[1, 1]]
+B = [[2, 3]] 
+
+Example Output
+Output 1:
+ [[-8, -6, -4],
+  [-2, 0, 2],
+  [4, 6, 8]]
+Output 2:
+ [[-1, -2]]
+
+Example Explanation
+Explanation 1:
+ *image
+Explanation 2:
+ [[1, 1]] - [[2, 3]] = [[1 - 2, 1 - 3]] = [[-1, -2]]
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    # @param B : list of list of integers
+    # @return a list of list of integers
+    def solve(self, A, B):
+        m = []
+        row = len(A)
+        column = len(A[0])
+        for i in range(row):
+            m.append([0]*column)
+
+        for i in range(row):
+            for j in range(column):
+                m[i][j] = A[i][j]-B[i][j]
+        return m
+
+#########################################################################################################################
+
+Q6. Matrix Transpose
+
+Problem Description
+Given a 2D integer array A, return the transpose of A.
+The transpose of a matrix is the matrix flipped over its main diagonal, switching the matrix's row and column indices.
+
+Problem Constraints
+1 <= A.size() <= 1000
+1 <= A[i].size() <= 1000
+1 <= A[i][j] <= 1000
+
+Input Format
+First argument is a 2D matrix of integers.
+
+Output Format
+You have to return the Transpose of this 2D matrix.
+
+Example Input
+Input 1:
+A = [[1, 2, 3],[4, 5, 6],[7, 8, 9]]
+Input 2:
+A = [[1, 2],[1, 2],[1, 2]]
+
+Example Output
+Output 1:
+[[1, 4, 7], [2, 5, 8], [3, 6, 9]]
+Output 2:
+[[1, 1, 1], [2, 2, 2]]
+
+Example Explanation
+Explanation 1:
+Clearly after converting rows to column and columns to rows of [[1, 2, 3],[4, 5, 6],[7, 8, 9]]
+we will get [[1, 4, 7], [2, 5, 8], [3, 6, 9]].
+Explanation 2:
+After transposing the matrix, A becomes [[1, 1, 1], [2, 2, 2]]
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    # @return a list of list of integers
+    def solve(self, A):
+        col = len(A[0])
+        row = len(A)
+
+        m = []
+        for i in range(col):
+            m.append([0]*row)
+
+        for j in range(col):
+            for i in range(row):
+                m[j][i] = A[i][j]
+        return m
+
+#########################################################################################################################
+
+Q7. Spiral Order Matrix II
+
+Problem Description
+Given an integer A, generate a square matrix filled with elements from 1 to A2 in spiral order and return the generated square matrix.
+
+Problem Constraints
+1 <= A <= 1000
+
+Input Format
+First and only argument is integer A
+
+Output Format
+Return a 2-D matrix which consists of the elements added in spiral order.
+
+Example Input
+Input 1:
+1
+Input 2:
+2
+Input 3:
+5
+
+Example Output
+Output 1:
+[ [1] ]
+Output 2:
+[ [1, 2], 
+  [4, 3] ]
+Output 3:
+[ [1,   2,  3,  4, 5], 
+  [16, 17, 18, 19, 6], 
+  [15, 24, 25, 20, 7], 
+  [14, 23, 22, 21, 8], 
+  [13, 12, 11, 10, 9] ]
+
+Example Explanation
+Explanation 1:
+Only 1 is to be arranged.
+Explanation 2:
+1 --> 2
+      |
+      |
+4<--- 3
+Explanation 3:
+*image
+
+Solution -
+
+lass Solution:
+    # @param A : integer
+    # @return a list of list of integers
+    def generateMatrix(self, A):
+        n = A
+        ret = [[0]*n]
+        for i in range(n-1):
+	        ret.append([0]*n)
+        
+        Top = 0
+        Bottom = n-1
+        Left = 0
+        Right = n-1
+        direction = 0
+        num = 1
+        while Top <= Bottom and Left <= Right:
+        	if direction == 0:
+        		for i in range(Left, Right+1):
+        			ret[Top][i] = num
+        			num += 1
+        		Top += 1
+        		direction = 1
+        	elif direction == 1:
+        		for i in range(Top, Bottom+1):
+        			ret[i][Right] = num
+        			num += 1
+        		Right -= 1
+        		direction = 2
+        	elif direction == 2:
+        		for i in range(Right, Left - 1, -1):
+        			ret[Bottom][i] = num
+        			num += 1
+        		Bottom -= 1
+        		direction = 3
+        	else:
+        		for i in range(Bottom, Top - 1, -1):
+        			ret[i][Left] = num
+        			num += 1
+        		Left += 1
+        		direction = 0
+        return ret
+
+
+#########################################################################################################################
+
+Q8. Rotate Matrix
+
+Problem Description
+You are given a n x n 2D matrix A representing an image.
+Rotate the image by 90 degrees (clockwise).
+You need to do this in place.
+Note: If you end up using an additional array, you will only receive partial score.
+
+Problem Constraints
+1 <= n <= 1000
+
+Input Format
+First argument is a 2D matrix A of integers
+
+Output Format
+Return the 2D rotated matrix.
+
+Example Input
+Input 1:
+[
+    [1, 2],
+    [3, 4]
+]
+Input 2:
+[
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+Example Output
+Output 1:
+[
+    [3, 1],
+    [4, 2]
+]
+Output 2:
+[
+    [7, 4, 1],
+    [8, 5, 2],
+    [9, 6, 3]
+]
+
+Example Explanation
+Explanation 1:
+After rotating the matrix by 90 degree:
+1 goes to 2, 2 goes to 4
+4 goes to 3, 3 goes to 1
+Explanation 2:
+After rotating the matrix by 90 degree:
+1 goes to 3, 3 goes to 9
+2 goes to 6, 6 goes to 8
+9 goes to 7, 7 goes to 1
+8 goes to 4, 4 goes to 2
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    def solve(self, A):
+        row,col = len(A),len(A[0])
+        for i in range(1,row):
+            for j in range(i):
+                A[i][j],A[j][i] = A[j][i],A[i][j]
+
+        for m in range(row):
+            i = 0
+            j = col-1
+            while i<j:
+                A[m][i], A[m][j] = A[m][j], A[m][i]
+                i += 1
+                j-= 1
+        return A
+
+#########################################################################################################################
+
+Q9. Are Matrices Same ?
+
+Problem Description
+You are given two matrices A and B of equal dimensions and you have to check whether two matrices are equal or not.\
+NOTE: Both matrices are equal if A[i][j] == B[i][j] for all i and j.
+
+Problem Constraints
+1 <= A.size(), B.size() <= 1000
+1 <= A[i].size(), B[i].size() <= 1000
+1 <= A[i][j], B[i][j] <= 1000
+A.size() == B.size()
+A[i].size() == B[i].size()
+
+Input Format
+First argument is 2-D array of integers representing matrix A.
+Second argument is 2-D array of integers representing matrix B.
+
+Output Format
+Return 1 if both matrices are equal or return 0.
+
+Example Input
+Input 1:
+A = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]
+B = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]
+Input 2:
+A = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]
+B = [[1, 2, 3],
+     [7, 8, 9],
+     [4, 5, 6]]
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+==> Clearly all the elements of both matrices are equal at respective positions.
+Explanation 2:
+==> Clearly, there are mismatches at (1, 0), (1, 1), (1, 2), (2, 0), (2, 1) and (2, 2).
+A = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]] 
+B = [[1, 2, 3],
+     [7, 8, 9],
+     [4, 5, 6]]
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    # @param B : list of list of integers
+    # @return an integer
+    def solve(self, A, B):
+        ans = 1
+        row,col = len(A), len(A[0])
+        for i in range(row):
+            for j in range(col):
+                if A[i][j] != B[i][j]:
+                    ans = 0
+                    break
+                else:
+                    ans = 1
+        return ans                 
+
+#########################################################################################################################
+
+Q10. Matrix Scalar Product
+
+Problem Description
+You are given a matrix A and and an integer B, you have to perform scalar multiplication of matrix A with an integer B.
+
+Problem Constraints
+1 <= A.size() <= 1000
+1 <= A[i].size() <= 1000
+1 <= A[i][j] <= 1000
+1 <= B <= 1000
+
+Input Format
+First argument is 2D array of integers A representing matrix.
+Second argument is an integer B.
+
+Output Format
+You have to return a 2D array of integers after doing required operations.
+
+Example Input
+Input 1:
+A = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]
+B = 2
+Input 2:
+A = [[1]]
+B = 5 
+
+Example Output
+Output 1:
+[[2, 4, 6], 
+[8, 10, 12], 
+[14, 16, 18]]
+Output 2:
+[[5]]
+
+Example Explanation
+Explanation 1:
+==> ( [[1, 2, 3],[4, 5, 6],[7, 8, 9]] ) * 2
+==> [[2*1, 2*2, 2*3],
+     [2*4, 2*5, 2*6],
+     [2*7, 2*8, 2*9]]
+==> [[2,   4,  6], 
+     [8,  10, 12], 
+     [14, 16, 18]]
+Explanation 2:
+==> ( [[1]] ) * 5
+==> [[5*1]]
+==> [[5]]
+
+Solution - 
+
+class Solution:
+    # @param A : list of list of integers
+    # @param B : integer
+    # @return a list of list of integers
+    def solve(self, A, B):
+        row = len(A)
+        col = len(A[0])
+        for i in range(row):
+            for j in range(col):
+                A[i][j] = A[i][j]*B
+        return A
+
+#########################################################################################################################
+
+Q11. Minor Diagonal Sum
+
+Problem Description
+You are given a N X N integer matrix. You have to find the sum of all the minor diagonal elements of A.
+Minor diagonal of a M X M matrix A is a collection of elements A[i, j] such that i + j = M + 1 (where i, j are 1-based).
+
+Problem Constraints
+1 <= N <= 103
+-1000 <= A[i][j] <= 1000
+
+Input Format
+First and only argument is a 2D integer matrix A.
+
+Output Format
+Return an integer denoting the sum of minor diagonal elements.
+
+Example Input
+Input 1:
+A = [[1, -2, -3],
+      [-4, 5, -6],
+      [-7, -8, 9]]
+Input 2:
+A = [[3, 2],
+      [2, 3]]
+
+Example Output
+Output 1:
+-5 
+Output 2:
+4 
+
+Example Explanation
+Explanation 1:
+A[1][3] + A[2][2] + A[3][1] = (-3) + 5 + (-7) = -5
+Explanation 2:
+A[1][2] + A[2][1] = 2 + 2 = 4
+
+Solution - 
+
+class Solution:
+    # @param A : tuple of list of integers
+    # @return an integer
+    def solve(self, A):
+        row,col = len(A), len(A[0])
+        summ = 0
+        for i in range(row):
+                summ += A[i][col-i-1]
+        return summ
+
+#########################################################################################################################
+
+Q12. Row Sum
+
+Problem Constraints
+1 <= A.size() <= 103
+1 <= A[i].size() <= 103
+1 <= A[i][j] <= 103
+
+Input Format
+First argument A is a 2D array of integers.(2D matrix).
+
+Output Format
+Return an array containing row-wise sums of original matrix.
+
+Example Input
+Input 1:
+[1,2,3,4]
+[5,6,7,8]
+[9,2,3,4]
+
+Example Output
+Output 1:
+[10,26,18]
+
+Example Explanation
+Explanation 1
+Row 1 = 1+2+3+4 = 10
+Row 2 = 5+6+7+8 = 26
+Row 3 = 9+2+3+4 = 18
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    # @return a list of integers
+    def solve(self, A):
+        l = []
+        row = len(A)
+        col = len(A[0])
+        for i in range(row):
+            summ = 0
+            for j in range(col):
+                summ += A[i][j]
+            l.append(summ)
+        return l        
+
+#########################################################################################################################
+
+Q13. Row to Column Zero
+
+Problem Description
+You are given a 2D integer matrix A, make all the elements in a row or column zero if the A[i][j] = 0. Specifically, make entire ith row and jth column zero.
+
+Problem Constraints
+1 <= A.size() <= 103
+1 <= A[i].size() <= 103
+0 <= A[i][j] <= 103
+
+Input Format
+First argument is a 2D integer matrix A.
+
+Output Format
+Return a 2D matrix after doing required operations.
+
+Example Input
+Input 1:
+[1,2,3,4]
+[5,6,7,0]
+[9,2,0,4]
+
+Example Output
+Output 1:
+[1,2,0,0]
+[0,0,0,0]
+[0,0,0,0]
+
+Example Explanation
+Explanation 1:
+A[2][4] = A[3][3] = 0, so make 2nd row, 3rd row, 3rd column and 4th column zero.
+
+Solution -
+
+import copy
+class Solution:
+    # @param A : list of list of integers
+    # @return a list of list of integers
+    def solve(self, A):
+        row, col = len(A), len(A[0])
+        B = copy.deepcopy(A)
+
+        for i in range(row):
+            for j in range(col):
+                if A[i][j]==0:
+                    for l in range(col):
+                        B[i][l] = 0
+                    for m in range(row):
+                        B[m][j] = 0
+        return B
+
+#########################################################################################################################
+
+Q14. Main Diagonal Sum
+
+Problem Description
+You are given a N X N integer matrix. You have to find the sum of all the main diagonal elements of A.
+Main diagonal of a matrix A is a collection of elements A[i, j] such that i = j.
+
+Problem Constraints
+1 <= N <= 103
+-1000 <= A[i][j] <= 1000
+
+Input Format
+There are 1 lines in the input. First 2 integers R, C are the number of rows and columns. Then R * C integers follow corresponding to the rowwise numbers in the 2D array A.
+
+Output Format
+Return an integer denoting the sum of main diagonal elements.
+
+Example Input
+Input 1:
+3 3 1 -2 -3 -4 5 -6 -7 -8 9
+Input 2:
+2 2 3 2 2 3
+
+Example Output
+Output 1:
+15 
+Output 2:
+6 
+
+Example Explanation
+Explanation 1:
+The size of matrix is 3.
+So, considering the indexing from 0.
+Main diagonal elements will be A[0][0], A[1][1] and A[2][2]
+A[1][1] + A[2][2] + A[3][3] = 1 + 5 + 9 = 15
+Explanation 2:
+The size of matrix is 2.
+So, considering the indexing from 0.
+Main diagonal elements will be A[0][0] and A[1][1].
+A[1][1] + A[2][2] = 3 + 3 = 6
+
+Solution -
+
+class Solution:
+    # @param A : tuple of list of integers
+    # @return an integer
+    def solve(self, A):
+        row,col = len(A), len(A[0])
+        summ = 0
+        for i in range(row):
+            summ += A[i][i]
+        return summ        
