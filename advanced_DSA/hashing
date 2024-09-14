@@ -1,0 +1,664 @@
+Q1. Longest Consecutive Sequence
+
+Problem Description
+Given an unsorted integer array A of size N.
+Find the length of the longest set of consecutive elements from array A.
+
+Problem Constraints
+1 <= N <= 106
+-106 <= A[i] <= 106
+
+Input Format
+First argument is an integer array A of size N.
+
+Output Format
+Return an integer denoting the length of the longest set of consecutive elements from the array A.
+
+Example Input
+Input 1:
+A = [100, 4, 200, 1, 3, 2]
+Input 2:
+A = [2, 1]
+
+Example Output
+Output 1:
+4
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+The set of consecutive elements will be [1, 2, 3, 4].
+Explanation 2:
+ The set of consecutive elements will be [1, 2].
+
+Solution -
+
+class Solution:
+	# @param A : tuple of integers
+	# @return an integer
+	# def longestConsecutive(self, A):
+    #     s = set()
+    #     for i in A:
+    #         s.add(i)
+
+    #     ans = 0
+
+    #     for i in s:
+    #         if (i-1) not in s:
+    #             l = 0
+    #             y = i
+    #             while y in s:
+    #                 l = l+1
+    #                 y = y+1
+    #             ans = max(ans,l)
+    #     return ans     
+    def longestConsecutive(self, A):
+        s = set()
+        for i in A:
+            s.add(i)
+        # print(s)
+        ans = 0
+        for i in s:
+            if i+1 not in s:
+                l=1
+                y=i-1
+                while y in s:
+                    l=l+1
+                    y=y-1
+                ans=max(ans,l)
+        return ans
+
+#######################################################################################################################
+
+Q2. Window String
+
+Problem Description
+Given a string A and a string B, find the window with minimum length in A, which will contain all the characters in B in linear time complexity.
+Note that when the count of a character c in B is x, then the count of c in the minimum window in A should be at least x.
+Note:
+If there is no such window in A that covers all characters in B, return the empty string.
+If there are multiple such windows, return the first occurring minimum window ( with minimum start index and length )
+
+Problem Constraints
+1 <= size(A), size(B) <= 106
+
+Input Format
+The first argument is a string A.
+The second argument is a string B.
+
+Output Format
+Return a string denoting the minimum window.
+
+Example Input
+Input 1:
+A = "ADOBECODEBANC"
+B = "ABC"
+Input 2:
+A = "Aa91b"
+B = "ab"
+
+Example Output
+Output 1:
+"BANC"
+Output 2:
+"a91b"
+
+Example Explanation
+Explanation 1:
+"BANC" is a substring of A which contains all characters of B.
+Explanation 2:
+"a91b" is the substring of A which contains all characters of B.
+
+Solution -
+
+from collections import Counter
+class Solution:
+	# @param A : string
+	# @param B : string
+	# @return a strings
+  def minWindow(self,A,B):
+      string=A 
+      pat=B 
+      no_of_chars=256
+      len1 = len(string)
+      len2 = len(pat)
+  
+      # Check if string's length is
+      # less than pattern's
+      # length. If yes then no such
+      # window can exist
+      if len1 < len2:
+  
+          # print("No such window exists")
+          return ""
+  
+      hash_pat = [0] * no_of_chars
+      hash_str = [0] * no_of_chars
+  
+      # Store occurrence ofs characters of pattern
+      for i in range(0, len2):
+          hash_pat[ord(pat[i])] += 1
+   
+    
+        start, start_index, min_len = 0, -1, len(string)+1
+    
+        # Start traversing the string
+        count = 0  # count of characters
+        for j in range(0, len1):
+    
+            # count occurrence of characters of string
+            hash_str[ord(string[j])] += 1
+    
+            # If string's char matches with
+            # pattern's char then increment count
+            if (hash_str[ord(string[j])] <=
+                    hash_pat[ord(string[j])]):
+                count += 1
+    
+            # if all the characters are matched
+            if count == len2:
+    
+                # Try to minimize the window
+                while (hash_str[ord(string[start])] >
+                    hash_pat[ord(string[start])] or
+                    hash_pat[ord(string[start])] == 0):
+    
+                    if (hash_str[ord(string[start])] >
+                            hash_pat[ord(string[start])]):
+                        hash_str[ord(string[start])] -= 1
+                    start += 1
+    
+                # update window size
+                len_window = j - start + 1
+                if min_len > len_window:
+    
+                    min_len = len_window
+                    start_index = start
+    
+        # If no window found
+        if start_index == -1:
+            # print("No such window exists")
+            return ""
+        return string[start_index: start_index + min_len]
+
+#######################################################################################################################
+
+Q3. Longest Substring Without Repeat
+
+Problem Description
+Determine the "GOOD"ness of a given string A, where the "GOOD"ness is defined by the length of the longest substring that contains no repeating characters. The greater the length of this unique-character substring, the higher the "GOOD"ness of the string.
+Your task is to return an integer representing the "GOOD"ness of string A.
+Note: The solution should be achieved in O(N) time complexity, where N is the length of the string.
+
+Problem Constraints
+1 <= size(A) <= 106
+
+String consists of lowerCase,upperCase characters and digits are also present in the string A.
+
+Input Format
+Single Argument representing string A.
+
+Output Format
+Return an integer denoting the maximum possible length of substring without repeating characters.
+
+Example Input
+Input 1:
+A = "abcabcbb"
+Input 2:
+A = "AaaA"
+
+Example Output
+Output 1:
+3
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+Substring "abc" is the longest substring without repeating characters in string A.
+Explanation 2:
+Substring "Aa" or "aA" is the longest substring without repeating characters in string A.
+
+Solution -
+
+class Solution:
+	# @param A : string
+	# @return an integer
+	def lengthOfLongestSubstring(self, A):
+        n = len(A)
+        ans = 0
+        i = 0
+        j = 0
+
+        s = set()
+        while j<n:
+            if A[j] not in s:
+                s.add(A[j])
+                j = j+1
+                ans = max(ans,len(s))
+            else:
+                s.remove(A[i])
+                i = i+1
+        return ans            
+  
+#######################################################################################################################
+
+Q4. Permutations of A in B
+
+Problem Description
+You are given two strings, A and B, of size N and M, respectively.
+You have to find the count of all permutations of A present in B as a substring. You can assume a string will have only lowercase letters.
+
+Problem Constraints
+1 <= N < M <= 105
+
+Input Format
+Given two arguments, A and B of type String.
+
+Output Format
+Return a single integer, i.e., number of permutations of A present in B as a substring.
+
+Example Input
+Input 1:
+A = "abc"
+B = "abcbacabc"
+Input 2:
+A = "aca"
+B = "acaa"
+
+Example Output
+Output 1:
+5
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+Permutations of A that are present in B as substring are:
+  1. abc
+  2. cba
+  3. bac
+  4. cab
+  5. abc
+  So ans is 5.
+Explanation 2:
+Permutations of A that are present in B as substring are:
+  1. aca
+    2. caa 
+
+  Solution -
+
+  class Solution:
+    # @param A : string
+    # @param B : string
+    # @return an integer
+    def solve(self, A, B):
+        n = len(A)
+        m = len(B)
+        d_a = dict()
+        d_b = dict()
+
+        for i in range(n):
+            if A[i] not in d_a:
+                d_a[A[i]] = 1
+            else:
+                d_a[A[i]] += 1
+
+        for i in range(n):
+            if B[i] not in d_b:
+                d_b[B[i]] = 1
+            else:
+                d_b[B[i]] += 1
+        ans = 0
+        if d_a == d_b:
+            ans+=1
+
+        for i in range(n,m):
+            if B[i] not in d_b:
+                d_b[B[i]] = 1
+            else:
+                d_b[B[i]]+=1
+            
+            if d_b[B[i-n]] == 1:
+                d_b.pop(B[i-n])
+            else:
+                d_b[B[i-n]] -= 1
+            if d_a == d_b:
+                ans+=1
+        return ans
+  
+#######################################################################################################################
+
+ Q5. Sort Array in given Order
+
+Problem Description
+Given two arrays of integers A and B, Sort A in such a way that the relative order among the elements will be the same as those are in B.
+For the elements not present in B, append them at last in sorted order.
+Return the array A after sorting from the above method.
+NOTE: Elements of B are unique.
+
+Problem Constraints
+1 <= length of the array A <= 100000
+1 <= length of the array B <= 100000
+-10^9 <= A[i] <= 10^9
+
+Input Format
+The first argument given is the integer array A.
+The second argument given is the integer array B.
+
+Output Format
+Return the array A after sorting as described.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5, 4]
+B = [5, 4, 2]
+Input 2:
+A = [5, 17, 100, 11]
+B = [1, 100]
+
+Example Output
+Output 1:
+[5, 4, 4, 2, 1, 3]
+Output 2:
+[100, 5, 11, 17]
+
+Example Explanation
+Explanation 1:
+Since 2, 4, 5, 4 of A are present in the array B.  So Maintaining the relative order of B.
+Thus, [5, 4, 4, 2] and appending the remaining element (1, 3) in sorted order.
+The Final array is [5, 4, 4, 2, 1, 3]
+Explanation 2:
+Since 100 of A are present in the array B.  So Maintaining the relative order of B.
+Thus, [100] and appending the remaining element (5, 11, 17) in sorted order.
+The Final array is [100, 5, 11, 17]
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : list of integers
+    # @return a list of integers
+    def solve(self, A, B):
+        A.sort()
+        d = dict()
+        for i in A:
+            if i in d:
+                d[i] += 1
+            else:
+                d[i] = 1
+        ans = []
+        for i in range(len(B)):
+            if B[i] in d:
+                for j in range(d[B[i]]):
+                    ans.append(B[i])
+                d.pop(B[i])
+        for i in d:
+            for j in range(d[i]):
+                ans.append(i)
+        return ans                
+
+#######################################################################################################################
+
+Q6. Anagrams
+
+Problem Description
+Given an array A of N strings, return all groups of strings that are anagrams.
+Represent a group by a list of integers representing the index(1-based) in the original list. Look at the sample case for clarification.
+NOTE: Anagram is a word, phrase, or name formed by rearranging the letters, such as 'spar', formed from 'rasp'.
+
+Problem Constraints
+1 <= N <= 104
+1 <= |A[i]| <= 104
+Each string consists only of lowercase characters.
+The sum of the length of all the strings doesn't exceed 107
+
+Input Format
+The first and only argument is an integer array A.
+
+Output Format
+Return a two-dimensional array where each row describes a group.
+Note:
+Ordering of the result :
+You should not change the relative ordering of the strings within the group suppose within a group containing A[i] and A[j], A[i] comes before A[j] if i < j.
+
+Example Input
+Input 1:
+A = [cat, dog, god, tca]
+Input 2:
+A = [rat, tar, art]
+
+Example Output
+Output 1:
+[ [1, 4],
+ [2, 3] ]
+Output 2:
+[ [1, 2, 3] ]
+
+Example Explanation
+Explanation 1:
+"cat" and "tca" are anagrams which correspond to index 1 and 4 and "dog" and "god" are another set of anagrams which correspond to index 2 and 3.
+The indices are 1 based ( the first element has index 1 instead of index 0).
+Explanation 2:
+All three strings are anagrams.
+
+Solution -
+
+class Solution:
+	# @param A : tuple of strings
+	# @return a list of list of integers
+	def anagrams(self, A):
+        n = len(A)
+        d = {}
+        ans = []
+        for i in range(n):
+            st = ''.join(sorted(A[i]))
+            if st in d:
+                a = d[st]
+                a.append(i+1)
+            else:
+                d[st] = [i+1]
+        for k,v in d.items():
+            ans.append(v)
+        return ans
+
+#######################################################################################################################
+
+Q7. Count Rectangles
+
+Problem Description
+Given two arrays of integers A and B of size N each, where each pair (A[i], B[i]) for 0 <= i < N represents a unique point (x, y) in a 2-D Cartesian plane.
+Find and return the number of unordered quadruplet (i, j, k, l) such that (A[i], B[i]), (A[j], B[j]), (A[k], B[k]) and (A[l], B[l]) form a rectangle with the rectangle having all the sides parallel to either x-axis or y-axis.
+
+Problem Constraints
+1 <= N <= 2000
+0 <= A[i], B[i] <= 109
+
+Input Format
+The first argument given is the integer array A.
+The second argument given is the integer array B.
+
+Output Format
+Return the number of unordered quadruplets that form a rectangle.
+
+Example Input
+Input 1:
+A = [1, 1, 2, 2]
+B = [1, 2, 1, 2]
+Input 1:
+A = [1, 1, 2, 2, 3, 3]
+B = [1, 2, 1, 2, 1, 2]
+
+Example Output
+Output 1:
+1
+Output 2:
+3
+
+Example Explanation
+Explanation 1:
+
+All four given points make a rectangle. So, the answer is 1.
+Explanation 2:
+
+3 quadruplets which make a rectangle are: (1, 1), (2, 1), (2, 2), (1, 2)
+                                         (1, 1), (3, 1), (3, 2), (1, 2)
+                                         (2, 1), (3, 1), (3, 2), (2, 2)
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : list of integers
+    # @return an integer
+    def solve(self, A, B):
+        s = set()
+        n = len(A)
+        for i in range(n):
+            d = str(A[i])+"_"+str(B[i])
+            s.add(d)
+
+        c = 0    
+
+        for i in range(n):
+            for j in range(i+1,n):
+                if A[i] != A[j] and B[i] != B[j]:
+                    p1 = str(A[j])+"_"+str(B[i])
+                    p2 = str(A[i])+"_"+str(B[j])
+                    if p1 in s and p2 in s:
+                        c+=1
+        return int(c/2)                
+
+#######################################################################################################################
+
+Q8. Unique 2D points
+
+Problem Description
+Given a 2D array A of integer points on a 2D plane. Find and return the number of unique points in the array.
+The ith point in the array is (A[i][0], A[i][1])
+
+Problem Constraints
+1 <= len(A) <= 105
+-109 <= A[i][0], A[i][1] <= 109
+
+Input Format
+The first argument is a 2D integer array A.
+
+Output Format
+Return an integer that is the number of unique points.
+
+Example Input
+Input 1:
+A = [[1, 1],
+     [2, 2],
+     [2, 2],
+     [1, 1],
+     [1, 1]]
+Input 2:
+A = [[5, 6],
+     [2, 8],
+     [-1, -1],
+     [2, -3],
+     [2, 8],
+     [7, 7],
+     [2, -3]]
+
+Example Output
+Output 1:
+2
+Output 2:
+5
+
+Example Explanation
+Explanation 1:
+There are 2 unique points in the given array. They are [1, 1] and [2, 2].
+Explanation 2:
+There are 5 unique points in the given array. They are [5, 6], [2, 8], [-1, -1], [2, -3] and [7, 7].
+
+Solution - 
+
+class Solution:
+    # @param A : list of list of integers
+    # @return an integer
+    def solve(self, A):
+        s = set()
+        for i in range(len(A)):
+            d = str(A[i][0])+"_"+str(A[i][1])
+            s.add(d)
+
+        return len(s)    
+
+#######################################################################################################################
+
+Q9. Common Elements
+
+Problem Description
+Given two integer arrays, A and B of size N and M, respectively. Your task is to find all the common elements in both the array.
+NOTE:
+Each element in the result should appear as many times as it appears in both arrays.
+The result can be in any order.
+
+Problem Constraints
+1 <= N, M <= 105
+1 <= A[i] <= 109
+
+Input Format
+First argument is an integer array A of size N.
+Second argument is an integer array B of size M.
+
+Output Format
+Return an integer array denoting the common elements.
+
+Example Input
+Input 1:
+A = [1, 2, 2, 1]
+B = [2, 3, 1, 2]
+Input 2:
+A = [2, 1, 4, 10]
+B = [3, 6, 2, 10, 10]
+
+Example Output
+Output 1:
+[1, 2, 2]
+Output 2:
+[2, 10]
+
+Example Explanation
+Explanation 1:
+Elements (1, 2, 2) appears in both the array. Note 2 appears twice in both the array.
+Explantion 2:
+Elements (2, 10) appears in both the array.
+
+Solution -
+
+class Solution:
+  # @param A : list of integers
+  # @param B : list of integers
+  # @return a list of integers
+  def solve(self, A, B):
+      d_a = {}
+      for i in A:
+          if i in d_a:
+              d_a[i] += 1
+          else:
+              d_a[i] = 1
+
+      d_b = {}
+      for i in B:
+          if i in d_b:
+              d_b[i] += 1
+          else:
+              d_b[i] = 1 
+
+      ans = []
+      for i in d_a:
+          if i in d_b:
+              if d_a[i]>=d_b[i]:
+                  for j in range(d_b[i]):
+                      ans.append(i)
+              else:
+                  for j in range(d_a[i]):
+                      ans.append(i)
+                      
+      return ans	
