@@ -1,0 +1,122 @@
+Q1. Tower of Hanoi
+
+Problem Description
+In the classic problem of the Towers of Hanoi, you have 3 towers numbered from 1 to 3 (left to right) and A disks numbered from 1 to A (top to bottom) of different sizes which can slide onto any tower.
+The puzzle starts with disks sorted in ascending order of size from top to bottom (i.e., each disk sits on top of an even larger one).
+
+You have the following constraints:
+Only one disk can be moved at a time.
+A disk is slid off the top of one tower onto another tower.
+A disk cannot be placed on top of a smaller disk.
+You have to find the solution to the Tower of Hanoi problem.
+You have to return a 2D array of dimensions M x 3, where M is the minimum number of moves needed to solve the problem.
+In each row, there should be 3 integers (disk, start, end), where:
+disk - number of the disk being moved
+start - number of the tower from which the disk is being moved
+end - number of the tower to which the disk is being moved
+
+Problem Constraints
+1 <= A <= 18
+
+Input Format
+The first argument is the integer A.
+
+Output Format
+Return a 2D array with dimensions M x 3 as mentioned above in the description.
+
+Example Input
+Input 1:
+A = 2
+Input 2:
+A = 3
+
+Example Output
+Output 1:
+[1 1 2 ] [2 1 3 ] [1 2 3 ]
+Output 2:
+[1 1 3 ] [2 1 2 ] [1 3 2 ] [3 1 3 ] [1 2 1 ] [2 2 3 ] [1 1 3 ] 
+
+Example Explanation
+Explanation 1:
+We shift the first disk to the middle tower.
+We shift the second disk to the last tower.
+We, finally, shift the first disk from the middle tower to the last tower.
+Explanation 2:
+We can see that this was the only unique path with minimal moves to move all disks from the first to the third tower.
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @return a list of list of integers
+    def towerOfHanoi(self, A):
+        result = []
+        def TOH(n, source, temp, destination):
+            if n == 0:
+                return
+
+            TOH(n-1, source, destination, temp) # Move n-1 discs from source to temp step by step
+
+            current = [n, source, destination]  # Move n discs from source to destination
+            result.append(current)
+
+            TOH(n-1, temp, source, destination) # Move n-1 discs from temp to destination step by step
+
+        TOH(A, 1, 2, 3)
+
+        return result
+
+########################################################################################################################
+
+Q2. Gray Code
+
+Problem Description
+The gray code is a binary numeral system where two successive values differ in only one bit.
+Given a non-negative integer A representing the total number of bits in the code, print the sequence of gray code.
+A gray code sequence must begin with 0.
+
+Problem Constraints
+1 <= A <= 16
+
+Input Format
+The first argument is an integer A.
+
+Output Format
+Return an array of integers representing the gray code sequence.
+
+Example Input
+Input 1:
+A = 2
+Input 1:
+A = 1
+
+Example Output
+output 1:
+[0, 1, 3, 2]
+output 2:
+[0, 1]
+
+Example Explanation
+Explanation 1:
+for A = 2 the gray code sequence is:
+    00 - 0
+    01 - 1
+    11 - 3
+    10 - 2
+So, return [0,1,3,2].
+Explanation 1:
+for A = 1 the gray code sequence is:
+    00 - 0
+    01 - 1
+So, return [0, 1].
+
+Solution - 
+
+class Solution:
+    # @param A : integer
+    # @return a list of integers
+    def grayCode(self, A):
+        ans = []
+        for i in range(2 ** A):
+            ans.append(i ^ (i >> 1))
+        return ans
