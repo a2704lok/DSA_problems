@@ -1,0 +1,529 @@
+Q1. Square root of a number
+
+Problem Description
+Given a number A. Return square root of the number if it is perfect square otherwise return -1.
+Note: A number is a perfect square if its square root is an integer.
+
+Problem Constraints
+1 <= A <= 108
+
+Input Format
+First and the only argument is an integer A.
+
+Output Format
+Return an integer which is the square root of A if A is perfect square otherwise return -1.
+
+Example Input
+Input 1:
+A = 4
+Input 2:
+A = 1001
+
+Example Output
+Output 1:
+2
+Output 2:
+-1
+
+Example Explanation
+Explanation 1:
+sqrt(4) = 2
+Explanation 2:
+1001 is not a perfect square.
+
+Solution - 
+
+import math
+class Solution:
+    # @param A : integer
+    # @return an integer
+    def solve(self, A):
+        ret = None
+        n = int(math.sqrt(A))
+        if n*n == A:
+            ret = n
+        else:
+            ret = -1
+        return ret        
+
+######################################################################################################################
+
+Q2. Is Perfect Square?
+
+Problem Description
+Given a number A. Return 1 if it is perfect square otherwise return 0.
+
+Problem Constraints
+1 <= A <= 108
+
+Input Format
+First line consists of a single integer T.
+Next, each of the test case consists of an integer A.
+
+Output Format
+Return an integer (0 or 1) based upon the question.
+
+Example Input
+Input 1:
+1
+4
+Input 2:
+1
+1001
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+sqrt(4) = 2
+Explanation 2:
+1001 is not a perfect square.
+
+Solution - 
+
+import math 
+def issquare(num):
+    ans  = None 
+    a = int(math.sqrt(num))
+    if a*a == num:
+	    ans = 1
+    else:
+	    ans = 0	
+    return ans
+
+######################################################################################################################
+
+Q3. Add the numbers
+
+Problem Description
+Given two numbers A & B. Return their sum.
+
+Problem Constraints
+1 <= A <= 107
+1 <= B <= 107
+
+Input Format
+First argument is an integer A.
+Second argument is an integer B.
+
+Output Format
+Return an integer which is the sum of A & B.
+
+Example Input
+Input 1:
+A = 4, B = 3
+Input 2:
+A = 14, B = 34
+
+Example Output
+Output 1:
+7
+Output 2:
+48
+
+Example Explanation
+Explanation 1:
+4 + 3 = 7
+Explanation 2:
+14 + 34 = 48
+
+Solution - 
+
+class Solution:
+    # @param A : integer
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        return A+B
+
+######################################################################################################################
+
+Q4. Multiply the numbers
+
+Problem Description
+Given two numbers A & B. Return their product.
+
+Problem Constraints
+1 <= A <= 104
+1 <= B <= 104
+
+Input Format
+First argument is an integer A.
+Second argument is an integer B.
+
+Output Format
+Return an integer which is the product of A & B.
+
+Example Input
+Input 1:
+A = 4, B = 3
+Input 2:
+A = 14, B = 34
+
+Example Output
+Output 1:
+12
+Output 2:
+476
+
+Example Explanation
+Explanation 1:
+4 * 3 = 12
+Explanation 2:
+14 * 34 = 476
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        return A*B
+
+######################################################################################################################
+
+Q5. Division of Integers
+
+Problem Description
+Given two integers A and B, where A is divisible by B.
+Print the value of quotient, when A is divided by B.
+Note: It is not necessary that A is completely divisible by B
+
+Problem Constraints
+-109 <= A, B <= 109
+
+Input Format
+First argument is a single integer A.
+Second argument is a single integer B.
+
+Output Format
+Print a single integer in a single line.
+
+Example Input
+Input 1:
+A = 8
+B = 2 
+Input 2:
+A = -9
+B = 3 
+
+Example Output
+Output 1:
+4 
+Output 2:
+-3 
+
+Example Explanation
+Explanation 1:
+Quotient of (8 / 2) = 4 
+Explanation 2:
+Quotient of (-9 / 3) = -3 
+
+Solution - 
+
+class Solution:
+    # @param A : integer
+    # @param B : integer
+    # @return an integer
+    def divide(self, A, B):
+        return int(A/B)
+
+######################################################################################################################
+
+Q6. Area of Square
+
+Problem Description
+You are given a positive integer A denoting the side of a square. You have to calculate the area of the square.
+Area of a square having side S is given by (S * S).
+
+Problem Constraints
+1 <= A <= 1000
+
+Input Format
+First and only argument is an integer A.
+
+Output Format
+Return a single integer denoting the area of the square.
+
+Example Input
+Input 1:
+A = 1 
+Input 2:
+A = 4 
+
+Example Output
+Output 1:
+1 
+Output 2:
+16 
+
+Example Explanation
+Explanation 1:
+Area = 1*1 = 1
+Explanation 2:
+Area = 4*4 = 16
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @return an integer
+    def solve(self, A):
+        return A*A
+
+######################################################################################################################
+
+Q7. Area of Circle
+
+Problem Description
+You are given a positive integer A denoting the radius of a circle. You have to calculate the area of the circle.
+Note :
+The formula for the area of a circle is Area = πr², where r is the radius of the circle.
+You can use the value of PI as 3.1416
+Round up the final answer up to 2 decimal places.
+You can use round(area, 2) it for rounding area to 2 decimal places
+
+Problem Constraints
+1 <= A <= 1000
+
+Input Format
+First and only argument is an integer A.
+
+Output Format
+Return final answer upto 2 decimal places, denoting the area of the circle.
+
+Example Input
+Input 1:
+8
+Input 2:
+15
+
+Example Output
+Output 1:
+201.06
+Output 2:
+706.86
+
+Example Explanation
+Explanation 1:
+r = 8
+Area = πr²
+     = 3.1416 * 8 * 8
+     = 201.0604
+     = 201.06 (upto 2 decimal places)
+Explanation 2:
+r = 8
+Area = πr²
+     = 3.1416 * 15 * 15
+     = 706.86
+
+Solution -
+
+import math
+class Solution:
+    # @param A : integer
+    # @return an integer
+    def solve(self, A):
+        pi = math.pi
+        area = pi*A*A
+        return math.ceil(area)
+
+######################################################################################################################
+
+Q8. Is It Cube?
+
+Problem Description
+You are given an integer A, You have to tell whether it is a perfect cube or not.
+A perfect cube is an integer that is equal to some other integer raised to the third power. If X is a perfect cube of Y, then X = Y3.
+
+Problem Constraints
+1 <= A <= 109
+
+Input Format
+First and only argument is an integer A.
+
+Output Format
+Return 1 if A is a perfect cube, else return 0.
+
+Example Input
+Input 1:
+A = 2 
+Input 2:
+A = 8 
+Input 3:
+A = 216 
+
+Example Output
+Output 1:
+0 
+Output 2:
+1 
+Output 3:
+1 
+
+Example Explanation
+Explanation 1:
+ A = 2, can not be expressed in the form X * X * X, where X denotes some integer. 
+Explanation 2:
+A = 8, can be expressed as 23.
+Explanation 3:
+A = 216, can be expressed as 63.
+
+Solution -
+
+import numpy as np
+class Solution:
+    # @param A : integer
+    # @return an integer
+    def isPerfectCube(self, A):
+        x = round(np.cbrt(A),0)
+        #x = int(A**(1/3))
+        if x**3 == A:
+            return 1
+        return 0
+
+######################################################################################################################
+
+Q9. Power function
+
+Problem Description
+You are given two integers A and B.
+You have to find the value of AB.
+NOTE: The value of answer is always less than or equal to 109.
+
+Problem Constraints
+1 <= A, B <= 1000
+
+Input Format
+First parameter is an integer A.
+Second parameter is an integer B.
+
+Output Format
+Return an integer.
+
+Example Input
+Input 1:
+A = 2
+B = 3 
+Input 2:
+A = 1
+B = 10 
+
+Example Output
+
+Output 1:
+8 
+Output 2:
+1 
+
+Example Explanation
+Explanation 1:
+For A = 2 and B = 3, the value of 23 = 2 * 2 * 2 = 8. 
+Explanation 2:
+For A = 1 and B = 10, the value of 110 = 1.
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @param B : integer
+    # @return an integer
+    def power(self, A, B):
+        return A**B
+
+######################################################################################################################
+
+Q10. Cube It!
+
+Problem Description
+You are given an integer A.
+You have to find the value of cube of A i.e, A3.
+
+Problem Constraints
+1 <= A <= 1000
+
+Input Format
+First and only parameter is an integer A.
+
+Output Format
+Single line integer output.
+
+Example Input
+Input 1:
+A = 1 
+Input 2:
+A = 2 
+
+Example Output
+Output 1:
+1 
+Output 2:
+8 
+
+Example Explanation
+Explanation 1:
+Value of 13 = 1 
+Explanation 2:
+Value of 23 = 2 * 2 * 2 = 8
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @return an integer
+    def cube(self, A):
+        return A**3
+
+######################################################################################################################
+
+Q11. Volume Of Sphere
+
+Problem Description
+You are given a positive integer A denoting the radius of a sphere. You have to calculate the volume of the sphere.
+Volume of a sphere having radius R is given by (4 * π * R3) / 3.
+NOTE: Since, the answer can be a real number, you have to return the ceil value of the volume. Ceil value of a real number X is the smallest integer that is greater than or equal to X.
+
+Problem Constraints
+1 <= A <= 400
+
+Input Format
+First and only argument is an integer A.
+
+Output Format
+Return a single integer denoting the ceil value of volume of the sphere.
+
+Example Input
+Input 1:
+A = 1 
+Input 2:
+A = 4 
+
+Example Output
+Output 1:
+5
+Output 2:
+269 
+
+Example Explanation
+Explanation 1:
+Volume of sphere having radius 1 units = 4.19
+Ceil value of volume = 5 
+Explanation 2:
+Volume of sphere having radius 4 units = 268.08
+Ceil value of volume = 269 
+
+Solution -
+
+import math
+class Solution:
+    # @param A : integer
+    # @return an integer
+    def solve(self, A):
+        pi = math.pi
+        return int((4/3)*pi*(A**3)+1)
+        
