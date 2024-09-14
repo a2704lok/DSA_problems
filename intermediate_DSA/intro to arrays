@@ -1,0 +1,618 @@
+Q1. Rotation Game
+
+Problem Description
+Given an integer array A of size N and an integer B, you have to print the same array after rotating it B times towards the right.
+
+Problem Constraints
+1 <= N <= 106
+1 <= A[i] <=108
+1 <= B <= 109
+
+Input Format
+There are 2 lines in the input
+Line 1: The first number is the size N of the array A. Then N numbers follow which indicate the elements in the array A.
+Line 2: A single integer B.
+
+Output Format
+Print array A after rotating it B times towards the right.
+
+Example Input
+Input 1 :
+4 1 2 3 4
+2
+
+Example Output
+Output 1 :
+3 4 1 2
+
+Example Explanation
+Example 1 :
+N = 4, A = [1, 2, 3, 4] and B = 2.
+Rotate towards the right 2 times - [1, 2, 3, 4] => [4, 1, 2, 3] => [3, 4, 1, 2]
+Final array = [3, 4, 1, 2]
+
+Solution -
+
+A = list(map(int, input().split()))[1:]
+B = int(input())
+
+def reverse(A,start,end):
+    while start<end:
+        A[start],A[end] = A[end],A[start]
+        start += 1
+        end -= 1
+
+def rotate_k_times_right(A,B):
+    n = len(A)
+    B = B%n
+    reverse(A,0,n-1)
+    reverse(A,0,B-1)
+    reverse(A,B,n-1)
+
+rotate_k_times_right(A,B)
+
+for i in A:
+    print(i,end = ' ')
+
+#########################################################################################################################
+
+Q2. Good Pair
+
+Problem Description
+Given an array A and an integer B. A pair(i, j) in the array is a good pair if i != j and (A[i] + A[j] == B). Check if any good pair exist or not.
+
+Problem Constraints
+1 <= A.size() <= 104
+1 <= A[i] <= 109
+1 <= B <= 109
+
+Input Format
+First argument is an integer array A.
+Second argument is an integer B.
+
+Output Format
+Return 1 if good pair exist otherwise return 0.
+
+Example Input
+Input 1:
+A = [1,2,3,4]
+B = 7
+Input 2:
+A = [1,2,4]
+B = 4
+Input 3:
+A = [1,2,2]
+B = 4
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+Output 3:
+1
+
+Example Explanation
+Explanation 1:
+(i,j) = (3,4)
+Explanation 2:
+No pair has sum equal to 4.
+Explanation 3:
+(i,j) = (2,3)
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        res = 0
+        s = set()
+        for i in A:
+            r = B-i
+            if r in s:
+                res = 1
+            else:
+                s.add(i)
+        return res
+
+#########################################################################################################################
+
+Q3. Max and Min of an Array
+
+Problem Description
+Take input an array A of size N and write a program to print maximum and minimum elements of the input. The only line of the input would contain a single integer N that represents the length of the array followed by the N elements of the input array A.
+
+Problem constraints
+1 <= N <= 1000
+1 <= A <= 1000
+
+Input Format
+The first line contains a single integer N representing the length of the array A followed by N elements of the array A.
+
+Output Format
+A single line output containing two space-separated integers.
+The first integer is the maximum value of the array.
+The second integer is the minimum value of the array. 
+There is **no space** after the minimum value in the output format. 
+There is only a **single space** between the maximum and minimum value.
+
+Example Input
+Input 1:
+5 1 2 3 4 5
+Input 2:
+4 10 50 40 80
+
+Example Output
+Output 1:
+5 1
+Output 2:
+80 10
+Note: There is no space after the minimum value in the output format.
+There is only a single space between the maximum and minimum value.
+
+Solution -
+
+l = list(map(int,input().split()))[1:]
+minn = l[0]
+maxx = l[0]
+
+for i in range(len(l)):
+    if l[i] < minn:
+        minn = l[i]
+
+for i in range(len(l)):
+    if l[i] > maxx:
+        maxx = l[i]
+
+print(maxx, minn)
+
+#########################################################################################################################
+
+Q4. Reverse the Array
+
+Problem Description
+You are given a constant array A.
+You are required to return another array which is the reversed form of the input array.
+
+Problem Constraints
+1 <= A.size() <= 10000
+1 <= A[i] <= 10000
+
+Input Format
+First argument is a constant array A.
+
+Output Format
+Return an integer array.
+
+Example Input
+Input 1:
+A = [1,2,3,2,1]
+Input 2:
+A = [1,1,10]
+
+Example Output
+Output 1:
+[1,2,3,2,1] 
+Output 2:
+[10,1,1] 
+
+Example Explanation
+Explanation 1:
+Reversed form of input array is same as original array
+Explanation 2:
+Clearly, Reverse of [1,1,10] is [10,1,1]
+
+Solution -
+
+class Solution:
+    # @param A : tuple of integers
+    # @return a list of integers
+    def solve(self, A):
+        A = list(A)
+        i = 0
+        j = len(A)-1
+        while i<j:
+            A[i],A[j] = A[j],A[i]
+            i += 1
+            j -= 1
+        return A
+
+#########################################################################################################################
+
+Q5. Search Element
+
+Problem Description
+You are given an integer T (number of test cases). You are given array A and an integer B for each test case. You have to tell whether B is present in array A or not.
+
+Problem Constraints
+1 <= T <= 10
+1 <= A <= 105
+1 <= A[i], B <= 109
+
+Input Format
+First line of the input contains number of test cases as single integer T .
+Next, each of the test case consists of 3 lines:
+First line contains a single integer A denoting the length of array
+Second line contains A integers denoting the array elements
+Third line contains a single integer B
+
+Output Format
+For each test case, print on a separate line 1 if the element exists, else print 0.
+
+Example Input
+Input 1:
+1 
+5 
+4 1 5 9 1
+5
+Input 2:
+1
+3 
+7 7 2
+1 
+
+Example Output
+Output 1:
+1 
+Output 2:
+0 
+
+Example Explanation
+Explanation 1:
+B = 5  is present at position 3 in A 
+Explanation 2:
+B = 1  is not present in A. 
+
+Solution -
+
+n = int(input())
+
+for i in range(n):
+    l = list(map(int, input().split()))[1:]
+    b = int(input())
+    res = 0
+    s = set(l)
+    if b in s:
+        res = 1
+    print(res)
+    
+#########################################################################################################################
+
+Q6. Little Ponny and Maximum Element
+
+Problem Description
+Little Ponny is given an array, A, of N integers. In a particular operation, he can set any element of the array equal to -1.
+He wants your help in finding out the minimum number of operations required such that the maximum element of the resulting array is B. If it is not possible, then return -1.
+
+Problem Constraints
+1 <= |A| <= 105
+1 <= A[i] <= 109
+
+Input Format
+The first argument of input contains an integer array, A.
+The second argument of input contains an integer, B.
+
+Output Format
+Return an integer representing the answer.
+
+Example Input
+Input 1:
+A = [2, 4, 3, 1, 5]
+B = 3 
+Input 2:
+A = [1, 4, 2]
+B = 3 
+
+Example Output
+Output 1:
+2 
+Output 2:
+-1 
+
+Example Explanation
+Explanation 1:
+We need to remove 4 and 5 to make 3 the biggest element. 
+Explanation 2:
+As 3 doesn't exist in the array, the answer is -1. 
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        pres = 0        
+        for i in A:
+            if i == B:
+                pres = 1
+
+
+        if pres == 0:
+            return -1
+        else:
+            count = 0
+            for i in A:
+                if i > B:
+                    count += 1
+        return count
+
+#########################################################################################################################
+
+Q7. Second Largest
+
+Problem Description
+You are given an integer array A. You have to find the second largest element/value in the array or report that no such element exists.
+
+Problem Constraints
+1 <= |A| <= 105
+0 <= A[i] <= 109
+
+Input Format
+The first argument is an integer array A.
+
+Output Format
+Return the second largest element. If no such element exist then return -1.
+
+Example Input
+Input 1:
+A = [2, 1, 2] 
+Input 2:
+A = [2]
+
+Example Output
+Output 1:
+1 
+Output 2:
+-1 
+
+Example Explanation
+Explanation 1:
+First largest element = 2
+Second largest element = 1
+Explanation 2:
+There is no second largest element in the array.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        final_ans = 0
+        if len(A) == 1:
+            final_ans = -1
+            return final_ans
+
+        maxx = max(A)
+
+        ct = 0
+        for i in A:
+            if i == maxx:
+                ct += 1       
+
+        if ct > 1:
+            final_ans = maxx
+        else:
+            A.remove(maxx)
+            maxx_2 = max(A)
+            final_ans = maxx_2        
+
+        return final_ans        
+
+#########################################################################################################################
+
+Q8. MINIMUM PICKS
+
+Problem Description
+You are given an array of integers A of size N.
+Return the difference between the maximum among all even numbers of A and the minimum among all odd numbers in A.
+
+Problem Constraints
+2 <= N <= 1e5
+-1e9 <= A[i] <= 1e9
+There is atleast 1 odd and 1 even number in A
+
+Input Format
+The first argument given is the integer array, A.
+
+Output Format
+Return maximum among all even numbers of A - minimum among all odd numbers in A.
+
+Example Input
+Input 1:
+A = [0, 2, 9]
+Input 2:
+A = [5, 17, 100, 1]
+
+Example Output
+Output 1:
+-7
+Output 2:
+99
+
+Example Explanation
+Explanation 1:
+Maximum of all even numbers = 2
+Minimum of all odd numbers = 9
+ans = 2 - 9 = -7
+Explanation 2:
+Maximum of all even numbers = 100
+Minimum of all odd numbers = 1
+ans = 100 - 1 = 99
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        even = []
+        odd = []
+        for i in A:
+            if i&1 == 0:
+                even.append(i)
+            else:
+                odd.append(i)
+
+        return max(even)-min(odd)
+
+#########################################################################################################################
+
+Q9. Separate Odd Even
+
+Problem Description
+You are given an integer T denoting the number of test cases. For each test case, you are given an integer array A.
+You have to print the odd and even elements of array A in 2 separate lines.
+NOTE: Array elements should have the same relative order as in A.
+
+Problem Constraints
+1 <= T <= 10
+1 <= |A| <= 105
+1 <= A[i] <= 109
+
+Input Format
+First line of the input contains a single integer T.
+For each test case:
+First line consists of a single integer |A| denoting the length of array.
+Second line consists of |A| space separated integers denoting the elements of array A.
+
+Output Format
+For each test case:
+First line should contain an array of space separated integers containing all the odd elements of array A
+Second line should contain an array of space separated integers containing all the even elements of array A
+
+Example Input
+Input 1:
+2
+5
+1 2 3 4 5
+3
+4 3 2
+Input 2:
+2 
+3
+2 2 2
+2
+1 1
+
+Example Output
+Output 1:
+1 3 5
+2 4
+3
+4 2
+Output 2:
+2 2 2
+1 1
+
+Example Explanation
+Explanation 1:
+Test Case 1: 
+Odd elements in the array(in the order they occur) are: 1, 3, 5.
+Even elements in the array(in the order they occur) are: 2, 4.
+Test Case 2 
+Odd elements in the array(in the order they occur) are: 3.
+Even elements in the array(in the order they occur) are: 4, 2.
+Explanation 2:
+Test Case 1: 
+There are no odd elements in the array.
+Even elements in the array(in the order they occur) are: 2, 2, 2.
+Test Case 2 
+Odd elements in the array(in the order they occur) are: 1, 1.
+There are no even elements in the array.
+
+Solution -
+
+T = int(input())
+
+for i in range(T):
+    A = int(input())
+    B = list(map(int,input().split()))
+    even_l = []
+    odd_l = []
+    for j in B:
+        if j&1 == 0:
+            even_l.append(j)
+        else:
+            odd_l.append(j)
+
+    for i in odd_l:
+        print(i,end = " ")
+    print()    
+    for i in even_l:
+        print(i,end = " ")
+    print()    
+
+#########################################################################################################################
+
+Q10. Multiple left rotations of the array
+
+Problem Description
+Given an array of integers A and multiple values in B, which represents the number of times array A needs to be left rotated.
+Find the rotated array for each value and return the result in the from of a matrix where ith row represents the rotated array for the ith value in B.
+
+Problem Constraints
+1 <= length of both arrays <= 2000 -10^9 <= A[i] <= 10^9 0 <= B[i] <= 2000
+
+Input Format
+The first argument given is the integer array A.
+The second argument given is the integer array B.
+
+Output Format
+Return the resultant matrix.
+
+Example Input
+Input 1: 
+A = [1, 2, 3, 4, 5]
+B = [2, 3]
+Input 2:
+A = [5, 17, 100, 11]
+B = [1]
+
+Example Output
+Output 1:
+[ [3, 4, 5, 1, 2]
+[4, 5, 1, 2, 3] ]
+Output 2:
+[ [17, 100, 11, 5] ]
+
+Example Explanation
+for input 1 -> B[0] = 2 which requires 2 times left rotations
+1: [2, 3, 4, 5, 1]
+2: [3, 4, 5, 1, 2]
+B[1] = 3 which requires 3 times left rotation
+1: [2, 3, 4, 5, 1]
+2: [3, 4, 5, 1, 2]
+2: [4, 5, 1, 2, 4]
+
+Solution -
+
+import copy
+class Solution:
+    # @param A : list of integers
+    # @param B : list of integers
+    # @return a list of list of integers
+    def reverse(A,start,end):
+        while start<end:
+            A[start],A[end] = A[end],A[start]
+            start += 1
+            end -= 1
+            
+    def rotate_k_times_left(A,k):
+        n = len(A)
+        k = k%n
+        Solution.reverse(A,0,n-1)
+        Solution.reverse(A,0,n-k-1)
+        Solution.reverse(A,n-k,n-1)
+        return A
+
+    def solve(self, A, B):
+        res = []
+        for i in range(len(B)):
+            Copy = copy.deepcopy(A)
+            v = Solution.rotate_k_times_left(Copy,B[i])
+            res.append(v)
+        return res
