@@ -1,0 +1,545 @@
+Q1. Count the digits
+
+Problem Description
+Take T (number of test cases) as input.
+For each test case, take integer N as input and Print the count of digits of that number.
+Note: No of digits for number 0 is considered as 1.
+
+Problem Constraints
+1 <= T <= 1000
+0 <= N <= 100000000
+
+Input Format
+The first line is the number T which denotes the total number of test cases.
+Next T lines contain an integer N for which you have to print the number of digits.
+
+Output Format
+For T different Numbers, Print the number of digits in separate lines.
+
+Example Input
+Input 1: 
+2
+0
+1
+Input 2:
+2
+100
+10101
+
+Example Output
+Output 1:
+1
+1
+Output 2:
+3
+5
+
+Example Explanation
+Explanation 1:
+0 and 1 both have only one digit.
+Explanation 2:
+100 has three digits and 10101 has 5 digits.
+
+Solution - 
+
+T = int(input())
+for i in range(T):
+    N = int(input())
+    count = 0
+    if N == 0:
+        count = 1
+    while N > 0:
+        count += 1
+        N = N//10
+    print(count)
+
+##################################################################################################
+
+Q2. Sum the digits
+
+Problem Description
+You take a number of test cases, denoted by T as input.For each test case, you should take integers N as input. Your task is to calculate and print the sum of the digits of the given number N.
+
+Problem Constraints
+1 <= T <= 1000
+0 <= N <= 100000000
+
+Input Format
+The first line is T which means the total number of test cases.
+Each of the next T lines contain an integer N.
+
+Output Format
+T lines each containing one integer representing the sum of the digits of the input integer.
+
+Example Input
+Input 1:
+2
+5
+1001
+Input 2:
+2
+123
+1589
+
+Example Output
+Output 1:
+5
+2
+Output 2:
+6
+23
+
+Example Explanation
+Explanation 1:
+5 has only 1 digit hence sum is 5.
+For the number 1001, the digits are 1,0,0,1. The Sum(1001) = 1+0+0+1 = 2.
+Explanation 2:
+For the number 123, the digits are 1,2,3. The Sum(123) = 1+2+3 = 6.
+For the number 1589, the digits are 1,5,8,9. The Sum(1589) = 1+5+8+9 = 23.
+
+Solution -
+
+A = int(input())
+for i in range(A):
+    B = int(input())
+    sum_ = 0
+    while B != 0:
+        sum_ = sum_ + B%10
+        B = B//10
+    
+    print(sum_)
+
+##################################################################################################
+
+Q3. Floor of A/B
+
+Problem Description
+Given two numbers A and B. Print the floor of A/B.
+
+Problem Constraints
+1 <= A, B <= 104
+
+Input Format
+There are two input lines
+The first line has a single integer A.
+The second line has a single integer B.
+
+Output Format
+Print the floor of A/B in a single line.
+
+Example Input
+Input 1:-
+4
+5
+Input 2:-
+16
+2
+
+Example Output
+Output 1:-
+0
+Output 2:-
+8
+
+Example Explanation
+Explanation 1:-
+floor(4/5) = 0
+Explanation 2:-
+floor(16/2) = 8
+
+Solution - 
+
+A = int(input())
+B = int(input())
+
+print(A//B)
+
+##################################################################################################
+
+Q4. Multiplication Table!
+
+Problem Description
+Take a number A as input, print its multiplication table having the first 10 multiples.
+
+Problem Constraints
+1 <= A <= 1000
+
+Input Format
+First line contains a single integer A.
+
+Output Format
+Print 10 lines, ith line containing ith multiple.
+
+Example Input
+Input 1:
+2 
+Input 2:
+3 
+
+Example Output
+Output 1:
+2 * 1 = 2 
+2 * 2 = 4 
+2 * 3 = 6 
+2 * 4 = 8 
+2 * 5 = 10 
+2 * 6 = 12 
+2 * 7 = 14 
+2 * 8 = 16 
+2 * 9 = 18 
+2 * 10 = 20 
+Output 2:
+3 * 1 = 3 
+3 * 2 = 6 
+3 * 3 = 9 
+3 * 4 = 12 
+3 * 5 = 15 
+3 * 6 = 18 
+3 * 7 = 21 
+3 * 8 = 24 
+3 * 9 = 27 
+3 * 10 = 30 
+
+Example Explanation
+Explanantion 1:
+For A = 2, First 10 multiples of 2 are 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 
+Explanation 2:
+For A = 3, First 10 multiples of 3 are 3, 6, 9, 12, 15, 18, 21, 24, 27, 30 
+
+Solution - 
+
+A = int(input())
+n = 1
+while n <= 10:
+    print(A,"*",n,"=",A*n)
+    n+=1
+
+##################################################################################################
+
+Q5. Easy Power
+
+Problem Description
+You are given two integers A and B. You have to find the value of AB.
+NOTE: The value of AB will always be less than or equal to 109.
+
+Problem Constraints
+1 <= A, B <= 1000
+
+Input Format
+First line of the input contains a single integer A.
+Second line of the input contains a single integer B.
+
+Output Format
+Print a single integer in single line.
+
+Example Input
+Input 1:
+2
+3 
+Input 2:
+1
+10 
+
+Example Output
+Output 1:
+8 
+Output 2:
+1 
+
+Example Explanation
+Explanation 1:
+For A = 2 and B = 3, the value of 23 = 2 * 2 * 2 = 8. 
+Explanation 2:
+For A = 1 and B = 10, the value of 110 = 1.
+
+Solution - 
+
+A = int(input())
+B = int(input())
+
+n = 1
+pow = A
+while n<B:
+    pow = A*pow
+    n+=1
+print(pow)
+
+##################################################################################################
+
+Q6. Print N stars
+
+Problem Description
+Given an integer N, print N stars in a single line.
+For example if N = 5 then pattern will be like:
+*****
+
+Problem Constraints
+2 <= N <= 100
+
+Input Format
+Single line input contains a single integer N.
+
+Output Format
+Output N stars in a single line.
+
+Example Input
+Input 1:
+2
+Input 2:
+3
+
+Example Output
+Output 1:
+**
+Output 2:
+***
+
+Example Explanation
+Print the pattern as described.
+
+Solution -
+
+A = int(input())
+
+print("*"*A)
+
+##################################################################################################
+
+Q7. Print a matrix of stars
+
+Problem Description
+Given two integers N and M as inputs, print a rectangle of N * M stars.
+For example if N = 3, M = 4 then pattern will be like:
+****
+****
+****
+
+Problem Constraints
+2 <= N, M <= 100
+
+Input Format
+First line of input contains an integers N (no of rows).
+Second line of input contains an integer M (no of cols).
+
+Output Format
+Output N * M rectangle of stars.
+
+Example Input
+Input 1:
+2
+3
+Input 2:
+3
+1
+
+Example Output
+Output 1:
+***
+***
+Output 2:
+*
+*
+*
+
+Example Explanation
+Print the pattern as described.
+
+Solution - 
+
+N,M = input().split()
+
+for i in range(0,int(N),1):
+    print("*"*int(M))
+
+##################################################################################################
+
+Q8. Stair Pattern
+
+Problem Description
+Take an integer N as input, print the corresponding stair pattern for N.
+For example if N = 4 then stair pattern will be like:
+*
+**
+***
+****
+
+Problem Constraints
+1 <= N <= 100
+
+Input Format
+First and only line of input contains a single integer N.
+
+Solution - 
+
+N = int(input())
+
+for i in range(1,N+1):
+    print("*"*i)
+
+##################################################################################################
+
+Q9. First vs Last
+
+Problem Description
+Write a program that asks the user to input a number T, indicating the number of test cases.
+Then, for each test case, ask for input a number N and print the first and last digits of N.
+
+Problem Constraints
+1 <= T <= 1000
+0 <= N <= 100000000
+
+Input Format
+First line is T which means number of test cases.
+Each next T lines contain an integer N.
+
+Output Format
+T lines each containing two space separated integers representing first and last digits of the input integer.
+
+Example Input
+Input 1:
+2
+5
+1001
+Input 2:
+2
+10023
+1589
+
+Example Output
+Output 1:
+5 5
+1 1
+Output 2:
+1 3
+1 9
+
+Example Explanation
+Explanation 1:
+5 has fist and last digits same.
+1001 also has fist and last digits same.
+Explanation 2:
+10023 has 1 as first digit and 3 as last digit.
+1589 has 1 as first digit and 9 as last digit.
+
+Solution - 
+
+T = int(input())
+
+for i in range(T):
+    N = int(input())
+    n = str(N)
+    last = int(n[-1])
+    start = int(n[0])
+    # else:
+    #     last = N%10
+    #     while N >= 10:
+    #         N = N/10
+    #     start = int(N)
+    print(start, last, sep = " ")
+            
+##################################################################################################
+
+Q10. Max of three
+
+Problem Description
+Write a program to input three numbers(A, B & C) from user and print the maximum element among A, B & C in each line.
+
+Problem Constraints
+1 <= A <= 1000000
+1 <= B <= 1000000
+1 <= C <= 1000000
+
+Input Format
+First line is a single integer A.
+Second line is a single integer B.
+Third line is a single integer C.
+
+Output Format
+One line containing an integer as per the question.
+
+Example Input
+Input 1:
+5 
+6 
+7
+Input 2:
+1000 
+10000 
+100000
+
+Example Output
+Output 1:
+7
+Output 2:
+100000
+
+Example Explanation
+Explanation 1:
+Clearly, among 5, 6 and 7, 7 is maximum.
+Explanation 2:
+Clearly, among 1000, 10000 and 100000, 100000 is maximum.
+
+Solution -
+
+A = int(input())
+B = int(input())
+C = int(input())
+
+if (A>=B) and (A>=C):
+    print(A)
+
+elif (B>=A) and (B>=C):
+    print(B)
+else:
+    print(C)
+
+##################################################################################################
+
+Q11. Is It Prime?
+
+Problem Description
+Take an integer A as input, you have to tell whether it is a prime number or not.
+A prime number is a natural number greater than 1 which is divisible only by 1 and itself.
+
+Problem Constraints
+1 <= A <= 106
+
+Input Format
+First and only line of the input contains a single integer A.
+
+Output Format
+Print YES if A is a prime, else print NO.
+
+Example Input
+Input 1:
+3 
+Input 2:
+4 
+
+Example Output
+Output 1:
+YES 
+Output 2:
+NO 
+
+Example Explanation
+Explanation 1:
+3 is a prime number as it is only divisible by 1 and 3.
+Explanation 2:
+4 is not a prime number as it is divisible by 2.
+
+Solution - 
+
+N = int(input())
+
+def find_prime(N):
+    is_prime = True
+    for i in range(2,N):
+        if N%i == 0:
+            is_prime = False
+    return is_prime        
+
+if find_prime(N) == True:
+    print("YES")
+else:
+    print("NO")
