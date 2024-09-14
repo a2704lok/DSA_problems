@@ -1,0 +1,902 @@
+Q1. Common Elements
+
+Problem Description
+Given two integer arrays, A and B of size N and M, respectively. Your task is to find all the common elements in both the array.
+NOTE:
+Each element in the result should appear as many times as it appears in both arrays.
+The result can be in any order.
+
+Problem Constraints
+1 <= N, M <= 105
+1 <= A[i] <= 109
+
+Input Format
+First argument is an integer array A of size N.
+Second argument is an integer array B of size M.
+
+Output Format
+Return an integer array denoting the common elements.
+
+Example Input
+Input 1:
+A = [1, 2, 2, 1]
+B = [2, 3, 1, 2]
+Input 2:
+A = [2, 1, 4, 10]
+B = [3, 6, 2, 10, 10]
+
+Example Output
+Output 1:
+[1, 2, 2]
+Output 2:
+[2, 10]
+
+Example Explanation
+Explanation 1:
+Elements (1, 2, 2) appears in both the array. Note 2 appears twice in both the array.
+Explantion 2:
+Elements (2, 10) appears in both the array.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : list of integers
+    # @return a list of integers
+    def solve(self, A, B):
+        n = len(A)
+        m = len(B)
+        hashmap = {}
+        for i in range(n):
+            if(hashmap.get(A[i]) == None):
+                hashmap[A[i]] = 1
+            else:
+                hashmap[A[i]] += 1
+        
+        ans =[] 
+        for i in range(m):
+            if(hashmap.get(B[i]) != None and hashmap[B[i]] != 0):
+                ans.append(B[i])
+                hashmap[B[i]] -= 1  
+        return ans
+
+#######################################################################################################################
+
+Q2. First Repeating element
+
+Problem Description
+Given an integer array A of size N, find the first repeating element in it.
+We need to find the element that occurs more than once and whose index of the first occurrence is the smallest.
+If there is no repeating element, return -1.
+
+Problem Constraints
+1 <= N <= 105
+1 <= A[i] <= 109
+
+Input Format
+The first and only argument is an integer array A of size N.
+
+Output Format
+Return an integer denoting the first repeating element.
+
+Example Input
+Input 1:
+A = [10, 5, 3, 4, 3, 5, 6]
+Input 2:
+A = [6, 10, 5, 4, 9, 120]
+
+Example Output
+Output 1:
+5
+Output 2:
+-1
+
+Example Explanation
+Explanation 1:
+5 is the first element that repeats
+Explanation 2:
+There is no repeating element, output -1
+ Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        dic = {}
+        for i in range(len(A)):
+            if A[i] in dic:
+                dic[A[i]] += 1
+            else:
+                dic[A[i]] = 1
+
+        for i in A:
+            if dic[i] != 1:
+                return i
+                break               
+        return -1        
+
+#######################################################################################################################
+
+Q3. Largest Continuous Sequence Zero Sum
+
+Problem Description
+Given an array A of N integers.
+Find the largest continuous sequence in a array which sums to zero.
+
+Problem Constraints
+1 <= N <= 106
+-107 <= A[i] <= 107
+
+Input Format
+Single argument which is an integer array A.
+
+Output Format
+Return an array denoting the longest continuous sequence with total sum of zero.
+NOTE : If there are multiple correct answers, return the sequence which occurs first in the array.
+
+Example Input
+A = [1,2,-2,4,-4]
+
+Example Output
+[2,-2,4,-4]
+
+Example Explanation
+[2,-2,4,-4] is the longest sequence with total sum of zero.
+
+Solution -
+
+class Solution:
+	# @param A : list of integers
+	# @return a list of integers
+	def lszero(self, A):
+        n = len(A)
+        pf = [0]*n
+        pf[0] = A[0]
+        s = pf[0] 
+        for i in range(1,n):
+            s += A[i]
+            pf[i] =  s
+
+        d = {}
+        d[0] = -1
+        maxl = float('-inf')
+        ans = []
+        for i in range(n):
+            if pf[i] not in d:
+                d[pf[i]] = i
+            else:
+                l = i - d[pf[i]]
+                if l > maxl:
+                    ans = A[pf[i]:i+1]
+                    maxl = l
+        return ans
+
+#######################################################################################################################
+
+Q4. Sub-array with 0 sum
+
+Problem Description
+Given an array of integers A, find and return whether the given array contains a non-empty subarray with a sum equal to 0.
+If the given array contains a sub-array with sum zero return 1, else return 0.
+
+Problem Constraints
+1 <= |A| <= 100000
+-10^9 <= A[i] <= 10^9
+
+Input Format
+The only argument given is the integer array A.
+
+Output Format
+Return whether the given array contains a subarray with a sum equal to 0.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5]
+Input 2:
+A = [4, -1, 1]
+
+Example Output
+Output 1:
+0
+Output 2:
+1
+
+Example Explanation
+Explanation 1:
+No subarray has sum 0.
+Explanation 2:
+The subarray [-1, 1] has sum 0.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        pf = set()
+        summ = 0
+        for i in A:
+            summ += i
+            pf.add(summ)
+
+        if (len(pf) < len(A)) or (0 in pf):
+            return 1
+        return 0    
+
+#######################################################################################################################
+
+Q5. Shaggy and distances
+
+Problem Description
+Shaggy has an array A consisting of N elements. We call a pair of distinct indices in that array a special if elements at those indices in the array are equal.
+Shaggy wants you to find a special pair such that the distance between that pair is minimum. Distance between two indices is defined as |i-j|. If there is no special pair in the array, then return -1.
+
+Problem Constraints
+1 <= |A| <= 105
+
+Input Format
+The first and only argument is an integer array A.
+
+Output Format
+Return one integer corresponding to the minimum possible distance between a special pair.
+
+Example Input
+Input 1:
+A = [7, 1, 3, 4, 1, 7]
+Input 2:
+A = [1, 1]
+
+Example Output
+Output 1:
+3
+Output 2:
+1
+
+Example Explanation
+Explanation 1:
+Here we have 2 options:
+1. A[1] and A[4] are both 1 so (1,4) is a special pair and |1-4|=3.
+2. A[0] and A[5] are both 7 so (0,5) is a special pair and |0-5|=5.
+Therefore the minimum possible distance is 3. 
+Explanation 2:
+Only possibility is choosing A[1] and A[2].
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        d = dict()
+        n = len(A)
+        mindis = float('inf')
+        for i in range(n):
+            if A[i] not in d:
+                d[A[i]] = i
+            else:
+                l = abs(i - d[A[i]])
+                mindis = min(mindis,l)
+
+        if mindis == float('inf'):
+            return -1
+        return mindis
+
+#######################################################################################################################
+
+Q6. K Occurrences
+
+Groot has N trees lined up in front of him where the height of the i'th tree is denoted by H[i].
+He wants to select some trees to replace his broken branches.
+But he wants uniformity in his selection of trees.
+So he picks only those trees whose heights have frequency B.
+He then sums up the heights that occur B times. (He adds the height only once to the sum and not B times).
+But the sum he ended up getting was huge so he prints it modulo 10^9+7.
+In case no such cluster exists, Groot becomes sad and prints -1.
+
+Constraints:
+1.   1<=N<=100000
+2.   1<=B<=N
+3.   0<=H[i]<=10^9
+  
+Input: Integers N and B and an array C of size N
+
+Output: Sum of all numbers in the array that occur exactly B times.
+
+Example:
+Input:
+N=5 ,B=2 ,C=[1 2 2 3 3]
+Output:
+5
+
+Explanation:
+There are 3 distinct numbers in the array which are 1,2,3.
+Out of these, only 2 and 3 occur twice. Therefore the answer is sum of 2 and 3 which is 5.
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @param B : integer
+    # @param C : list of integers
+    # @return an integer
+    def getSum(self, A, B, C):
+        dic = {}
+        for i in range(len(C)):
+            if C[i] in dic:
+                dic[C[i]] += 1
+            else:
+                dic[C[i]] = 1
+
+        l = list(set(C))
+        m = []
+        for i in l:
+            if dic[i] == B:
+                m.append(i)
+
+        if len(m) == 0:
+            return -1
+        return sum(m)%1000000007
+          
+#######################################################################################################################
+
+Q7. Check Palindrome - II
+
+Problem Description
+Given a string A consisting of lowercase characters.
+Check if characters of the given string can be rearranged to form a palindrome.
+Return 1 if it is possible to rearrange the characters of the string A such that it becomes a palindrome else return 0.
+
+Problem Constraints
+1 <= |A| <= 105
+A consists only of lower-case characters.
+
+Input Format
+First argument is an string A.
+
+Output Format
+Return 1 if it is possible to rearrange the characters of the string A such that it becomes a palindrome else return 0.
+
+Example Input
+Input 1:
+A = "abcde"
+Input 2:
+A = "abbaee"
+
+Example Output
+Output 1:
+0
+Output 2:
+1
+
+Example Explanation
+Explanation 1:
+No possible rearrangement to make the string palindrome.
+Explanation 2:
+Given string "abbaee" can be rearranged to "aebbea" to form a palindrome.
+
+Solution -
+
+class Solution:
+    # @param A : string
+    # @return an integer
+    def solve(self, A):
+        l = list(A)
+        s = list(set(l))
+        dic = {}
+        for i in range(len(l)):
+            if l[i] in dic:
+                dic[l[i]] += 1
+            else:
+                dic[l[i]] = 1
+        ans = 1
+        if len(l)&1 == 0:
+            for i in l:
+                if dic[i]&1 == 1:
+                    ans = 0
+
+        else:
+            odd_cnt = 0
+            for i in s:
+                if dic[i]&1 == 1:
+                    odd_cnt += 1
+            if odd_cnt == 1:
+                ans = 1
+            else:
+                ans = 0
+        return ans        
+
+#######################################################################################################################
+
+Q8. Colorful Number
+
+Problem Description
+Given a number A, find if it is COLORFUL number or not.
+If number A is a COLORFUL number return 1 else, return 0.
+What is a COLORFUL Number:
+A number can be broken into different consecutive sequence of digits. 
+The number 3245 can be broken into sequences like 3, 2, 4, 5, 32, 24, 45, 324, 245 and 3245. 
+This number is a COLORFUL number, since the product of every consecutive sequence of digits is different
+
+Problem Constraints
+1 <= A <= 2 * 109
+
+Input Format
+The first and only argument is an integer A.
+
+Output Format
+Return 1 if integer A is COLORFUL else return 0.
+
+Example Input
+Input 1:
+A = 23
+Input 2:
+A = 236
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+Possible Sub-sequences: [2, 3, 23] where
+2 -> 2 
+3 -> 3
+23 -> 6  (product of digits)
+This number is a COLORFUL number since product of every digit of a sub-sequence are different. 
+Explanation 2:
+Possible Sub-sequences: [2, 3, 6, 23, 36, 236] where
+2 -> 2 
+3 -> 3
+6 -> 6
+23 -> 6  (product of digits)
+36 -> 18  (product of digits)
+236 -> 36  (product of digits)
+This number is not a COLORFUL number since the product sequence 23  and sequence 6 is same. 
+
+Solution -
+
+class Solution:
+	# @param A : integer
+	# @return an integer
+	def colorful(self, A):
+        A = str(A)
+        l = []
+        for i in range(len(A)):
+            for j in range(i+1,len(A)+1):
+                l.append(A[i:j])
+
+        l_prod = []
+        for i in l:
+            prod = 1
+            for j in i:
+                prod = prod*int(j)
+            l_prod.append(prod)
+
+        if len(l_prod) == len(set(l_prod)):
+            return 1
+        return 0         
+
+#######################################################################################################################
+
+Q9. Subarray with given sum
+
+Problem Description
+Given an array of positive integers A and an integer B, find and return first continuous subarray which adds to B.
+If the answer does not exist return an array with a single integer "-1".
+First sub-array means the sub-array for which starting index in minimum.
+
+Problem Constraints
+1 <= length of the array <= 100000
+1 <= A[i] <= 109
+1 <= B <= 109
+
+Input Format
+The first argument given is the integer array A.
+The second argument given is integer B.
+
+Output Format
+Return the first continuous sub-array which adds to B and if the answer does not exist return an array with a single integer "-1".
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5]
+B = 5
+Input 2:
+A = [5, 10, 20, 100, 105]
+B = 110
+
+Example Output
+Output 1:
+[2, 3]
+Output 2:
+[-1]
+
+Example Explanation
+Explanation 1:
+[2, 3] sums up to 5.
+Explanation 2:
+
+ No subarray sums up to required number.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return a list of integers
+    def solve(self, A, B):
+        pf = []
+        summ = 0
+        for i in A:
+            summ += i
+            pf.append(summ)
+        for i in range(len(pf)):
+            if pf[i] == B:
+                start=0
+                end=i
+                return A[start:end+1]
+            if pf[i]-B in dic:
+                start=dic[pf[i]-B]+1
+                end=i
+                return A[start:end+1]
+            if pf[i]-B not in dic:
+                dic[pf[i]]=i
+        return [-1]
+
+#######################################################################################################################
+
+Q10. Diffk II
+
+Problem Description
+Given an array A of integers and another non negative integer B .
+Find if there exists 2 indices i and j such that A[i] - A[j] = B and i != j.
+
+Problem Constraints
+1 <= |A| <= 106
+0 <= A[i] <= 109
+0 <= B <= 109
+
+Input Format
+First argument A is an array of integer
+Second argument B is an integer
+
+Output Format
+Return 1 if two such indexes are found and 0 otherwise
+
+Example Input
+Input 1:
+A = [1, 5, 3]
+B = 2
+Input 2:
+A = [2, 4, 3]
+B = 3
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+For Input 1:
+The given value of A[1] = 1 and A[3] = 3.
+The value of A[3] - A[1] = 2.
+For Input 2:
+There are no pairs such that difference is B.
+
+Solution - 
+
+class Solution:
+# @param A : tuple of integers
+# @param B : integer
+# @return an integer
+def diffPossible(self, A, B):
+      s = set()
+      for i in range(len(A)):
+          b1, b2 = A[i] + B, A[i] - B
+          if b1 in s:
+              return 1
+          if b2 in s:
+              return 1    
+          s.add(A[i])
+      return 0        
+      
+#######################################################################################################################
+
+Q11. Distinct Numbers in Window
+
+Problem Description
+You are given an array of N integers, A1, A2 ,..., AN and an integer B. Return the of count of distinct numbers in all windows of size B.
+Formally, return an array of size N-B+1 where i'th element in this array contains number of distinct elements in sequence Ai, Ai+1 ,..., Ai+B-1.
+NOTE: if B > N, return an empty array.
+
+Problem Constraints
+1 <= N <= 106
+1 <= A[i] <= 109
+
+Input Format
+First argument is an integer array A
+Second argument is an integer B.
+
+Output Format
+Return an integer array.
+
+Example Input
+Input 1:
+A = [1, 2, 1, 3, 4, 3]
+B = 3
+Input 2:
+ A = [1, 1, 2, 2]
+ B = 1
+
+Example Output
+Output 1:
+[2, 3, 3, 2]
+Output 2:
+[1, 1, 1, 1]
+
+Example Explanation
+Explanation 1:
+A=[1, 2, 1, 3, 4, 3] and B = 3
+All windows of size B are
+[1, 2, 1]
+[2, 1, 3]
+[1, 3, 4]
+[3, 4, 3]
+So, we return an array [2, 3, 3, 2].
+Explanation 2:
+Window size is 1, so the output array is [1, 1, 1, 1].
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return a list of integers
+    def dNums(self, A, B):
+        N = len(A)
+        hashm = {}
+        res = []
+        for j in range(B):
+            if A[j] not in hashm:
+                hashm[A[j]] = 1
+            else:
+                hashm[A[j]] += 1
+               
+        res.append(len(hashm))
+
+        for i in range(N-B):
+            if A[i] in hashm:
+                if hashm[A[i]] == 1:
+                    del hashm[A[i]]
+                else:
+                    hashm[A[i]] -= 1
+            if A[i+B] not in hashm:
+                hashm[A[i+B]] = 1
+            else:
+                hashm[A[i+B]] += 1
+            res.append(len(hashm))
+        return res
+
+#######################################################################################################################
+
+Q12. 2 Sum
+
+Problem Description
+Given an array of integers, find two numbers such that they add up to a specific target number.
+The function twoSum should return indices of the two numbers such that they add up to the target, where index1 < index2. Please note that your returned answers (both index1 and index2 ) are not zero-based. Put both these numbers in order in an array and return the array from your function ( Looking at the function signature will make things clearer ). Note that, if no pair exists, return empty list.
+If multiple solutions exist, output the one where index2 is minimum. If there are multiple solutions with the minimum index2, choose the one with minimum index1 out of them.
+
+Input: [2, 7, 11, 15], target=9
+Output: index1 = 1, index2 = 2  
+
+Solution -
+
+class Solution:
+	# @param A : tuple of integers
+	# @param B : integer
+	# @return a list of integers
+	def twoSum(self, A, B):
+      dic = {}
+      for i in range(len(A)):
+          b = B-A[i]
+          if b in dic:
+              return [dic[b]+1,i+1]
+          if A[i] in dic:
+              continue    
+          dic[A[i]] = i
+      return []
+
+#######################################################################################################################
+
+Q13. Is Dictionary?
+
+Problem Description
+Surprisingly, in an alien language, they also use English lowercase letters, but possibly in a different order. The order of the alphabet is some permutation of lowercase letters.
+Given an array of words A of size N written in the alien language, and the order of the alphabet denoted by string B of size 26, return 1 if and only if the given words are sorted lexicographically in this alien language else, return 0.
+
+Problem Constraints
+1 <= N, length of each word <= 105
+Sum of the length of all words <= 2 * 106
+
+Input Format
+The first argument is a string array A of size N.
+The second argument is a string B of size 26, denoting the order.
+
+Output Format
+Return 1 if and only if the given words are sorted lexicographically in this alien language else, return 0.
+
+Example Input
+Input 1:
+A = ["hello", "scaler", "interviewbit"]
+B = "adhbcfegskjlponmirqtxwuvzy"
+Input 2:
+A = ["fine", "none", "bush"]
+B = "qwertyuiopasdfghjklzxcvbnm"
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+The order shown in string B is: h < s < i (adhbcfegskjlponmirqtxwuvzy) for the given words. 
+So, Return 1.
+Explanation 2:
+"none" should be present after "bush", Since b < n (qwertyuiopasdfghjklzxcvbnm). 
+So, Return 0.
+
+Solution -
+
+class Solution:
+    # @param A : list of strings
+    # @param B : string
+    # @return an integer
+    def find_Smaller(s1,s2,B):
+        d = {}
+        m = 1
+        for i in B:
+            d[i] = m
+            m += 1
+
+        l = min(len(s1),len(s2))
+        for i in range(l):
+            if s1[i] == s2[i]:
+                continue
+            if d[s1[i]] > d[s2[i]]:
+                return s2
+            if d[s1[i]] < d[s2[i]]:
+                return s1
+        if len(s1) > len(s2):
+            return s2
+        return s1
+
+    def solve(self, A, B):
+        correct_order = True
+
+        for i in range(1,len(A)):
+            s1,s2 = A[i-1],A[i]
+            if Solution.find_Smaller(s1,s2,B) == s1:
+                continue
+            else:
+                correct_order = False
+
+        if correct_order == True:
+            return 1
+        return 0
+
+#######################################################################################################################
+
+Q14. Pairs With Given Xor
+
+Problem Description
+Given an integer array A containing N distinct integers.
+Find the number of unique pairs of integers in the array whose XOR is equal to B.
+NOTE:
+Pair (a, b) and (b, a) is considered to be the same and should be counted once.
+
+Problem Constraints
+1 <= N <= 105
+1 <= A[i], B <= 107
+
+Input Format
+The first argument is an integer array A.
+The second argument is an integer B.
+
+Output Format
+Return a single integer denoting the number of unique pairs of integers in the array A whose XOR is equal to B.
+
+Example Input
+Input 1:
+A = [5, 4, 10, 15, 7, 6]
+B = 5
+Input 2:
+A = [3, 6, 8, 10, 15, 50]
+B = 5
+
+Example Output
+Output 1:
+1
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+(10 ^ 15) = 5
+Explanation 2:
+(3 ^ 6) = 5 and (10 ^ 15) = 5
+
+Solution -
+
+class Solution:
+  # @param A : list of integers
+  # @param B : integer
+  # @return an integer
+  def solve(self, A, B):
+      s = set()
+      c = 0
+      for i in A:
+          b = i^B
+          if b in s:
+              c += 1
+          s.add(i)    
+      return c
+
+#######################################################################################################################
+
+Q15. Valid Sudoku
+
+Determine if a Sudoku is valid, according to: http://sudoku.com.au/TheRules.aspx
+The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
+The input corresponding to the above configuration :
+["53..7....", "6..195...", ".98....6.", "8...6...3", "4..8.3..1", "7...2...6", ".6....28.", "...419..5", "....8..79"]
+A partially filled sudoku which is valid.
+Note:
+A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.
+Return 0 / 1 ( 0 for false, 1 for true ) for this problem
+
+Solution -
+
+class Solution:
+  # @param A : tuple of strings
+  # @return an integer
+  def isValidSudoku(self, A):
+      # Case 1: check in each 3X3 sudoku
+      for i in range(0, 9, 3):
+          for j in range(0, 9, 3):
+              """
+              i, j gives us the starting co-ordinates of each 3X3 sudoku 
+              """
+              numSet = set()
+              for r in range(i, i+3):
+                  for c in range(j, j+3):
+                      if A[r][c]!='.' and A[r][c] in numSet:
+                          return 0
+                      else:
+                          numSet.add(A[r][c])
+
+      # Case 2: check in each row 
+      for r in range(0, 9):
+          numSet.clear()
+          for c in range(0, 9):
+              if A[r][c]!='.' and A[r][c] in numSet:
+                  return 0
+              else:
+                  numSet.add(A[r][c]) 
+    
+      # Case 3: check in each column
+      for c in range (0,9):
+          numSet.clear()
+          for r in range(0, 9):
+              if A[r][c]!='.' and A[r][c] in numSet:
+                  return 0
+              else:
+                  numSet.add(A[r][c])     
+
+  
+
+      return 1
