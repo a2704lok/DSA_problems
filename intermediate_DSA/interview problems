@@ -1,0 +1,252 @@
+Q1. Length of longest consecutive ones
+
+Given a binary string A. It is allowed to do at most one swap between any 0 and 1. Find and return the length of the longest consecutive 1’s that can be achieved.
+
+Input Format
+The only argument given is string A.
+
+Output Format
+Return the length of the longest consecutive 1’s that can be achieved.
+
+Constraints
+1 <= length of string <= 1000000
+A contains only characters 0 and 1.
+
+For Example
+Input 1:
+    A = "111000"
+Output 1:
+    3
+Input 2:
+    A = "111011101"
+Output 2:
+    7
+
+Solution -
+
+class Solution:
+    # @param A : string
+    # @return an integer
+    def solve(self, A):
+        n = len(A)
+        c = 0
+        for i in range(n):
+            if A[i] == '1':
+                c = c+1
+
+        if c == n:
+            return n
+            
+        ans = 0
+        for i in range(n):
+            if A[i] == '1':
+                continue
+            l = 0
+            for j in range(i-1,-1,-1):
+                if A[j] == '1':
+                    l+=1
+                else:
+                    break
+
+            r = 0
+            for j in range(i+1,n,1):
+                if A[j] == '1':
+                    r+=1
+                else:
+                    break                    
+
+            if l+r == c:
+                ones = l+r
+            else:
+                ones = l+r+1
+            ans = max(ans,ones) 
+        return ans
+
+########################################################################################################################
+
+Q2. Christmas Trees
+
+Problem Description
+You are given an array A consisting of heights of Christmas trees and an array B of the same size consisting of the cost of each of the trees (Bi is the cost of tree Ai, where 1 ≤ i ≤ size(A)), and you are supposed to choose 3 trees (let's say, indices p, q, and r), such that Ap < Aq < Ar, where p < q < r.
+The cost of these trees is Bp + Bq + Br.
+You are to choose 3 trees such that their total cost is minimum. Return that cost.
+If it is not possible to choose 3 such trees return -1.
+
+Problem Constraints
+1 <= A[i], B[i] <= 109
+3 <= size(A) = size(B) <= 3000
+
+Input Format
+First argument is an integer array A.
+Second argument is an integer array B.
+
+Output Format
+Return an integer denoting the minimum cost of choosing 3 trees whose heights are strictly in increasing order, if not possible, -1.
+
+Example Input
+Input 1:
+A = [1, 3, 5]
+B = [1, 2, 3]
+Input 2:
+A = [1, 6, 4, 2, 6, 9]
+B = [2, 5, 7, 3, 2, 7]
+
+Example Output
+Output 1:
+6 
+Output 2:
+7 
+
+Example Explanation
+Explanation 1:
+We can choose the trees with indices 1, 2 and 3, and the cost is 1 + 2 + 3 = 6. 
+Explanation 2:
+We can choose the trees with indices 1, 4 and 5, and the cost is 2 + 3 + 2 = 7. 
+This is the minimum cost that we can get.
+
+Solution -
+
+# for more explanation check: https://www.geeksforgeeks.org/minimum-cost-of-choosing-3-increasing-elements-in-an-array-of-size-n/
+class Solution:
+    # @param A : list of integers
+    # @param B : list of integers
+    # @return an integer
+    def solve(self, A, B):
+        N = len(A)
+        min_total_sum = 10**9
+        for i in range(1, N-1):
+            j = i
+            k = i
+            min_left_sum  = 10**9
+           
+            while j > 0:
+                if A[i] > A[j-1]:
+                    left_sum = B[i] + B[j-1]
+                    min_left_sum= min(min_left_sum, left_sum)
+                j = j -1
+            min_right_sum = 10**9
+            while k <= N-2:
+                if A[k+1] > A[i]:
+                    min_right_sum = min(min_right_sum, B[k+1])
+                     
+                k = k +1  
+            min_total_sum = min(min_total_sum, (min_right_sum+min_left_sum))
+        if min_total_sum == 1000000000:
+            return -1
+        return min_total_sum 
+
+########################################################################################################################
+
+Q3. Maximum positivity
+
+Problem Description
+Given an array of integers A, of size N.
+Return the maximum size subarray of A having only non-negative elements. If there are more than one such subarray, return the one having the smallest starting index in A.
+NOTE: It is guaranteed that an answer always exists.
+
+Problem Constraints
+1 <= N <= 105
+-109 <= A[i] <= 109
+
+Input Format
+The first and only argument given is the integer array A.
+
+Output Format
+Return maximum size subarray of A having only non-negative elements. If there are more than one such subarrays, return the one having earliest starting index in A.
+
+Example Input
+Input 1:
+A = [5, 6, -1, 7, 8]
+Input 2:
+A = [1, 2, 3, 4, 5, 6]
+
+Example Output
+Output 1:
+[5, 6]
+Output 2:
+[1, 2, 3, 4, 5, 6]
+
+Example Explanation
+Explanation 1:
+There are two subarrays of size 2 having only non-negative elements.
+1. [5, 6]  starting point  = 0
+2. [7, 8]  starting point  = 3
+As starting point of 1 is smaller, return [5, 6]
+Explanation 2:
+There is only one subarray of size 6 having only non-negative elements:
+[1, 2, 3, 4, 5, 6]
+
+solution -
+
+class Solution:
+# @param A : list of integers
+# @return a list of integers
+
+    def solve(self, A):
+        max_len_here=0
+        max_len_sofar=0
+   
+        for i in range(len(A)):
+            if A[i]>0:                
+                max_len_here+=1     # if element is positive count and store max length
+                if max_len_here> max_len_sofar: #Compare curr len with max len so far
+                    max_len_sofar= max_len_here
+                    start_index= i-max_len_here+1
+            else:
+                max_len_here=0
+        return A[start_index : start_index +max_len_sofar]
+
+########################################################################################################################
+
+Q4. Star Pattern I
+
+Problem Description
+Write a program to input an integer N from user and print hollow diamond star pattern series of N lines.
+See example for clarifications over the pattern.
+
+Problem Constraints
+1 <= N <= 1000
+
+Input Format
+First line is an integer N
+
+Output Format
+N lines conatining only char '*' as per the question.
+
+Example Input
+Input 1:
+4
+Input 2:
+6
+
+Example Output
+Output 1:
+********
+***  ***
+**    **
+*      *
+*      *
+**    **
+***  ***
+********
+Output 2:
+************
+*****  *****
+****    ****
+***      ***
+**        **
+*          *
+*          *
+**        **
+***      ***
+****    ****
+*****  *****
+************
+
+Solution -
+
+n = int(input())
+for i in range(n,0,-1):
+    print(("*"*i+" "*(n-i))+("*"*i+" "*(n-i))[::-1])
+for i in range(1,n+1,1):
+    print(("*"*i+" "*(n-i))+("*"*i+" "*(n-i))[::-1])
