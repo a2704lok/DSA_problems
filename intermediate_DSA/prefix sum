@@ -1,0 +1,396 @@
+Q1. Equilibrium index of an array
+
+Problem Description
+You are given an array A of integers of size N.
+Your task is to find the equilibrium index of the given array
+The equilibrium index of an array is an index such that the sum of elements at lower indexes is equal to the sum of elements at higher indexes.
+If there are no elements that are at lower indexes or at higher indexes, then the corresponding sum of elements is considered as 0.
+Note:
+Array indexing starts from 0.
+If there is no equilibrium index then return -1.
+If there are more than one equilibrium indexes then return the minimum index.
+
+Problem Constraints
+1 <= N <= 105
+-105 <= A[i] <= 105
+
+Input Format
+First arugment is an array A .
+
+Output Format
+Return the equilibrium index of the given array. If no such index is found then return -1.
+
+Example Input
+Input 1:
+A = [-7, 1, 5, 2, -4, 3, 0]
+Input 2:
+A = [1, 2, 3]
+
+Example Output
+Output 1:
+3
+Output 2:
+-1
+
+Example Explanation
+Explanation 1:
+i   Sum of elements at lower indexes    Sum of elements at higher indexes
+0                   0                                   7
+1                  -7                                   6
+2                  -6                                   1
+3                  -1                                  -1
+4                   1                                   3
+5                  -3                                   0
+6                   0                                   0
+
+3 is an equilibrium index, because: 
+A[0] + A[1] + A[2] = A[4] + A[5] + A[6]
+Explanation 1:
+
+i   Sum of elements at lower indexes    Sum of elements at higher indexes
+0                   0                                   5
+1                   1                                   3
+2                   3                                   0
+Thus, there is no such index.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        n = len(A)
+        pf = [0]*n
+        pf[0] = A[0]
+        for i in range(1,n):
+            pf[i] = pf[i-1]+A[i]
+
+        idx = None
+
+        for i in range(n):
+            if i == 0:
+                leftsum = 0
+            else:
+                leftsum = pf[i-1]
+
+            rightsum = pf[n-1]-pf[i]
+
+            if leftsum == rightsum:
+                idx = i
+
+        if idx == None:
+            return -1
+        else:
+            return idx
+
+######################################################################################################################
+
+Q2. Special Index
+
+Problem Description
+Given an array, arr[] of size N, the task is to find the count of array indices such that removing an element from these indices makes the sum of even-indexed and odd-indexed array elements equal.
+
+Problem Constraints
+1 <= N <= 105
+-105 <= A[i] <= 105
+Sum of all elements of A <= 109
+
+Input Format
+First argument contains an array A of integers of size N
+
+Output Format
+Return the count of array indices such that removing an element from these indices makes the sum of even-indexed and odd-indexed array elements equal.
+
+Example Input
+Input 1:
+A = [2, 1, 6, 4]
+Input 2:
+A = [1, 1, 1]
+
+Example Output
+Output 1:
+1
+Output 2:
+3
+
+Example Explanation
+Explanation 1:
+Removing arr[1] from the array modifies arr[] to { 2, 6, 4 } such that, arr[0] + arr[2] = arr[1]. 
+Therefore, the required output is 1. 
+Explanation 2:
+Removing arr[0] from the given array modifies arr[] to { 1, 1 } such that arr[0] = arr[1] 
+Removing arr[1] from the given array modifies arr[] to { 1, 1 } such that arr[0] = arr[1] 
+Removing arr[2] from the given array modifies arr[] to { 1, 1 } such that arr[0] = arr[1] 
+Therefore, the required output is 3.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        n = len(A)
+        pfeven = [0]*n
+        pfeven[0] = A[0]
+        for i in range(1,n):
+            if i&1 == 1:  #odd condition
+                pfeven[i] = pfeven[i-1]
+            else:
+                pfeven[i] = pfeven[i-1]+A[i]
+
+        pfodd = [0]*n
+        pfodd[0] = 0
+        pfodd[1] = A[1]
+        for i in range(2,n):
+            if i&1 == 1:
+                pfodd[i] = pfodd[i-1]+A[i]
+            else:
+                pfodd[i] = pfodd[i-1]
+
+
+        count = 0
+
+        for i in range(n):
+            if i == 0:
+                s_even = pfodd[n-1] - pfodd[i]
+                s_odd =  pfeven[n-1] - pfeven[i]
+                if s_even == s_odd:
+                    count += 1                
+
+            else:
+                s_even = pfeven[i-1]+pfodd[n-1] - pfodd[i]
+                s_odd =  pfodd[i-1]+pfeven[n-1] - pfeven[i]
+                if s_even == s_odd:
+                    count += 1
+
+        return count   
+
+######################################################################################################################
+
+Q3. Pick from both sides!
+
+Problem Description
+You are given an integer array A of size N.
+You have to perform B operations. In one operation, you can remove either the leftmost or the rightmost element of the array A.
+Find and return the maximum possible sum of the B elements that were removed after the B operations.
+NOTE: Suppose B = 3, and array A contains 10 elements, then you can:
+
+Remove 3 elements from front and 0 elements from the back, OR
+Remove 2 elements from front and 1 element from the back, OR
+Remove 1 element from front and 2 elements from the back, OR
+Remove 0 elements from front and 3 elements from the back.
+
+Problem Constraints
+1 <= N <= 105
+1 <= B <= N
+-103 <= A[i] <= 103
+
+Input Format
+First argument is an integer array A.
+Second argument is an integer B.
+
+Output Format
+Return an integer denoting the maximum possible sum of elements you removed.
+
+Example Input
+Input 1:
+A = [5, -2, 3 , 1, 2]
+B = 3
+Input 2:
+A = [ 2, 3, -1, 4, 2, 1 ]
+B = 4
+
+Example Output
+Output 1:
+8
+Output 2:
+9
+
+Example Explanation
+Explanation 1:
+Remove element 5 from front and element (1, 2) from back so we get 5 + 1 + 2 = 8
+Explanation 2:
+Remove the first element and the last 3 elements. So we get 2 + 4 + 2 + 1 = 9
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        n = len(A)
+        pf = [0]*n
+        pf[0] = A[0]
+        for i in range(1,n):
+            pf[i] = pf[i-1]+A[i]
+
+        sf = [0]*n
+        sf[n-1] = A[n-1]
+        for i in range(n-2,0,-1):
+            sf[i] = sf[i+1]+A[i]
+        sf[0] = sf[1]+A[0]
+
+        summ = float('-Infinity')
+        value = 0
+        for i in range(B+1):
+            if i == 0:
+                value = 0+sf[n-B+i]
+            elif i == B:
+                value = pf[i-1]+0
+            else:
+                value = pf[i-1]+sf[-(B-i)]        
+            if value >= summ:
+                summ = value
+        return summ
+
+######################################################################################################################
+
+Q4. Range Sum Query
+
+Problem Description
+You are given an integer array A of length N.
+You are also given a 2D integer array B with dimensions M x 2, where each row denotes a [L, R] query.
+For each query, you have to find the sum of all elements from L to R indices in A (0 - indexed).
+More formally, find A[L] + A[L + 1] + A[L + 2] +... + A[R - 1] + A[R] for each query.
+
+Problem Constraints
+1 <= N, M <= 105
+1 <= A[i] <= 109
+0 <= L <= R < N
+
+Input Format
+The first argument is the integer array A.
+The second argument is the 2D integer array B.
+
+Output Format
+Return an integer array of length M where ith element is the answer for ith query in B.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5]
+B = [[0, 3], [1, 2]]
+Input 2:
+A = [2, 2, 2]
+B = [[0, 0], [1, 2]]
+
+Example Output
+Output 1:
+[10, 5]
+Output 2:
+[2, 4]
+
+Example Explanation
+Explanation 1:
+The sum of all elements of A[0 ... 3] = 1 + 2 + 3 + 4 = 10.
+The sum of all elements of A[1 ... 2] = 2 + 3 = 5.
+Explanation 2:
+The sum of all elements of A[0 ... 0] = 2 = 2.
+The sum of all elements of A[1 ... 2] = 2 + 2 = 4.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : list of list of integers
+    # @return an list of long
+    def rangeSum(self, A, B):
+        pf_A = [0]*(len(A))
+        pf_A[0] = A[0]
+        for i in range(1,len(A)):
+            pf_A[i] = pf_A[i-1]+A[i]
+
+        output_l = []
+        summ = 0        
+        for i in range(len(B)):
+            B[i][0] = B[i][0] - 1
+            B[i][1] = B[i][1] - 1
+
+            if B[i][0]>0:
+                summ = pf_A[B[i][1]] - pf_A[B[i][0]-1] 
+            else:
+                summ = pf_A[B[i][1]]
+            output_l.append(summ)
+        return output_l         
+
+######################################################################################################################
+
+Q5. Time to equality
+
+Problem Description
+Given an integer array A of size N. In one second, you can increase the value of one element by 1.
+Find the minimum time in seconds to make all elements of the array equal.
+
+Problem Constraints
+1 <= N <= 1000000
+1 <= A[i] <= 1000
+
+Input Format
+First argument is an integer array A.
+
+Output Format
+Return an integer denoting the minimum time to make all elements equal.
+
+Example Input
+A = [2, 4, 1, 3, 2]
+
+Example Output
+8
+
+Example Explanation
+We can change the array A = [4, 4, 4, 4, 4]. The time required will be 8 seconds.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        maxx_a = max(A)
+        n = len(A)
+        return maxx_a*n-sum(A)
+
+######################################################################################################################
+
+Q6. Product array puzzle
+
+Given an array of integers A, find and return the product array of the same size where the ith element of the product array will be equal to the product of all the elements divided by the ith element of the array.
+Note: It is always possible to form the product array with integer (32 bit) values. Solve it without using the division operator.
+
+Input Format
+The only argument given is the integer array A.
+
+Output Format
+Return the product array.
+
+Constraints
+2 <= length of the array <= 1000
+1 <= A[i] <= 10
+
+For Example
+Input 1:
+A = [1, 2, 3, 4, 5]
+Output 1:
+[120, 60, 40, 30, 24]
+
+Input 2:
+A = [5, 1, 10, 1]
+Output 2:
+[10, 50, 5, 50]
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return a list of integers
+    def solve(self, A):
+        prod = 1
+        for i in A:
+            prod = prod*i
+        
+        l = [int(prod/x) for x in A]
+
+        return l
+
+
+
