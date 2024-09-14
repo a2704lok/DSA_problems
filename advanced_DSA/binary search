@@ -1,0 +1,1072 @@
+Q1. Sorted Insert Position
+
+Problem Description
+You are given a sorted array A of size N and a target value B.
+Your task is to find the index (0-based indexing) of the target value in the array.
+If the target value is present, return its index.
+If the target value is not found, return the index of least element greater than equal to B.
+If the target value is not found and least number greater than equal to target is also not present, return the length of array (i.e. the position where target can be placed)
+Your solution should have a time complexity of O(log(N)).
+
+Problem Constraints
+1 <= N <= 105
+1 <= A[i] <= 105
+1 <= B <= 105
+
+Input Format
+The first argument is an integer array A of size N.
+The second argument is an integer B.
+
+Output Format
+Return an integer denoting the index of target value.
+
+Example Input
+Input 1:
+A = [1, 3, 5, 6]
+B = 5 
+Input 2:
+A = [1, 4, 9]
+B = 3
+
+Example Output
+Output 1:
+2 
+Output 2:
+1
+
+Example Explanation
+Explanation 1:
+The target value is present at index 2. 
+Explanation 2:
+The target value should be inserted at index 1.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def searchInsert(self, A, B):
+        s = 0
+        e = len(A)-1
+        m = 0
+        while e >= s:
+            m = (s+e)//2
+            if A[m] == B:
+                return m
+
+            if A[m] > B:
+                e = m-1
+                m = (s+e)//2
+
+            else:
+                s = m+1
+                m = (s+e)//2
+
+        return m+1 
+
+########################################################################################################################
+
+Q2. Find a peak element
+
+Problem Description
+Given an array of integers A, find and return the peak element in it.
+An array element is considered a peak if it is not smaller than its neighbors. For corner elements, we need to consider only one neighbor.
+NOTE:
+It is guaranteed that the array contains only a single peak element.
+Users are expected to solve this in O(log(N)) time. The array may contain duplicate elements.
+
+Problem Constraints
+1 <= |A| <= 100000
+1 <= A[i] <= 109
+
+Input Format
+The only argument given is the integer array A.
+
+Output Format
+Return the peak element.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5]
+Input 2:
+A = [5, 17, 100, 11]
+
+Example Output
+Output 1:
+5
+Output 2:
+100
+
+Example Explanation
+Explanation 1:
+5 is the peak.
+Explanation 2:
+100 is the peak.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        # N = len(A)
+
+        # Linear Search 
+        
+        # A.append(float("-inf"))
+        # for i in range(1, len(A)):
+        #     if A[i] >= A[i - 1] and A[i] >= A[i + 1]: return A[i]
+        # return A[0]
+        
+        # Binary search
+        l = 0
+        r = len(A) - 1
+        while l < r:
+            mid = (l+r)//2 
+            if A[mid+1] > A[mid]:
+                l = mid + 1
+            else:
+                r = mid
+        return A[l]
+
+########################################################################################################################
+
+Q3. Search for a Range
+
+Problem Description
+Given a sorted array of integers A (0-indexed) of size N, find the left most and the right most index of a given integer B in the array A.
+Return an array of size 2, such that 
+          First element = Left most index of B in A
+          Second element = Right most index of B in A.
+If B is not found in A, return [-1, -1].
+Note : Note: The time complexity of your algorithm must be O(log n)..
+
+Problem Constraints
+1 <= N <= 106
+1 <= A[i], B <= 109
+
+Input Format
+The first argument given is the integer array A.
+The second argument given is the integer B.
+
+Output Format
+Return the left most and right most index (0-based) of B in A as a 2-element array. If B is not found in A, return [-1, -1].
+
+Example Input
+Input 1:
+A = [5, 7, 7, 8, 8, 10]
+B = 8
+Input 2:
+A = [5, 17, 100, 111]
+B = 3
+
+Example Output
+Output 1:
+[3, 4]
+Output 2:
+[-1, -1]
+
+Example Explanation
+Explanation 1:
+The first occurrence of 8 in A is at index 3.
+The last occurrence of 8 in A is at index 4.
+ans = [3, 4]
+Explanation 2:
+There is no occurrence of 3 in the array.
+
+Solution -
+
+class Solution:
+    # @param A : tuple of integers
+    # @param B : integer
+    # @return a list of integers
+    def searchRange(self, A, B):
+        n = len(A)
+        C = [-1,-1]
+        l = 0
+        h = n-1
+        while(l<=h):
+            m = (l+h)//2
+            if A[m] == B:
+                C[0] = m
+                h = m-1
+            elif A[m] < B:
+                l = m+1
+            else:
+                h = m-1
+        l = 0
+        h = n-1
+        while(l<=h):
+            m = (l+h)//2
+            if A[m] == B:
+                C[1] = m
+                l = m+1
+            elif A[m] < B:
+                l = m+1
+            else:
+                h = m-1
+        return C
+
+########################################################################################################################
+
+Q4. Matrix Search
+
+Problem Description
+Given a matrix of integers A of size N x M and an integer B. Write an efficient algorithm that searches for integer B in matrix A.
+This matrix A has the following properties:
+Integers in each row are sorted from left to right.
+The first integer of each row is greater than or equal to the last integer of the previous row.
+Return 1 if B is present in A, else return 0.
+NOTE: Rows are numbered from top to bottom, and columns are from left to right.
+
+Problem Constraints
+1 <= N, M <= 1000
+1 <= A[i][j], B <= 106
+
+Input Format
+The first argument given is the integer matrix A.
+The second argument given is the integer B.
+
+Output Format
+Return 1 if B is present in A else, return 0.
+
+Example Input
+Input 1:
+A = [ 
+      [1,   3,  5,  7]
+      [10, 11, 16, 20]
+      [23, 30, 34, 50]  
+    ]
+B = 3
+Input 2:
+A = [   
+    [5, 17, 100, 111]
+    [119, 120, 127, 131]    
+  ]
+B = 3
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+3 is present in the matrix at A[0][1] position so return 1.
+Explanation 2:
+3 is not present in the matrix so return 0.
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    # @param B : integer
+    # @return an integer
+    def searchMatrix(self, A, B):
+        r = len(A)
+        c = len(A[0])
+        l = []
+        for i in range(r):
+            l.extend(A[i])
+
+        s = 0
+        e = len(l)-1
+        m = 0
+        ans = 0
+        while e >= s:
+            m = (s+e)//2
+            if l[m] == B:
+                ans = 1
+            if l[m] > B:
+                e = m-1
+            else:
+                s = m+1
+        return ans
+
+########################################################################################################################
+
+Q5. Search in Bitonic Array!
+
+Problem Description
+Given a bitonic sequence A of N distinct elements, write a program to find a given element B in the bitonic sequence in O(logN) time.
+NOTE:
+A Bitonic Sequence is a sequence of numbers which is first strictly increasing then after a point strictly decreasing.
+
+Problem Constraints
+3 <= N <= 105
+1 <= A[i], B <= 108
+Given array always contain a bitonic point.
+Array A always contain distinct elements.
+
+Input Format
+First argument is an integer array A denoting the bitonic sequence.
+Second argument is an integer B.
+
+Output Format
+Return a single integer denoting the position (0 index based) of the element B in the array A if B doesn't exist in A return -1.
+
+Example Input
+Input 1:
+A = [3, 9, 10, 20, 17, 5, 1]
+B = 20
+Input 2:
+A = [5, 6, 7, 8, 9, 10, 3, 2, 1]
+B = 30
+
+Example Output
+Output 1:
+3
+Output 2:
+-1
+
+Example Explanation
+Explanation 1:
+B = 20 present in A at index 3
+Explanation 2:
+B = 30 is not present in A
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        s = 0
+        e = len(A) - 1
+        n = len(A)
+
+    # find point of change in order
+        while s <= e :
+            mid = (s+e) // 2
+            if A[mid] > A[mid+1] and A[mid] > A[mid-1] :
+                poc = mid
+                break
+            elif A[mid] < A[mid+1] :
+                s = mid + 1
+            elif A[mid] <= A[mid-1] :
+                e = mid - 1
+       
+    #search space before point of change
+        l = 0
+        r = poc - 1
+        while l <= r :
+            mid = (l+r) // 2
+            if A[mid] == B :
+                return mid
+            elif A[mid] < B :
+                l = mid + 1
+            else :
+                r = mid - 1
+
+    #search space after point of change
+        l = poc
+        r = n - 1
+        while l <= r :
+            mid = (l+r) // 2
+            if A[mid] == B :
+                return mid
+            elif A[mid] < B :
+                r = mid - 1
+            else :
+                l = mid + 1
+        return -1
+        
+########################################################################################################################
+
+Q6. Square Root of Integer
+
+Problem Description
+Given an integer A. Compute and return the square root of A.
+If A is not a perfect square, return floor(sqrt(A)).
+NOTE: 
+   The value of A*A can cross the range of Integer.
+   Do not use the sqrt function from the standard library. 
+   Users are expected to solve this in O(log(A)) time.
+
+Problem Constraints
+0 <= A <= 109
+
+Input Format
+The first and only argument given is the integer A.
+
+Output Format
+Return floor(sqrt(A))
+
+Example Input
+Input 1:
+11
+Input 2:
+9
+
+Example Output
+Output 1:
+3
+Output 2:
+3
+
+Example Explanation
+Explanation 1:
+When A = 11 , square root of A = 3.316. It is not a perfect square so we return the floor which is 3.
+Explanatino 2:
+When A = 9 which is a perfect square of 3, so we return 3.
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @return an integer
+    def sqrt(self, A):
+        s = 1
+        e = A
+        ans = 1
+        if A == 0:
+            return 0
+        if A == 1:
+            return 1    
+        while s<=e:
+            m = (s+e)//2
+            if m*m == A:
+                return m
+            elif m*m > A:
+                e = m-1
+            else:
+                s = m+1
+                ans = m
+        return ans    
+
+########################################################################################################################
+
+Q7. Rotated Sorted Array Search
+
+Problem Description
+Given a sorted array of integers A of size N and an integer B, 
+where array A is rotated at some pivot unknown beforehand.
+For example, the array [0, 1, 2, 4, 5, 6, 7] might become [4, 5, 6, 7, 0, 1, 2].
+Your task is to search for the target value B in the array. If found, return its index; otherwise, return -1.
+You can assume that no duplicates exist in the array.
+NOTE: You are expected to solve this problem with a time complexity of O(log(N)).
+
+Problem Constraints
+1 <= N <= 1000000
+1 <= A[i] <= 109
+All elements in A are Distinct.
+
+Input Format
+The First argument given is the integer array A.
+The Second argument given is the integer B.
+
+Output Format
+Return index of B in array A, otherwise return -1
+
+Example Input
+Input 1:
+A = [4, 5, 6, 7, 0, 1, 2, 3]
+B = 4
+Input 2:
+A : [ 9, 10, 3, 5, 6, 8 ]
+B : 5
+
+Example Output
+Output 1:
+0 
+Output 2:
+3
+
+Example Explanation
+Explanation 1:
+Target 4 is found at index 0 in A. 
+Explanation 2:
+Target 5 is found at index 3 in A.
+
+Solution -
+
+class Solution:
+    def search(self, A, B):
+        l=0
+        n=len(A)
+        h=n-1
+        ans=n
+        while(l<=h):
+            mid=(l+h)//2
+            if A[0]>A[mid]:
+                ans=mid
+                h=mid-1
+            else:
+                l=mid+1
+
+
+        l=0
+        k=ans
+        h=k-1
+        B=int(B)
+
+        while(l<=h):
+            mid= (l+h)//2
+            if A[mid]==B:
+                return mid
+            if A[mid]<B:
+                l=mid+1
+            else:
+                h=mid-1
+
+        l=k
+        k=ans
+        h=n-1
+
+        while(l<=h):
+            mid= (l+h)//2
+            if A[mid]==B:
+                return mid
+            if A[mid]<B:
+                l=mid+1
+            else:
+                h=mid-1
+
+        return -1
+        
+########################################################################################################################
+
+Q8. Special Integer
+
+Problem Description
+Given an array of integers A and an integer B, find and return the maximum value K such that there is no subarray in A of size K with the sum of elements greater than B.
+
+Problem Constraints
+1 <= |A| <= 100000
+1 <= A[i] <= 10^9
+1 <= B <= 10^9
+
+Input Format
+The first argument given is the integer array A.
+The second argument given is integer B.
+
+Output Format
+Return the maximum value of K (sub array length).
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5]
+B = 10
+Input 2:
+A = [5, 17, 100, 11]
+B = 130
+
+Example Output
+Output 1:
+2
+Output 2:
+3
+
+Example Explanation
+Explanation 1:
+For K = 5, There are subarrays [1, 2, 3, 4, 5] which has a sum > B
+For K = 4, There are subarrays [1, 2, 3, 4], [2, 3, 4, 5] which has a sum > B
+For K = 3, There is a subarray [3, 4, 5] which has a sum > B
+For K = 2, There were no subarray which has a sum > B.
+Constraints are satisfied for maximal value of 2.
+Explanation 2:
+For K = 4, There are subarrays [5, 17, 100, 11] which has a sum > B
+For K = 3, There were no subarray which has a sum > B.
+Constraints are satisfied for maximal value of 3.
+
+Solution -
+
+class Solution:
+    def slidingwindow(self,arr,window_size,k):
+        N = len(arr)
+        cur_sum = 0
+        for i in range(window_size):
+            cur_sum += arr[i]
+            if cur_sum > k:
+                return False
+        for j in range(N - window_size):
+            cur_sum -= arr[j]
+            cur_sum += arr[j + window_size]
+            if cur_sum > k:
+                return False
+        return True    
+
+    def binarysearch(self,arr,k):
+        N = len(arr)
+        low = 0
+        high = N
+        ans = 0
+        while low <= high:
+            mid  = low + (high - low) // 2
+            if self.slidingwindow(arr,mid,k):
+                ans = mid 
+                low = mid + 1
+            else:
+                high = mid - 1
+        return ans
+
+    def solve(self, A, B):
+        res = self.binarysearch(A,B)
+        return res
+
+########################################################################################################################
+
+Q9. Single Element in Sorted Array
+
+Problem Description
+Given a sorted array of integers A where every element appears twice except for one element which appears once, find and return this single element that appears only once.
+Elements which are appearing twice are adjacent to each other.
+NOTE: Users are expected to solve this in O(log(N)) time.
+
+Problem Constraints
+1 <= |A| <= 100000
+1 <= A[i] <= 10^9
+
+Input Format
+The only argument given is the integer array A.
+
+Output Format
+Return the single element that appears only once.
+
+Example Input
+Input 1:
+A = [1, 1, 7]
+Input 2:
+A = [2, 3, 3]
+
+Example Output
+Output 1:
+7
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+7 appears once
+Explanation 2:
+2 appears once
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        n = len(A)
+        if n == 1:
+            return A[0]
+        if A[0] != A[1]:
+            return A[0]
+        if A[n-2] != A[n-1]:
+            return A[n-1]
+
+        s = 1
+        e = n-2
+        while s <= e:
+            m = (s+e)//2
+            if (A[m-1] != A[m]) & (A[m+1] != A[m]):
+                return A[m]
+
+            if A[m-1] == A[m]:
+                m = m-1
+
+            if m%2 == 0:
+                s = m+2
+            if m%2 == 1:
+                e = m-1
+########################################################################################################################
+
+Q10. Painter's Partition Problem
+
+Problem Description
+Given 2 integers A and B and an array of integers C of size N. Element C[i] represents the length of ith board.
+You have to paint all N boards [C0, C1, C2, C3 … CN-1]. There are A painters available and each of them takes B units of time to paint 1 unit of the board.
+Calculate and return the minimum time required to paint all boards under the constraints that any painter will only paint contiguous sections of the board.
+NOTE:
+1. 2 painters cannot share a board to paint. That is to say, a board cannot be painted partially by one painter, and partially by another.
+2. A painter will only paint contiguous boards. This means a configuration where painter 1 paints boards 1 and 3 but not 2 is invalid.
+
+Return the ans % 10000003.
+
+Problem Constraints
+1 <= A <= 1000
+1 <= B <= 106
+1 <= N <= 105
+1 <= C[i] <= 106
+
+Input Format
+The first argument given is the integer A.
+The second argument given is the integer B.
+The third argument given is the integer array C.
+
+Output Format
+Return minimum time required to paint all boards under the constraints that any painter will only paint contiguous sections of board % 10000003.
+
+Example Input
+Input 1:
+A = 2
+B = 5
+C = [1, 10]
+Input 2:
+A = 10
+B = 1
+C = [1, 8, 11, 3]
+
+Example Output
+Output 1:
+50
+Output 2:
+11
+
+Example Explanation
+Explanation 1:
+Possibility 1:- One painter paints both blocks, time taken = 55 units.
+Possibility 2:- Painter 1 paints block 1, painter 2 paints block 2, time take = max(5, 50) = 50
+There are no other distinct ways to paint boards.
+ans = 50 % 10000003
+Explanation 2:
+Each block is painted by a painter so, Painter 1 paints block 1, painter 2 paints block 2, painter 3 paints block 3 
+and painter 4 paints block 4, time taken = max(1, 8, 11, 3) = 11
+ans = 11 % 10000003
+
+Soluton -
+
+class Solution:
+	# @param A : integer
+	# @param B : integer
+	# @param C : list of integers
+	# @return an integer
+    def check(C,m,A):
+        s = 0
+        c = 0
+        n = len(C)
+        for i in range(n):
+            s = s + C[i]
+            if s > m:
+                c = c+1
+                s = C[i]
+            if c == A:
+                return False
+        return True            
+
+	def paint(self, A, B, C):
+        l = max(C)
+        h = sum(C)
+        ans = 0
+        while l <= h:
+            m = (l+h)//2
+            if Solution.check(C,m,A) == True:
+                ans = m
+                h = m-1
+            else:
+                l = m+1
+
+        return (ans*B)%10000003
+
+########################################################################################################################
+
+Q11. Aggressive cows
+
+Problem Description
+Farmer John has built a new long barn with N stalls. Given an array of integers A of size N where each element of the array represents the location of the stall and an integer B which represents the number of cows.
+His cows don't like this barn layout and become aggressive towards each other once put into a stall. To prevent the cows from hurting each other, John wants to assign the cows to the stalls, such that the minimum distance between any two of them is as large as possible. What is the largest minimum distance?
+
+Problem Constraints
+2 <= N <= 100000
+0 <= A[i] <= 109
+2 <= B <= N
+
+Input Format
+The first argument given is the integer array A.
+The second argument given is the integer B.
+
+Output Format
+Return the largest minimum distance possible among the cows.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5]
+B = 3
+Input 2:
+A = [1, 2]
+B = 2
+
+Example Output
+Output 1:
+2
+Output 2:
+1
+
+Example Explanation
+Explanation 1:
+John can assign the stalls at location 1, 3 and 5 to the 3 cows respectively. So the minimum distance will be 2.
+Explanation 2:
+The minimum distance will be 1.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def check(self, n, k, lis, d):
+        last_placed = lis[0]
+        c = 1
+        for i in range(1,n):
+            if lis[i] - last_placed >= d:
+                last_placed = lis[i]
+                c += 1
+                if c == k:
+                    return True
+        return False            
+
+    def solve(self, A, B):
+        A.sort()
+        n = len(A)
+        h = A[n-1]-A[0]
+        l = A[1]-A[0]
+        for i in range(2,n):
+            if A[i]-A[i-1]< l:
+                l = A[i]-A[i-1]
+        while l<=h:
+            m = int((l+h)/2)
+            if self.check(n, B, A, m) == True:
+                ans = m
+                l = m+1
+            else:
+                h = m-1
+        return ans            
+
+########################################################################################################################
+
+Q12. Allocate Books
+
+Problem Description
+Given an array of integers A of size N and an integer B.
+The College library has N books. The ith book has A[i] number of pages.
+You have to allocate books to B number of students so that the maximum number of pages allocated to a student is minimum.
+A book will be allocated to exactly one student.
+Each student has to be allocated at least one book.
+Allotment should be in contiguous order, for example: A student cannot be allocated book 1 and book 3, skipping book 2.
+Calculate and return that minimum possible number.
+NOTE: Return -1 if a valid assignment is not possible.
+
+Problem Constraints
+1 <= N <= 105
+1 <= A[i], B <= 105
+
+Input Format
+The first argument given is the integer array A.
+The second argument given is the integer B.
+
+Output Format
+Return that minimum possible number.
+
+Example Input
+Input 1:
+A = [12, 34, 67, 90]
+B = 2
+Input 2:
+A = [12, 15, 78] 
+B = 4
+
+Example Output
+Output 1:
+113
+Output 2:
+-1
+
+Example Explanation
+Explanation 1:
+
+There are two students. Books can be distributed in following fashion : 
+1)  [12] and [34, 67, 90]
+    Max number of pages is allocated to student 2 with 34 + 67 + 90 = 191 pages
+2)  [12, 34] and [67, 90]
+    Max number of pages is allocated to student 2 with 67 + 90 = 157 pages 
+3)  [12, 34, 67] and [90]
+    Max number of pages is allocated to student 1 with 12 + 34 + 67 = 113 pages
+    Of the 3 cases, Option 3 has the minimum pages = 113.
+Explanation 2:
+Each student has to be allocated at least one book.  
+But the Total number of books is less than the number of students.
+Thus each student cannot be allocated to atleast one book.
+
+Therefore, the result is -1.
+
+Solution -
+
+class Solution:
+	# @param A : list of integers
+	# @param B : integer
+	# @return an integer
+    def check(A,m,B):
+        s = 0
+        c = 0
+        n = len(A)
+        for i in range(n):
+            s = s + A[i]
+            if s > m:
+                c = c+1
+                s = A[i]
+            if c == B:
+                return False
+        return True
+
+	def books(self, A, B):
+        l = max(A)
+        h = sum(A)
+        ans = 0
+        if len(A)<B:
+            return -1
+        while l <= h:
+            m = (l+h)//2
+            if Solution.check(A,m,B) == True:
+                ans = m
+                h = m-1
+            else:
+                l = m+1
+
+        return ans 
+
+########################################################################################################################
+
+Q13. Food Packets Distribution
+
+Problem Description
+The government wants to set up B distribution offices across N cities for the distribution of food packets.
+The population of the ith city is A[i]. Each city must have at least 1 office and every person is assigned to exactly one office in their own city.
+Let M denote the minimum number of people that are assigned to any of the offices. Find the maximum value of M possible.
+
+Problem Constraints
+1 <= N <= 105
+1 <= A[i] <= 106
+1 <= B <= 5 x 105
+
+Input Format
+The first line of input contains an integer array A. 
+The second line of input contains an integer B.
+
+Output Format
+Return one integer representing the maximum number of people who can get food in any single office.
+
+Example Input
+Input 1:
+A = [10000, 22000, 36000]
+B = 6
+Input 2:
+A = [1, 1, 1]
+B = 4
+
+Example Output
+Output 1:
+10000
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+1 office can be opened in the first city,
+2 offices in the second city and
+3 in the third. This way ,
+10,000 people can get food in the office in the first city, and
+11,000 people can get food in each office in the second city and
+12,000 people can get food in third city.
+Had we alloted more in some office, we had to allot lesser in some other office which will reduce the answer.
+Explanation 2:
+We will have to allot 2 offices to one city. And one of these offices would give food to 0 people. 
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        n = len(A)
+        low, high = 1, min(A)
+        if n==B:
+            return min(A)
+        if n>B:
+            return 0
+        while low<=high:
+            mid = (low+high)//2
+            if self.isvalid(A, n, mid, B):
+                low = mid+1
+            else:
+                high = mid-1
+        return low-1
+
+    def isvalid(self, A, n, mpm, total_bucks):
+        i, prev_bucks, remaining_bucks = 0, 0, n-1
+        while i<n:
+            required_bucks = total_bucks-(prev_bucks+remaining_bucks)
+            obtained_bucks = A[i]//mpm
+            if obtained_bucks>=required_bucks:
+                return True
+            i+=1
+            remaining_bucks-=1
+            prev_bucks+=obtained_bucks
+
+        return False  
+
+########################################################################################################################
+
+Q14. Matrix Median
+
+Problem Description
+Given a matrix of integers A of size N x M in which each row is sorted.
+Find and return the overall median of matrix A.
+NOTE: No extra memory is allowed.
+NOTE: Rows are numbered from top to bottom and columns are numbered from left to right.
+
+Problem Constraints
+1 <= N, M <= 10^5
+1 <= N*M <= 10^6
+1 <= A[i] <= 10^9
+N*M is odd
+
+Input Format
+The first and only argument given is the integer matrix A.
+
+Output Format
+Return the overall median of matrix A.
+
+
+Example Input
+Input 1:
+
+A = [   [1, 3, 5],
+        [2, 6, 9],
+        [3, 6, 9]   ] 
+Input 2:
+
+A = [   [5, 17, 100]    ]
+
+Example Output
+Output 1:
+5 
+Output 2:
+17
+
+Example Explanation
+Explanation 1:
+A = [1, 2, 3, 3, 5, 6, 6, 9, 9]
+Median is 5. So, we return 5. 
+Explanation 2:
+Median is 17.
+
+Solution -
+
+class Solution:
+	# @param A : list of list of integers
+	# @return an integer
+	def findMedian(self, A):
+        n = len(A)
+        m = len(A[0])
+        l = n*m
+        mid = int(l/2)
+        listt = []
+        for i in range(n):
+            listt.extend(A[i])
+        listt.sort()
+        return listt[mid]    
+
