@@ -1,0 +1,427 @@
+Q1. Max Sum Contiguous Subarray
+
+Problem Description
+Find the maximum sum of contiguous non-empty subarray within an array A of length N.
+
+Problem Constraints
+1 <= N <= 1e6
+-1000 <= A[i] <= 1000
+
+Input Format
+The first and the only argument contains an integer array, A.
+
+Output Format
+Return an integer representing the maximum possible sum of the contiguous subarray.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, -10] 
+Input 2:
+A = [-2, 1, -3, 4, -1, 2, 1, -5, 4] 
+
+Example Output
+Output 1:
+10 
+Output 2:
+6
+
+Example Explanation
+Explanation 1:
+The subarray [1, 2, 3, 4] has the maximum possible sum of 10. 
+Explanation 2:
+The subarray [4,-1,2,1] has the maximum possible sum of 6. 
+
+Solution -
+
+class Solution:
+    # @param A : tuple of integers
+    # @return an integer
+    def maxSubArray(self, A):
+        max_ending_here = max_so_far = A[0]
+        for x in A[1:]:
+            max_ending_here = max(x, max_ending_here+x)
+            max_so_far = max(max_so_far, max_ending_here)
+        return max_so_far
+
+########################################################################################################################
+
+Q2. Sum of All Subarrays
+
+Problem Description
+You are given an integer array A of length N.
+You have to find the sum of all subarray sums of A.
+More formally, a subarray is defined as a contiguous part of an array which we can obtain by deleting zero or more elements from either end of the array.
+A subarray sum denotes the sum of all the elements of that subarray.
+Note : Be careful of integer overflow issues while calculations. Use appropriate datatypes.
+
+Problem Constraints
+1 <= N <= 105
+1 <= Ai <= 10 4
+
+Input Format
+The first argument is the integer array A.
+
+Output Format
+Return a single integer denoting the sum of all subarray sums of the given array.
+
+Example Input
+Input 1:
+A = [1, 2, 3]
+Input 2:
+A = [2, 1, 3]
+
+Example Output
+Output 1:
+20
+Output 2:
+19
+
+Example Explanation
+Explanation 1:
+The different subarrays for the given array are: [1], [2], [3], [1, 2], [2, 3], [1, 2, 3].
+Their sums are: 1 + 2 + 3 + 3 + 5 + 6 = 20
+Explanation 2:
+The different subarrays for the given array are: [2], [1], [3], [2, 1], [1, 3], [2, 1, 3].
+Their sums are: 2 + 1 + 3 + 3 + 4 + 6 = 19
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+     # @return an long
+    def subarraySum(self, A):
+        n = len(A)
+        s = 0
+        for i in range(n):
+            c = (i+1)*(n-i)
+            s = s + (c*A[i])
+        return s   
+
+########################################################################################################################
+
+Q3. Subarray with least average
+
+Problem Description
+Given an array A of size N, find the subarray of size B with the least average.
+
+Problem Constraints
+1 <= B <= N <= 105
+-105 <= A[i] <= 105
+
+Input Format
+First argument contains an array A of integers of size N.
+Second argument contains integer B.
+
+Output Format
+Return the index of the first element of the subarray of size B that has least average.
+Array indexing starts from 0.
+
+Example Input
+Input 1:
+A = [3, 7, 90, 20, 10, 50, 40]
+B = 3
+Input 2:
+A = [3, 7, 5, 20, -10, 0, 12]
+B = 2
+
+Example Output
+Output 1:
+3
+Output 2:
+4
+
+Example Explanation
+Explanation 1:
+Subarray between indexes 3 and 5
+The subarray {20, 10, 50} has the least average 
+among all subarrays of size 3.
+Explanation 2:
+Subarray between [4, 5] has minimum average
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        n = len(A)
+        pf = [0]*n
+        pf[0] = A[0]
+        for i in range(1,n):
+            pf[i] = pf[i-1]+A[i]
+
+        summ = []
+        for i in range(n-B+1):
+            if i == 0:
+                summ.append(pf[B-1])
+            else:
+                summ.append(pf[B-1+i]-pf[i-1])
+                  
+        minn_idx = summ.index(min(summ))
+
+        return minn_idx
+
+########################################################################################################################
+
+Q4. Maximum Subarray Easy
+
+Problem Description
+You are given an integer array C of size A. Now you need to find a subarray (contiguous elements) so that the sum of contiguous elements is maximum.
+But the sum must not exceed B.
+
+Problem Constraints
+1 <= A <= 103
+1 <= B <= 109
+1 <= C[i] <= 106
+
+Input Format
+The first argument is the integer A.
+The second argument is the integer B.
+The third argument is the integer array C.
+
+Output Format
+Return a single integer which denotes the maximum sum.
+
+Example Input
+Input 1:
+A = 5
+B = 12
+C = [2, 1, 3, 4, 5]
+Input 2:
+A = 3
+B = 1
+C = [2, 2, 2]
+
+Example Output
+Output 1:
+12
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+We can select {3,4,5} which sums up to 12 which is the maximum possible sum.
+Explanation 2:
+All elements are greater than B, which means we cannot select any subarray.
+Hence, the answer is 0.
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @param B : integer
+    # @param C : list of integers
+    # @return an integer
+    def maxSubarray(self, A, B, C):
+        n = len(C)
+        maxx = -float('inf')
+        l = []
+        for i in range(n):
+            s = 0
+            for j in range(i,n):
+                s+=C[j]
+                l.append(s)
+
+        for i in l:
+            if (i>maxx) & (i<=B):
+                maxx = i
+        if maxx ==  -float('inf'):
+            return 0
+        else:
+            return maxx
+
+########################################################################################################################
+
+Q5. Counting Subarrays Easy
+
+Problem Description
+Given an array A of N non-negative numbers and a non-negative number B,
+you need to find the number of subarrays in A with a sum less than B.
+We may assume that there is no overflow.
+
+Problem Constraints
+1 <= N <= 5 x 103
+1 <= A[i] <= 1000
+1 <= B <= 107
+
+Input Format
+First argument is an integer array A.
+Second argument is an integer B.
+
+Output Format
+Return an integer denoting the number of subarrays in A having sum less than B.
+
+Example Input
+Input 1:
+A = [2, 5, 6]
+B = 10
+Input 2:
+A = [1, 11, 2, 3, 15]
+B = 10
+
+Example Output
+Output 1:
+4
+Output 2:
+4
+
+Example Explanation
+Explanation 1:
+The subarrays with sum less than B are {2}, {5}, {6} and {2, 5},
+Explanation 2:
+The subarrays with sum less than B are {1}, {2}, {3} and {2, 3}
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        n = len(A)
+        l = []
+        for i in range(n):
+            s = 0
+            for j in range(i,n):
+                s+=A[j]
+                l.append(s)
+        ans = 0
+        for i in l:
+            if i<B:
+                ans += 1
+        return ans
+
+########################################################################################################################
+
+Q6. Good Subarrays Easy
+
+Problem Description
+Given an array of integers A, a subarray of an array is said to be good if it fulfills any one of the criteria:
+1. Length of the subarray is be even, and the sum of all the elements of the subarray must be less than B.
+2. Length of the subarray is be odd, and the sum of all the elements of the subarray must be greater than B.
+Your task is to find the count of good subarrays in A.
+
+Problem Constraints
+1 <= len(A) <= 5 x 103
+1 <= A[i] <= 103
+1 <= B <= 107
+
+Input Format
+The first argument given is the integer array A.
+The second argument given is an integer B.
+
+Output Format
+Return the count of good subarrays in A.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5]
+B = 4
+Input 2:
+A = [13, 16, 16, 15, 9, 16, 2, 7, 6, 17, 3, 9]
+B = 65
+
+Example Output
+Output 1:
+6
+Output 2:
+36
+
+Example Explanation
+Explanation 1:
+Even length good subarrays = {1, 2}
+Odd length good subarrays = {1, 2, 3}, {1, 2, 3, 4, 5}, {2, 3, 4}, {3, 4, 5}, {5} 
+Explanation 1:
+There are 36 good subarrays
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        n = len(A)
+        good_sub = 0
+        pf = [0]*(n+1)
+        for i in range(n) :
+            pf[i+1] = pf[i] + A[i]
+        for i in range(n) :
+            for j in range(i, n) :
+                sums = pf[j+1] - pf[i]
+                if (j-i+1) % 2 == 0:
+                    if sums < B :
+                        good_sub += 1
+                else:
+                    if sums > B :
+                        good_sub += 1
+        return good_sub
+
+
+########################################################################################################################
+
+Q7. Alternating Subarrays Easy
+
+Problem Description
+You are given an integer array A of length N comprising of 0's & 1's, and an integer B.
+You have to tell all the indices of array A that can act as a center of 2 * B + 1 length 0-1 alternating subarray.
+A 0-1 alternating array is an array containing only 0's & 1's, and having no adjacent 0's or 1's. For e.g. arrays [0, 1, 0, 1], [1, 0] and [1] are 0-1 alternating, while [1, 1] and [0, 1, 0, 0, 1] are not.
+
+Problem Constraints
+1 <= N <= 103
+A[i] equals to 0 or 1.
+0 <= B <= (N - 1) / 2
+
+Input Format
+First argument is an integer array A.
+Second argument is an integer B.
+
+Output Format
+Return an integer array containing indices(0-based) in sorted order. If no such index exists, return an empty integer array.
+
+Example Input
+Input 1:
+A = [1, 0, 1, 0, 1]
+B = 1 
+Input 2:
+A = [0, 0, 0, 1, 1, 0, 1]
+B = 0 
+
+Example Output
+Output 1:
+[1, 2, 3]
+Output 2:
+[0, 1, 2, 3, 4, 5, 6]
+
+Example Explanation
+Explanation 1:
+Index 1 acts as a centre of alternating sequence: [A0, A1, A2]
+Index 2 acts as a centre of alternating sequence: [A1, A2, A3]
+Index 3 acts as a centre of alternating sequence: [A2, A3, A4] 
+Explanation 2:
+Each index in the array acts as the center of alternating sequences of lengths 1.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return a list of integers
+    def solve(self, A, B):
+        n = len(A)
+        l = 2*B+1
+        c = []
+        for s in range(0,n-l+1):
+            e = s+l-1
+            prev = -1
+            is_alternate = True
+            for i in range(s,e+1):
+                if A[i] == prev:
+                    is_alternate = False
+                    break
+
+                prev = A[i]
+            if is_alternate == True:
+                c.append(s+B)
+        return c        
