@@ -1,0 +1,283 @@
+Q1. Characters Swap
+
+Problem Description:
+Write a program to return a single string from two given strings, separated by a space. Swap the first two characters of the first string (s1) with the first two characters of the second one (s2).
+
+Input Format:
+The first line of input contains an integer t denoting the number of test cases.
+The next 2t lines contain strings s1 and s2.
+The two arguments to the function are the strings s1 and s2.
+
+Output Format:
+Resultant string.
+
+Sample Input:
+1
+abc
+xyz
+
+Sample Output:
+xyc abz
+
+Sample explanation:
+The first two characters of string abc are ab which are swapped with xy of xyz and both the strings are joined by space.
+
+Solution -
+
+def swap(s1, s2):
+    w1 = s2[:2]+s1[2:]
+    w2 = s1[:2]+s2[2:]
+    strr = w1+" "+w2
+    return strr
+
+########################################################################################################################
+
+Q2. Length of String - II
+
+Problem Description
+You have a string (A).
+You have to return length of input string.
+
+Problem Constraints
+1 <= A.size() <= 1000
+
+Input Format
+First and only argument containing a lowercase string A.
+
+Output Format
+You have to return an integer as per the question.
+
+Example Input
+Input 1:
+scaler
+Input 2:
+interviewbit
+
+Example Output
+Output 1:
+6
+Output 2:
+12
+
+Example Explanation
+Explanation 1:
+Clearly,  length of scaler is 6.
+Explanation 2:
+Clearly, length of interviewbit is 12.
+
+Solution -
+
+class Solution:
+    # @param A : string
+    # @return an integer
+    def solve(self, A):
+        return len(A)
+
+########################################################################################################################
+
+Q3. No. of Alphabets & Digits
+
+Problem Description:
+Write a program that takes a sentence as a parameter and returns the number of alphabets and digits separately.
+
+Input Format:
+First line will have the number of test cases. For each testcase there will be one line of input consisting
+of string/sentence in string format.
+
+Output Format:
+Count of alphabets and digits in the given string.
+
+Sample Input:
+1
+John.Smith1990@gmail.com
+
+Sample Output:
+Number of alphabets:  17
+Number of Digits:  4
+
+Sample explanation:
+The four digits are 1,9,9, and 0. The 17 alphabets are J,o,h,n,S,m,i,t,h,g,m,a,i,l,c,o and m.
+
+Solution -
+
+def alphandig_count(s):
+    '''Input: s takes the string as input
+       Output: return count of alphabets and digits'''
+       
+    count_digit = 0
+    count_alpha = 0
+
+    for i in s:
+        if i.isnumeric()==True:
+            count_digit+=1
+        elif i.isalpha()==True:
+            count_alpha+=1
+            
+    return count_alpha, count_digit
+
+########################################################################################################################
+
+Q4. String Manipulation
+
+Problem Description:
+Given a string, complete the function modify() that returns the string after performing string modifications according to the following conditions:
+1) If the length of the given string is less than 3, leave it unchanged.
+2) Otherwise add 'ing' at the end of the given string.
+3) If the given string already ends with 'ing' then add 'ly' instead.
+
+Input Format:
+First-line will have the number of test cases. For each testcase there will be a single line of input consisting of a string.
+
+Output Format:
+Resultant string in string format
+
+Sample Input 1:
+1
+Am
+Sample Output 1:
+Am
+Sample explanation:
+The length of "Am" is lesser than 3 therefore it is returned as it is.
+
+Sample Input 2:
+1
+Sow
+Sample Output 2:
+Sowing
+Sample explanation:
+The length of "Sow" is equal to 3 therefore it is returned after adding 'ing' at the end.
+
+Sample Input 3:
+1
+string
+Sample Output 3:
+stringly
+Sample explanation:
+The length of "string" is greater than 3 and it has 'ing' at the end therefore it is returned after adding "ly" at the end.
+
+Solution -
+
+def modify(s):
+    '''Input: s is the string
+       Output:return the resultant string with described modifications'''
+    # YOUR CODE GOES HERE
+    new_s = ""
+    if len(s)<3:
+        new_s = s
+    else:
+        if s[-3:] == 'ing':
+            new_s = s+'ly'
+        else:
+            new_s = s+'ing'
+
+    return new_s                
+
+########################################################################################################################
+
+Q5. Palindrome or not
+
+Problem Description:
+Write a program to check whether the given string is a palindrome or not. Return True if it is palindrome else return False.
+Note: A string is said to be a palindrome if the reverse of the string is the same as the string itself.
+
+Input Format:
+First line will have the number of test cases. For each testcase there will be single line of input consisting of a string.
+
+Output Format:
+True if palindrome else False
+
+Sample Input 1:
+1
+level
+Sample Output 1:
+True
+Sample explanation:
+'level' when reversed returns 'level' only which are same therefore True is returned.
+
+Sample Input 2:
+1
+Scaler
+Sample Output 2:
+False
+Sample explanation:
+'Scaler' when reversed returns 'relacS' which is not equal to original string therefore False is returned.
+
+Solution -
+
+def isPalindrome(s):
+    '''Input: s takes the string as input
+       Output:return the True or False'''
+    # YOUR CODE GOES HERE
+    result = None
+    if s==s[::-1]:
+        result = True
+    else:
+        result = False 
+    return result
+
+########################################################################################################################
+
+Q6. Mirror String
+
+Problem Description:
+Write a program to return the mirror string for the given string.
+
+Input Format:
+The first line of the input contains an integer representing the number of test cases.
+The following t lines contain a string as input.
+You are given a function StringMirror which takes in an argument a string.
+
+Output Format:
+Resultant mirrored string.
+
+Sample Input:
+1
+red
+
+Sample Output:
+redder
+
+Solution -
+
+def StringMirror(string):
+    '''Input: string takes the string as input
+       Output:return the resultant mirror string'''
+    return string+string[::-1]
+
+########################################################################################################################
+
+Q7. Replacing Character
+
+Problem Description:
+Write a program to return a string from a given string s where all occurrences of 
+the first char of the string except the first occurrence have been changed to '$'.
+
+Input Format:
+The number of test cases. For each testcase there will be a single line of input as explained following.
+The single line consists of a string.
+
+Output Format:
+Resultant string
+
+Sample Input:
+1
+"restart"
+
+Sample Output:
+"resta$t"
+Sample Explanation:
+
+‘r’ is the first character of the string. We have to replace all the occurrences of r to ‘$’
+ except the one at index 0.
+
+Solution -
+
+def change_char(s):
+    '''Input: s takes the string as input
+       Output:return the resultant string'''
+    res = ''
+    start = s[0]
+    rest = s[1:].replace(start,"$")
+    res = start+rest
+    return res
+    
