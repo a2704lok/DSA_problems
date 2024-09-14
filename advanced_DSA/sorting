@@ -1,0 +1,676 @@
+Q1. Merge Two Sorted Arrays
+
+Problem Description
+Given two sorted integer arrays A and B, merge B and A as one sorted array and return it as an output.
+Note: A linear time complexity is expected and you should avoid use of any library function.
+
+Problem Constraints
+-2×109 <= A[i], B[i] <= 2×109
+1 <= |A|, |B| <= 5×104
+
+Input Format
+First Argument is a 1-D array representing  A.
+Second Argument is also a 1-D array representing B.
+
+Output Format
+Return a 1-D vector which you got after merging A and B.
+
+Example Input
+Input 1:
+A = [4, 7, 9]
+B = [2, 11, 19]
+Input 2:
+A = [1]
+B = [2]
+
+Example Output
+Output 1:
+[2, 4, 7, 9, 11, 19]
+Output 2:
+[1, 2]
+
+Example Explanation
+Explanation 1:
+Merging A and B produces the output as described above.
+Explanation 2:
+Merging A and B produces the output as described above.
+
+Solution -
+
+class Solution:
+    # @param A : tuple of integers
+    # @param B : tuple of integers
+    # @return a list of integers
+    def solve(self, A, B):
+        p1 = 0
+        p2 = 0
+        N = len(A)
+        M = len(B)
+        C = []
+
+        while (p1<N) & (p2<M):
+	        if A[p1]<=B[p2]:
+		        C.append(A[p1])
+		        p1 += 1
+	        else:
+		        C.append(B[p2])
+		        p2 += 1
+		
+        while p1<N:
+	        C.append(A[p1])
+	        p1 += 1
+        while p2 < M:
+	        C.append(B[p2])
+	        p2 += 1		
+		return C	
+
+#######################################################################################################################
+
+Q2. Kth Smallest Element
+
+Problem Description
+Find the Bth smallest element in given array A .
+NOTE: Users should try to solve it in less than equal to B swaps.
+
+Problem Constraints
+1 <= |A| <= 100000
+1 <= B <= min(|A|, 500)
+1 <= A[i] <= 109
+
+Input Format
+The first argument is an integer array A.
+The second argument is integer B.
+
+Output Format
+Return the Bth smallest element in given array.
+
+Example Input
+Input 1:
+A = [2, 1, 4, 3, 2]
+B = 3
+Input 2:
+A = [1, 2]
+B = 2
+
+Example Output
+Output 1:
+2
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+3rd element after sorting is 2.
+Explanation 2:
+2nd element after sorting is 2.
+
+Solution -
+
+class Solution:
+# @param A : tuple of integers
+# @param B : integer
+# @return an integer
+def kthsmallest(self, A, B):
+      A = list(A)
+      N = len(A)
+      for i in range(B):
+        minn = A[i]
+        ind = i
+        for j in range(i,N):
+          if A[j] < minn:
+            minn = A[j]
+            ind = j
+        A[ind],A[i] = A[i],A[ind]
+
+      return A[B-1]   
+
+#######################################################################################################################
+
+Q3. Array with consecutive elements
+
+Problem Description
+Given an array of positive integers A, check and return whether the array elements are consecutive or not.
+NOTE: Try this with O(1) extra space.
+
+Problem Constraints
+1 <= length of the array <= 105
+1 <= A[i] <= 109
+
+Input Format
+The only argument given is the integer array A.
+
+Output Format
+Return 1 if the array elements are consecutive else return 0.
+
+Example Input
+Input 1:
+A = [3, 2, 6, 4, 5]
+Input 2:
+A = [1, 3, 2, 5]
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+As you can see all the elements are consecutive (i.e 2, 3, 4, 5, 6), so we return 1.
+Explanation 2:
+Element 4 is missing, so we return 0.
+
+Solution -
+
+class Solution:
+  # @param A : list of integers
+  # @return an integer
+  def solve(self, A):
+      A.sort()
+      l = len(A)
+      if len(set(A))<l:
+          return 0
+      if l-(A[-1]-A[0])-1 == 0:
+          return 1
+      return 0    
+  
+#######################################################################################################################
+
+Q4. MaxMod
+
+Problem Description
+Given an array A of size N, Groot wants you to pick 2 indices i and j such that
+1 <= i, j <= N
+A[i] % A[j] is maximum among all possible pairs of (i, j).
+Help Groot in finding the maximum value of A[i] % A[j] for some i, j.
+
+Problem Constraints
+1 <= N <= 100000
+0 <= A[i] <= 100000
+
+Input Format
+First and only argument in an integer array A.
+
+Output Format
+Return an integer denoting the maximum value of A[i] % A[j] for any valid i, j.
+
+Example Input
+Input 1:
+A = [1, 2, 44, 3]
+Input 2:
+A = [2, 6, 4]
+
+Example Output
+Output 1:
+3
+Output 2:
+4
+
+Example Explanation
+Explanation 1:
+For i = 4, j = 3  A[i] % A[j] = 3 % 44 = 3.
+No pair exists which has more value than 3.
+Explanation 2:
+For i = 3, j = 2  A[i] % A[j] = 4 % 6 = 4.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        A=list(set(A))
+        A.sort()
+        B = []
+        if len(set(A)) == 1:
+            return 0
+        return A[-2]
+        
+#######################################################################################################################
+
+Q5. Merge Sort
+
+Problem Description
+Given an integer array A, sort the array using Merge Sort.
+
+Problem Constraints
+1 <= |A| <= 105
+1 <= A[i] <= 109
+
+Input Format
+First argument is an integer array A.
+
+Output Format
+Return the sorted array.
+
+Example Input
+Input 1:-
+A = [1, 4, 10, 2, 1, 5]
+Input 2:-
+A = [3, 7, 1]
+
+Example Output
+Output 1:-
+[1, 1, 2, 4, 5, 10]
+Output 2:-
+[1, 3, 7]
+
+Example Explanation
+Explanation 1 and 2:
+Return the sorted array.
+
+Solution -
+
+class Solution:
+    def solve(self, A):
+        n = len(A)
+        self.mergeSort(A, 0, n-1)
+        return A
+
+    def mergeSort(self, arr, start, end):
+        if start == end:
+            return
+        
+        midElement = (start + end) // 2
+
+        self.mergeSort(arr, start, midElement) #Left array
+        self.mergeSort(arr, midElement + 1, end) #Right array
+        self.mergeSubarrays(arr, start, midElement, end) # Merge left and right sorted array
+
+        return arr
+
+    def mergeSubarrays(self, arr, start, midElement, end):
+        #consider two sorted sub arrays
+        ##1 start to midElement
+        ##2 midElement+1 to end
+        p1 = start
+        p2 = midElement + 1
+        p3 = 0
+
+        tempArray = [0] * (end - start + 1)
+
+        while (p1 <= midElement and p2 <= end):
+            if arr[p1] < arr[p2]:
+                tempArray[p3] = arr[p1]
+                p1 += 1
+                p3 += 1
+            else:
+                tempArray[p3] = arr[p2]
+                p2 += 1
+                p3 += 1
+        
+        #Copying remaining elements
+        while p1 <= midElement:
+            tempArray[p3] = arr[p1]
+            p1 += 1
+            p3 += 1
+        
+        #Copying remaining elements
+        while p2 <= end:
+            tempArray[p3] = arr[p2]
+            p2 += 1
+            p3 += 1
+        
+        # copying the sorted tempArray (merged two sub arrays) to main array
+        i = start
+        j = 0 
+
+        while i <= end:
+            arr[i] = tempArray[j]
+            i += 1
+            j += 1
+#######################################################################################################################
+
+Q6. Chocolate Distribution
+
+Problem Description
+Given an array A of N integers where the i-th element represent the number of chocolates in the i-th packet.
+There are B number of students, the task is to distribute chocolate packets following below conditions:
+1. Each student gets one packets.
+2. The difference between the number of chocolates given to any two students is minimum.
+Return the minimum difference (that can be achieved) between the student who gets minimum number of chocolates and the student who gets maximum number of chocolates.
+Note: If you can't give each student 1 packet, return 0.
+
+Problem Constraints
+0 <= N <= 10^5
+1 <= A[i] <= 10^7
+0 <= B <= 10^5
+
+Input Format
+The first argument contains an integer array A.
+The second argument contains an integer B.
+
+Output Format
+Return the minimum difference (that can be achieved) between maximum and minimum number of chocolates distributed.
+
+Example Input
+Input:
+A : [3, 4, 1, 9, 56, 7, 9, 12]
+B : 5
+
+Example Output
+Output:
+6
+
+Example Explanation
+Explanation:
+We can choose the packets with chocolates = [3, 4, 9, 7, 9]
+The difference between maximum and minimum is 9-3 = 6
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        if len(A) == 0:
+            return 0
+        if B == 0:
+            return 0    
+        A.sort()
+        n = len(A)
+        maxx = float('inf')
+        for i in range(n-B):
+            diff = abs(A[B-1+i]-A[i])
+            maxx = min(maxx,diff)
+        return maxx
+
+#######################################################################################################################
+
+Q7. Inversion count in an array
+
+Problem Description
+Given an array of integers A. If i < j and A[i] > A[j], then the pair (i, j) is called an inversion of A. Find the total number of inversions of A modulo (109 + 7).
+
+Problem Constraints
+1 <= length of the array <= 105
+1 <= A[i] <= 109
+
+Input Format
+The only argument given is the integer array A.
+
+Output Format
+Return the number of inversions of A modulo (109 + 7).
+
+Example Input
+Input 1:
+A = [1, 3, 2]
+Input 2:
+A = [3, 4, 1, 2]
+
+Example Output
+Output 1:
+1
+Output 2:
+4
+
+Example Explanation
+Explanation 1:
+The pair (1, 2) is an inversion as 1 < 2 and A[1] > A[2]
+Explanation 2:
+The pair (0, 2) is an inversion as 0 < 2 and A[0] > A[2]
+The pair (0, 3) is an inversion as 0 < 3 and A[0] > A[3]
+The pair (1, 2) is an inversion as 1 < 2 and A[1] > A[2]
+The pair (1, 3) is an inversion as 1 < 3 and A[1] > A[3]
+
+Solution -
+
+class Solution:
+    def solve(self, A):
+        n = len(A)
+        mod = 10**9 + 7
+        result = self.mergeSort(A, 0, n-1)
+        return result % mod
+
+
+    def mergeSort(self, arr, start, end):
+        if start == end:
+            return 0
+        
+        midElement = (start + end) // 2
+
+        X = self.mergeSort(arr, start, midElement) #Left array
+        Y = self.mergeSort(arr, midElement + 1, end) #Right array
+        Z = self.mergeSubarrays(arr, start, midElement, end)
+        inversionPairsCount = X + Y + Z
+
+        return inversionPairsCount
+
+    def mergeSubarrays(self, arr, start, midElement, end):
+        #consider two sorted sub arrays
+        ##1 start to midElement
+        ##2 midElement+1 to end
+        p1 = start
+        p2 = midElement + 1
+        p3 = 0
+        inversionPairs = 0
+
+        tempArray = [0] * (end - start + 1)
+
+        while (p1 <= midElement and p2 <= end):
+            if arr[p1] <= arr[p2]:
+                tempArray[p3] = arr[p1]
+                p1 += 1
+                p3 += 1
+            else:
+                inversionPairs += midElement - p1 + 1
+                tempArray[p3] = arr[p2]
+                p2 += 1
+                p3 += 1
+        
+        #Copying remaining elements
+        while p1 <= midElement:
+            tempArray[p3] = arr[p1]
+            p1 += 1
+            p3 += 1
+        
+        #Copying remaining elements
+        while p2 <= end:
+            tempArray[p3] = arr[p2]
+            p2 += 1
+            p3 += 1
+        
+        # copying the sorted tempArray (merged two sub arrays) to main array
+        i = start
+        j = 0 
+
+        while i <= end:
+            arr[i] = tempArray[j]
+            i += 1
+            j += 1
+        
+        return inversionPairs
+
+#######################################################################################################################
+
+Q8. Count swaps in InsertionSort - II
+
+Problem Description
+Given an integer array A of size N, sort the elements in increasing order using Insertion Sort.
+You are asked to return the total number of shifts/swaps done.
+
+Problem Constraints
+1 <= N <= 103
+1 <= A[i] <= 109
+
+Input Format
+First and only argument is an integer array A.
+
+Output Format
+Return an integer denoting the number of swaps.
+
+Example Input
+Input 1:
+A = [5, 3, 1, 9, 4]
+Input 2:
+A = [2, 10, 4, 11]
+
+Example Output
+Output 1:
+5
+Output 2:
+1
+
+Example Explanation
+Explanation 1:
+Array will be sorted in 5 Swaps.
+Explanation 2:
+Only 1 swap is required.
+
+Solution - 
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        n = len(A)
+        c = 0
+        for i in range(1,n):
+            for j in range(i-1,-1,-1):
+                if A[j]> A[j+1]:
+                    A[j],A[j+1] = A[j+1],A[j]
+                    c+=1
+                else:
+                    break
+        return c                
+
+#######################################################################################################################
+
+Q9. Sum the Difference
+
+Problem Description
+Given an integer array, A of size N.
+You have to find all possible non-empty subsequences of the array of numbers and then,
+for each subsequence, find the difference between the largest and smallest number in that subsequence.
+Then add up all the differences to get the number.
+As the number may be large, output the number modulo 1e9 + 7 (1000000007).
+NOTE: Subsequence can be non-contiguous.
+
+Problem Constraints
+1 <= N <= 10000
+1<= A[i] <=1000
+
+Input Format
+First argument is an integer array A.
+
+Output Format
+Return an integer denoting the output.
+
+Example Input
+Input 1:
+A = [1, 2] 
+Input 2:
+A = [3, 5, 10]
+
+Example Output
+Output 1:
+1
+Output 2:
+21
+
+Example Explanation
+Explanation 1:
+All possible non-empty subsets are:
+[1]     largest-smallest = 1 - 1 = 0
+[2]     largest-smallest = 2 - 2 = 0
+[1, 2]  largest-smallest = 2 - 1 = 1
+Sum of the differences = 0 + 0 + 1 = 1
+So, the resultant number is 1 
+Explanation 2:
+All possible non-empty subsets are:
+[3]         largest-smallest = 3 - 3 = 0
+[5]         largest-smallest = 5 - 5 = 0
+[10]        largest-smallest = 10 - 10 = 0
+[3, 5]      largest-smallest = 5 - 3 = 2
+[3, 10]     largest-smallest = 10 - 3 = 7
+[5, 10]     largest-smallest = 10 - 5 = 5
+[3, 5, 10]  largest-smallest = 10 - 3 = 7
+Sum of the differences = 0 + 0 + 0 + 2 + 7 + 5 + 7 = 21
+So, the resultant number is 21 
+
+Solution -
+
+class Solution:
+	# @param A : list of integers
+	# @return an integer
+    def solve(self, A):
+        A.sort()
+        mod = 1000000007
+        n = len(A)
+        max_sum = 0
+        min_sum = 0
+
+        for i in range(n):
+            max_sum += A[i] * ((2**i) % mod)
+            min_sum += A[i] * ((2**(n - 1 - i)) % mod)
+
+        return (max_sum - min_sum) % mod
+
+#######################################################################################################################
+
+Q10. QuickSort
+
+Problem Description
+Given an integer array A, sort the array using QuickSort.
+
+Problem Constraints
+1 <= |A| <= 105
+1 <= A[i] <= 109
+
+Input Format
+First argument is an integer array A.
+
+Output Format
+Return the sorted array.
+
+Example Input
+Input 1:
+A = [1, 4, 10, 2, 1, 5]
+Input 2:
+A = [3, 7, 1]
+
+Example Output
+Output 1:
+[1, 1, 2, 4, 5, 10]
+Output 2:
+[1, 3, 7]
+
+Example Explanation
+Explanation 1:
+Return the sorted array.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return a list of integers
+    def partition(self,A,s,e):
+        pivot=A[e]
+        i=s-1
+        for j in range(s,e,1):
+            if A[j]<=pivot:
+                i=i+1
+                A[i],A[j]=A[j],A[i]
+
+        A[e],A[i+1]=A[i+1],A[e]
+
+        return i+1
+
+
+    def quicksort(self,A,s,e):
+        if s>=e:
+            return
+        else:
+            p=self.partition(A,s,e)
+            self.quicksort(A,s,p-1)
+            self.quicksort(A,p+1,e)
+       
+        return A
+
+    def solve(self, A):
+        lenA=len(A)
+        s=0
+        e=lenA-1
+        return self.quicksort(A,s,e)
+
