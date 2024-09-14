@@ -1,0 +1,586 @@
+Q1. Largest in each Row of 2D Array
+
+Problem Description
+Given a 2D array A of N rows and M columns. Find value of largest element in each row.
+
+Problem Constraints
+1 <= N, M <= 1000
+1 <= Ai <= 109
+
+Input Format
+The first argument A is a 2D array of integers
+
+Output Format
+Return an array of length N, in which every index i contains the maximun value of the ith row in the 2D matrix.
+
+Example Input
+Input 1:
+A = [[1, 2], [1, 3]]
+Input 2:
+A = [[1, 2, 3]]
+
+Example Output
+Output 1:
+[2, 3]
+Output 2:
+[3]
+
+Example Explanation
+Explanation 1:
+In the first row 2 is maximum value.
+In the second row 3 is maximum value.
+Explanation 2:
+In the first and only row 3 is maximum value.
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    # @return a list of integers
+    def solve(self, A):
+        l = []
+        for i in range(len(A)):
+            l.append(max(A[i]))
+        return l
+
+###################################################################################################################
+
+Q2. Matrix Scalar Product
+
+Problem Description
+You are given a matrix A and and an integer B, you have to perform scalar multiplication of matrix A with an integer B.
+
+Problem Constraints
+1 <= A.size() <= 1000
+1 <= A[i].size() <= 1000
+1 <= A[i][j] <= 1000
+1 <= B <= 1000
+
+Input Format
+First argument is 2D array of integers A representing matrix.
+Second argument is an integer B.
+
+Output Format
+You have to return a 2D array of integers after doing required operations.
+
+Example Input
+Input 1:
+A = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]
+B = 2 
+Input 2:
+A = [[1]]
+B = 5 
+
+Example Output
+Output 1:
+[[2, 4, 6], 
+[8, 10, 12], 
+[14, 16, 18]]
+Output 2:
+[[5]]
+
+Example Explanation
+Explanation 1:
+==> ( [[1, 2, 3],[4, 5, 6],[7, 8, 9]] ) * 2
+
+==> [[2*1, 2*2, 2*3],
+     [2*4, 2*5, 2*6],
+     [2*7, 2*8, 2*9]]
+
+==> [[2,   4,  6], 
+     [8,  10, 12], 
+     [14, 16, 18]]
+Explanation 2:
+==> ( [[1]] ) * 5
+
+==> [[5*1]]
+
+==> [[5]]
+
+Solution - 
+
+class Solution:
+    # @param A : list of list of integers
+    # @param B : integer
+    # @return a list of list of integers
+    def solve(self, A, B):
+        l = []
+        for i in range(len(A)):
+            e_l = []
+            for j in range(len(A[i])):
+                val = A[i][j]*B
+                e_l.append(val)
+            l.append(e_l)
+
+        return l
+
+###################################################################################################################
+
+Q3. Main Diagonal Sum
+
+Problem Description
+You are given a N X N integer matrix. You have to find the sum of all the main diagonal elements of A.
+Main diagonal of a matrix A is a collection of elements A[i, j] such that i = j.
+
+Problem Constraints
+1 <= N <= 103
+-1000 <= A[i][j] <= 1000
+
+Input Format
+There are 1 lines in the input. First 2 integers R, C are the number of rows and columns. Then R * C integers follow corresponding to the rowwise numbers in the 2D array A.
+
+Output Format
+Return an integer denoting the sum of main diagonal elements.
+
+Example Input
+Input 1:
+3 3 1 -2 -3 -4 5 -6 -7 -8 9
+Input 2:
+2 2 3 2 2 3
+
+Example Output
+Output 1:
+15 
+Output 2:
+6 
+
+Example Explanation
+Explanation 1:
+The size of matrix is 3.
+So, considering the indexing from 0.
+Main diagonal elements will be A[0][0], A[1][1] and A[2][2]
+A[1][1] + A[2][2] + A[3][3] = 1 + 5 + 9 = 15
+Explanation 2:
+The size of matrix is 2.
+So, considering the indexing from 0.
+Main diagonal elements will be A[0][0] and A[1][1].
+A[1][1] + A[2][2] = 3 + 3 = 6
+
+Solution -
+
+class Solution:
+    # @param A : tuple of list of integers
+    # @return an integer
+    def solve(self, A):
+        summ = 0
+        for i in range(len(A)):
+            for j in range(len(A[i])):
+                if i == j:
+                    summ = summ+ (A[i][j])
+        return summ
+
+###################################################################################################################
+
+Q4. Row Sum
+
+Problem Constraints
+1 <= A.size() <= 103
+1 <= A[i].size() <= 103
+1 <= A[i][j] <= 103
+
+Input Format
+First argument A is a 2D array of integers.(2D matrix).
+
+Output Format
+Return an array containing row-wise sums of original matrix.
+
+Example Input
+Input 1:
+[1,2,3,4]
+[5,6,7,8]
+[9,2,3,4]
+
+Example Output
+Output 1:
+[10,26,18]
+
+Example Explanation
+Explanation 1
+Row 1 = 1+2+3+4 = 10
+Row 2 = 5+6+7+8 = 26
+Row 3 = 9+2+3+4 = 18
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    # @return a list of integers
+    def solve(self, A):
+        l = []
+        for i in range(len(A)):
+            l.append(sum(A[i]))
+        return l
+
+###################################################################################################################
+
+Q5. Matrix Transpose
+
+Problem Description
+Given a 2D integer array A, return the transpose of A.
+The transpose of a matrix is the matrix flipped over its main diagonal, switching the matrix's row and column indices.
+
+Problem Constraints
+1 <= A.size() <= 1000
+1 <= A[i].size() <= 1000
+1 <= A[i][j] <= 1000
+
+Input Format
+First argument is a 2D matrix of integers.
+
+Output Format
+You have to return the Transpose of this 2D matrix.
+
+Example Input
+Input 1:
+A = [[1, 2, 3],[4, 5, 6],[7, 8, 9]]
+Input 2:
+A = [[1, 2],[1, 2],[1, 2]]
+
+Example Output
+Output 1:
+[[1, 4, 7], [2, 5, 8], [3, 6, 9]]
+Output 2:
+[[1, 1, 1], [2, 2, 2]]
+
+Example Explanation
+Explanation 1:
+Clearly after converting rows to column and columns to rows of [[1, 2, 3],[4, 5, 6],[7, 8, 9]]
+ we will get [[1, 4, 7], [2, 5, 8], [3, 6, 9]].
+Explanation 2:
+After transposing the matrix, A becomes [[1, 1, 1], [2, 2, 2]]
+
+Solution - 
+
+class Solution:
+    # @param A : list of list of integers
+    # @return a list of list of integers
+    def solve(self, A):
+        A_T = [] 
+        for i in range(len(A[0])):
+            row =[]
+            for item in A:
+                row.append(item[i])
+            A_T.append(row)
+        return A_T    
+
+###################################################################################################################
+
+Q6. Sum of Columns of 2D Array
+
+Problem Description
+Given a 2D integer array C[][] of A rows and B columns. Return an integer array of size B that represents the sums of the columns of the 2D array C.
+
+Problem Constraints
+1 <= A,B <= 103
+1 <= C[i][j] <= 103
+
+Input Format
+The first argument is a single integer A.
+The second argument is a single integer B.
+The third argument is a 2D integer array C.
+
+Output Format
+Return an integer array of size B that represents the sums of the columns of the 2D array C.
+
+Example Input
+Input 1:
+A = 3
+B = 2
+C = [[4, 1], [1, 3], [6, 2]]
+Input 2:
+A = 2
+B = 2
+C = [[1, 1], [4, 1]]
+
+Example Output
+Output 1:
+[11, 6]
+Output 2:
+[5, 2]
+
+Example Explanation
+Explanation 1:
+Column 1 : 4 + 1 + 6 = 11
+Column 2 : 1 + 3 + 2 = 6
+Explanation 2:
+Column 1 : 4 + 1 = 5
+Column 2 : 1 + 1 = 2
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @param B : integer
+    # @param C : list of list of integers
+    # @return a list of integers
+    def solve(self, A, B, C):
+        l = []
+        for j in range(B):
+            summ = 0
+            for i in range(A):
+                summ = summ+C[i][j]
+            l.append(summ)
+        return l
+
+###################################################################################################################
+
+Q7. Are Matrices Same ?
+
+Problem Description
+You are given two matrices A and B of equal dimensions and you have to check whether two matrices are equal or not.
+NOTE: Both matrices are equal if A[i][j] == B[i][j] for all i and j.
+
+Problem Constraints
+1 <= A.size(), B.size() <= 1000
+1 <= A[i].size(), B[i].size() <= 1000
+1 <= A[i][j], B[i][j] <= 1000
+A.size() == B.size()
+A[i].size() == B[i].size()
+
+Input Format
+First argument is 2-D array of integers representing matrix A.
+Second argument is 2-D array of integers representing matrix B.
+
+Output Format
+Return 1 if both matrices are equal or return 0.
+
+Example Input
+Input 1:
+A = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]
+B = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]
+Input 2:
+A = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]]
+B = [[1, 2, 3],
+     [7, 8, 9],
+     [4, 5, 6]]
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+==> Clearly all the elements of both matrices are equal at respective positions.
+Explanation 2:
+==> Clearly, there are mismatches at (1, 0), (1, 1), (1, 2), (2, 0), (2, 1) and (2, 2).
+A = [[1, 2, 3],
+     [4, 5, 6],
+     [7, 8, 9]] 
+B = [[1, 2, 3],
+     [7, 8, 9],
+     [4, 5, 6]]
+
+Solution -
+
+class Solution:
+    # @param A : list of list of integers
+    # @param B : list of list of integers
+    # @return an integer
+    def solve(self, A, B):
+        c = 0
+        for i in range(len(A)):
+            if A[i] != B[i]:
+                c+=1
+        if c==0:
+            return 1
+        return 0            
+
+###################################################################################################################
+
+Q8. Wave Print (Column Wise)
+
+Problem Description
+Write a program to input an integer N and a N*N matrix Mat from user and print the matrix in wave form (column wise)
+See example for clarifications regarding wave print.
+Note: Ensure there is a space character (' ') at the end of the line.
+
+Problem Constraints
+1 <= N <= 103
+0 <= Mat[i][j] <= 109
+
+Input Format
+First line is an integer N
+Next N lines contain N space separated integers representing the matrix Mat
+
+Output Format
+A single line containing N*N integers of matrix Mat in wave form (column wise)
+
+Example Input
+Input 1:
+3
+4 1 2 
+7 4 4 
+3 7 4 
+Input 2:
+2
+1 2
+3 4
+
+Example Output
+Output 1:
+4 7 3 7 4 1 2 4 4 
+Output 2:
+1 3 4 2
+
+Example Explanation
+For Input 1:
+We will first iterate the 1st column from top to bottom and print the elements, 
+then we will iterate the 2nd column from botton to top and print the elements,
+then we will iterate the 3rd column from top to bottom and print the elements.
+For Input 2:
+We will first iterate the 1st column from top to bottom and print the elements, 
+then we will iterate the 2nd column from bottom to top and print the elements.
+
+Solution - 
+
+n = int(input())
+m = []
+for i in range(n):
+    x = input().split()
+    l = list(map(int,x))
+    m.append(l)
+
+R = len(m)
+C = len(m[0])
+
+N = len(m)
+for j in range(N):
+    if j%2==1:
+        for i in range(N-1,-1,-1):
+            print(m[i][j],end = ' ')
+    else:
+        for i in range(N):
+            print(m[i][j], end=' ')
+
+###################################################################################################################
+
+Q9. Wave Print (Row Wise)
+
+Problem Description
+Given an N x N matrix, print the elements of the matrix in a wave form row-wise. For the first row, traverse from left to right, for the second row, traverse from right to left, and continue this alternating pattern for the remaining rows.
+
+Problem Constraints
+1 <= N <= 103
+0 <= Mat[i][j] <= 109
+Input Format
+First line is an integer N
+Next N lines contain N space separated integers representing the matrix Mat
+
+Output Format
+A single line containing N*N integers of matrix Mat in wave form (row wise)
+Note: Ensure there is a space character (' ') at the end of the line.
+
+Example Input
+Input 1:
+3
+4 1 2
+7 4 4 
+3 7 4
+Input 2:
+2
+1 2
+3 4
+
+Example Output
+Output 1:
+4 1 2 4 4 7 3 7 4
+Output 2:
+1 2 4 3
+
+Example Explanation
+For Input 1:
+We will first iterate the 1st row from left to right and print the elements, 
+then we will iterate the 2nd row from right to left and print the elements,
+then we will iterate the 3rd row from left to right and print the elements.
+This looks like a wave.
+For Input 2:
+We will first iterate the 1st row from left to right and print the elements, 
+then we will iterate the 2nd row from right to left and print the elements.
+This looks like a wave.
+
+Solution -
+
+n = int(input())
+
+m = []
+for i in range(n):
+    x = input().split()
+    l = list(map(int,x))
+    m.append(l)
+
+R = len(m)
+C = len(m[0])
+
+N = len(m)
+
+for i in range(N):
+    if i%2==1:
+        for j in range(N-1,-1,-1):
+            print(m[i][j],end = ' ')
+    else:
+        for j in range(N):
+            print(m[i][j], end=' ')
+
+###################################################################################################################
+
+
+Q10. Matrix Subtraction
+
+Problem Description
+You are given two integer matrices A and B having same size(Both having same number of rows (N) and columns (M). You have to subtract matrix B from A and return the resultant matrix. (i.e. return the matrix A - B).
+If A and B are two matrices of the same order (same dimensions). Then A - B is a matrix of the same order as A and B and its elements are obtained by doing an element wise subtraction of A from B.
+
+Problem Constraints
+1 <= N, M <= 103
+-109 <= A[i][j], B[i][j] <= 109
+
+Input Format
+The first argument is the 2D integer array A
+The second argument is the 2D integer array B
+
+Output Format
+Return a 2D matrix denoting A - B.
+
+Example Input
+Input 1:
+A =  [[1, 2, 3], 
+      [4, 5, 6], 
+      [7, 8, 9]]
+B =  [[9, 8, 7], 
+      [6, 5, 4], 
+      [3, 2, 1]]
+Input 2:
+A = [[1, 1]]
+B = [[2, 3]] 
+
+Example Output
+Output 1:
+ [[-8, -6, -4],
+  [-2, 0, 2],
+  [4, 6, 8]]
+Output 2:
+ [[-1, -2]]
+
+Solution -
+
+import numpy as np
+class Solution:
+    # @param A : list of list of integers
+    # @param B : list of list of integers
+    # @return a list of list of integers
+    def solve(self, A, B):
+        mat = np.empty((len(A),len(A[0])),int)
+        for i in range(len(A)):
+            for j in range(len(A[0])):
+                mat[i][j] = A[i][j]-B[i][j]
+        return mat
