@@ -1,0 +1,80 @@
+Q1. Sorted Permutation Rank
+
+Problem Description
+Given a string A. Find the rank of the string amongst its permutations sorted lexicographically.
+Assume that no characters are repeated.
+Note: The answer might not fit in an integer, so return your answer % 1000003
+
+Problem Constraints
+1 <= |A| <= 1000
+
+Input Format
+First argument is a string A.
+
+Output Format
+Return an integer denoting the rank of the given string.
+
+Example Input
+Input 1:
+A = "acb"
+Input 2:
+A = "a"
+
+Example Output
+Output 1:
+2
+Output 2:
+1
+
+Example Explanation
+Explanation 1:
+Given A = "acb".
+The order permutations with letters 'a', 'c', and 'b' : 
+abc
+acb
+bac
+bca
+cab
+cba
+So, the rank of A is 2.
+Explanation 2:
+Given A = "a".
+Rank is clearly 1.
+
+Solution -
+
+class Solution:
+	# @param A : string
+	# @return an integer
+
+    def factorial(n):
+        if n == 0 or n == 1:
+            return 1
+        else:
+            return n * Solution.factorial(n-1)
+
+	def findRank(self, A):
+        c = 0
+        n = len(A)
+        l = list(A)
+        l_sort = sorted(l)
+        d = {}
+
+        for i in range(n):
+            d[l_sort[i]]=0
+        
+        i=0
+        j=0
+        ans=0
+        while(i<n and j<n):           
+            if  d[l_sort[j]]== 0:
+                if l_sort[j]==l[i]:
+                    i=i+1
+                    d[l_sort[j]]=1
+                    j=0
+                else:
+                    ans=ans+Solution.factorial(n-i-1)
+                    j=j+1
+            else: 
+                j=j+1
+        return (ans+1 )   % 1000003
