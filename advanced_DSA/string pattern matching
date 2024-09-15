@@ -332,3 +332,68 @@ class Solution:
                 return "YES"
             else:
                 return "NO"        
+
+########################################################################################################################
+
+Q6. Period of a string
+
+Problem Description
+You are given a string A of length N consisting of lowercase alphabets. Find the period of the string.
+Period of the string is the minimum value of k (k >= 1), that satisfies A[i] = A[i % k] for all valid i.
+
+Problem Constraints
+1 <= N <= 106
+
+Input Format
+First and only argument is a string A of length N.
+
+Output Format
+Return an integer, denoting the period of the string.
+
+Example Input
+Input 1:
+A = "abababab"
+Input 2:
+A = "aaaa"
+
+Example Output
+Output 1:
+2
+Output 2:
+1
+
+Example Explanation
+Explanation 1:
+Period of the string will be 2: 
+Since, for all i, A[i] = A[i%2]. 
+Explanation 2:
+Period of the string will be 1.
+
+Solution -
+
+class Solution:
+    # @param A : string
+    # @return an integer
+    def Compute_lps(self,string):
+        m=len(string)
+        lps=[0]*m
+        j=1
+        i=0
+        lps[0]=0
+        while j<m:
+            if string[i]==string[j]:
+                i+=1
+                lps[j]=i
+                j+=1
+            else:
+                if i!=0:
+                    i=lps[i-1]
+                else:
+                    lps[j]=0
+                    j+=1
+        return lps
+    def solve(self, A):
+        lps=self.Compute_lps(A)
+        if lps[len(A)-1]==0:
+            return len(A)
+        return len(A)-max(lps)
