@@ -1,0 +1,824 @@
+Q1. Delete middle node of a Linked List
+
+Given a singly linked list, delete middle of the linked list.
+For example, if given linked list is 1->2->3->4->5 then linked list should be modified to 1->2->4->5
+If there are even nodes, then there would be two middle nodes, we need to delete the second middle element.
+For example, if given linked list is 1->2->3->4->5->6 then it should be modified to 1->2->3->5->6.
+
+Return the head of the linked list after removing the middle node.
+If the input linked list has 1 node, then this node should be deleted and a null node should be returned.
+
+Input Format
+The only argument given is the node pointing to the head node of the linked list
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.next = None
+
+class Solution:
+    # @param A : head node of linked list
+    # @return the head node in the linked list
+    def solve(self, A):
+        c = 0
+        n = A
+        while n.next != None:
+            c+=1
+            n = n.next
+        if c == 0:
+            return 
+
+        slow = A
+        fast = A
+        while fast!=None and fast.next != None:
+            slow = slow.next
+            fast = fast.next.next
+
+        t = A
+        while t.next != slow:
+            t = t.next
+
+        t.next = t.next.next         
+
+
+        return A   
+
+#########################################################################################################################
+
+Q2. K reverse linked list
+
+Problem Description
+Given a singly linked list A and an integer B, reverse the nodes of the list B at a time and return the modified linked list.
+
+Problem Constraints
+1 <= |A| <= 103
+B always divides A
+
+Input Format
+The first argument of input contains a pointer to the head of the linked list.
+The second arugment of input contains the integer, B.
+
+Output Format
+Return a pointer to the head of the modified linked list.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5, 6]
+B = 2
+Input 2:
+A = [1, 2, 3, 4, 5, 6]
+B = 3
+
+Example Output
+Output 1:
+[2, 1, 4, 3, 6, 5]
+Output 2:
+[3, 2, 1, 6, 5, 4]
+
+Example Explanation
+Explanation 1:
+For the first example, the list can be reversed in groups of 2.
+[[1, 2], [3, 4], [5, 6]]
+After reversing the K-linked list
+[[2, 1], [4, 3], [6, 5]]
+Explanation 2:
+For the second example, the list can be reversed in groups of 3.
+[[1, 2, 3], [4, 5, 6]]
+After reversing the K-linked list
+[[3, 2, 1], [6, 5, 4]]
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.next = None
+
+class Solution:
+	# @param A : head node of linked list
+	# @param B : integer
+	# @return the head node in the linked list
+	def reverseList(self, A, B):
+        if not A:
+            return 
+
+        count = B
+
+        cur = A 
+        prev = None
+        cn = None
+
+        while cur and count > 0:
+            cn = cur.next 
+            cur.next = prev 
+            prev = cur 
+            cur = cn 
+            count -= 1
+
+        if cur:
+            A.next = self.reverseList(cur,B)
+        return prev
+
+#########################################################################################################################
+
+Q3. Middle element of linked list
+
+Problem Description
+Given a linked list of integers, find and return the middle element of the linked list.
+NOTE: If there are N nodes in the linked list and N is even then return the (N/2 + 1)th element.
+
+Problem Constraints
+1 <= length of the linked list <= 100000
+1 <= Node value <= 109
+
+Input Format
+The only argument given head pointer of linked list.
+
+Output Format
+Return the middle element of the linked list.
+
+Example Input
+Input 1:
+1 -> 2 -> 3 -> 4 -> 5
+Input 2:
+1 -> 5 -> 6 -> 2 -> 3 -> 4
+
+Example Output
+Output 1:
+3
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+The middle element is 3.
+Explanation 2:
+The middle element in even length linked list of length N is ((N/2) + 1)th element which is 2.
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.next = None
+
+class Solution:
+    # @param A : head node of linked list
+    # @return an integer
+    def solve(self, A):
+        slow = A
+        fast = A
+        while fast!=None and fast.next != None:
+            slow = slow.next
+            fast = fast.next.next
+
+        return slow.val    
+
+#########################################################################################################################
+
+Q4. Reverse Link List II
+
+Problem Description
+Reverse a linked list A from position B to C.
+NOTE: Do it in-place and in one-pass.
+
+Problem Constraints
+1 <= |A| <= 106
+1 <= B <= C <= |A|
+
+Input Format
+The first argument contains a pointer to the head of the given linked list, A.
+The second arugment contains an integer, B.
+The third argument contains an integer C.
+
+Output Format
+Return a pointer to the head of the modified linked list.
+
+Example Input
+Input 1:
+A = 1 -> 2 -> 3 -> 4 -> 5
+B = 2
+C = 4
+Input 2:
+A = 1 -> 2 -> 3 -> 4 -> 5
+B = 1
+C = 5
+
+Example Output
+Output 1:
+1 -> 4 -> 3 -> 2 -> 5
+Output 2:
+5 -> 4 -> 3 -> 2 -> 1
+
+Example Explanation
+Explanation 1:
+In the first example, we want to reverse the highlighted part of the given linked list : 1 -> 2 -> 3 -> 4 -> 5 
+Thus, the output is 1 -> 4 -> 3 -> 2 -> 5 
+Explanation 2:
+In the second example, we want to reverse the highlighted part of the given linked list : 1 -> 4 -> 3 -> 2 -> 5  
+Thus, the output is 5 -> 4 -> 3 -> 2 -> 1 
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.next = None
+
+class Solution:
+	# @param A : head node of linked list
+	# @param B : integer
+	# @param C : integer
+	# @return the head node in the linked list
+
+    def reverseList(self, head):
+        prev = None
+        curr = head
+        while curr != None:
+            temp = curr.next
+            curr.next = prev
+            prev = curr
+            curr = temp
+        return prev
+
+
+    def reverseBetween(self, A, B, C):
+        current = A
+        first = None
+        fromx = None
+        to = None
+        last = None
+        count = 0
+        while current!= None:
+            count += 1
+            if count < B:
+                first = current
+            if count == B:
+                fromx = current
+            if count == C:
+                to = current
+                last = to.next
+                break
+            current = current.next
+        to.next = None
+        #reverse from to to
+        Solution.reverseList(self,fromx)
+        if first != None:
+            first.next = to
+        else:
+            A = to
+        fromx.next = last
+        return A
+
+#########################################################################################################################
+
+Q5. Reverse Linked List
+
+Problem Description
+You are given a singly linked list having head node A. You have to reverse the linked list and return the head node of that reversed list.
+NOTE: You have to do it in-place and in one-pass.
+
+Problem Constraints
+1 <= Length of linked list <= 105
+Value of each node is within the range of a 32-bit integer.
+
+Input Format
+First and only argument is a linked-list node A.
+
+Output Format
+Return a linked-list node denoting the head of the reversed linked list.
+
+Example Input
+Input 1:
+A = 1 -> 2 -> 3 -> 4 -> 5 -> NULL 
+Input 2:
+A = 3 -> NULL 
+
+Example Output
+Output 1:
+5 -> 4 -> 3 -> 2 -> 1 -> NULL 
+Output 2:
+3 -> NULL 
+
+Example Explanation
+Explanation 1:
+The linked list has 5 nodes. After reversing them, the list becomes : 5 -> 4 -> 3 -> 2 -> 1 -> NULL 
+Expalantion 2:
+The linked list consists of only a single node. After reversing it, the list becomes : 3 -> NULL
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.next = None
+
+class Solution:
+	# @param A : head node of linked list
+	# @return the head node in the linked list
+	# def reverseList(self, A):
+    def reverseList(self, A):
+        curr=A
+        rh=None
+
+        while(curr!=None):
+            temp=curr
+            curr=curr.next
+            temp.next=None 
+            temp.next=rh
+            rh=temp
+        return rh
+
+#########################################################################################################################
+
+Q6. Linked-List
+
+Problem Description
+Design and implement a Linked List data structure.
+A node in a linked list should have the following attributes - an integer value and a pointer to the next node.
+It should support the following operations:
+insert_node(position, value) - To insert the input value at the given position in the linked list.
+delete_node(position) - Delete the value at the given position from the linked list.
+print_ll() - Print the entire linked list, such that each element is followed by a single space (no trailing spaces).
+Note:
+If an input position does not satisfy the constraint, no action is required.
+Each print query has to be executed in a new line.
+
+Problem Constraints
+1 <= value <= 105
+1 <= position <= n where, n is the size of the linked-list.
+
+Input Format
+First line contains an integer denoting number of cases, let's say t. Next t line denotes the cases.
+
+Output Format
+When there is a case of print_ll(), Print the entire linked list, such that each element is followed by a single space.
+There should not be any trailing space.
+NOTE: You don't need to return anything.
+
+Example Input
+Input 1:
+5
+i 1 23
+i 2 24
+p
+d 1
+p
+Input 2:
+3
+i 1 54
+d 10
+p
+
+Example Output
+Output 1:
+23 24
+24
+Output 2:
+54
+
+Example Explanation
+Explanation 1:
+After first two cases linked list contains two elements 23 and 24.
+At third case print: 23 24.
+At fourth case delete value at first position, only one element left 24.
+At fifth case print: 24.
+Explanation 2:
+After the first case,  linked list contains: 54
+At second case delete value at 10th position,  
+Since the position is higher than the length of the linkedlist. 
+It does not satisfy the constraint, So no action is required.
+At third case print: 54.
+
+Solution -
+
+class Node:
+    def __init__(self,data,next = None):
+        self.data = data
+        self.next = next
+
+class LL:
+    def __init__(self):
+        self.head = None
+        self.length = 0
+
+    def insert_node(self,position, value):
+        if position > (self.length + 1):
+            return
+           
+        newNode = Node(value)
+        temp = self.head
+        if position == 1:
+            newNode.next = temp
+            self.head = newNode
+        else:            
+            c = 1
+            while c < position -1:
+                temp = temp.next
+                c += 1
+            newNode.next = temp.next
+            temp.next = newNode
+        self.length += 1
+
+    def delete_node(self,position):
+        if position > (self.length):
+            return
+        else:
+            temp = self.head
+            if position == 1:
+                newHead = temp.next
+                self.head = newHead
+
+            else:
+                count = 1
+                while count < position - 1:
+                    temp = temp.next
+                    count +=1
+
+                new_node = temp.next.next
+                temp.next = new_node
+               
+            self.length -= 1
+
+    def print_ll(self):
+        if self.head:
+            temp = self.head
+            while temp.next:
+                print(temp.data,end= " ")
+                temp = temp.next
+
+            if temp:
+                print(temp.data,end= "")
+            print()
+
+ll  = LL()
+
+def insert_node(position, value):
+    return ll.insert_node(position,value)
+
+def delete_node(position):
+    return ll.delete_node(position)
+
+def print_ll():
+    return ll.print_ll()
+#########################################################################################################################
+
+Q7. Remove Nth Node from List End
+
+Problem Description
+Given a linked list A, remove the B-th node from the end of the list and return its head.
+For example, given linked list: 1->2->3->4->5, and B = 2.
+After removing the second node from the end, the linked list becomes 1->2->3->5.
+NOTE: If B is greater than the size of the list, remove the first node of the list.
+Try doing it using constant additional space.
+
+Problem Constraints
+1 <= |A| <= 106
+
+Input Format
+The first argument of input contains a pointer to the head of the linked list. The second argument of input contains the integer B.
+
+Output Format
+Return the head of the linked list after deleting the B-th element from the end.
+
+Example Input
+Input 1:
+A = 1->2->3->4->5
+B = 2
+Input 2:
+A = 1
+B = 1
+
+Example Output
+Output 1:
+1->2->3->5
+Output 2:
+Example Explanation
+Explanation 1:
+In the first example, 4 is the second last element.
+Explanation 2:
+In the second example, 1 is the first and the last element.
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.next = None
+
+class Solution:
+	# @param A : head node of linked list
+	# @param B : integer
+	# @return the head node in the linked list
+
+	def removeNthFromEnd(self, A, B):
+		c = 0
+		temp = A
+		while temp.next != None:
+			c+=1
+			temp = temp.next
+
+		if B>c:
+			return A.next
+		if c == 0 or c == 1:
+			return
+
+        v = c-B
+        k = 0
+        t = A
+        while k != v:
+            t = t.next
+            k+=1
+
+        t.next = t.next.next
+        return A
+
+#########################################################################################################################
+
+Q8. Remove Duplicates from Sorted List
+
+Problem Description
+Given a sorted linked list, delete all duplicates such that each element appears only once.
+
+Problem Constraints
+0 <= length of linked list <= 106
+
+Input Format
+First argument is the head pointer of the linked list.
+
+Output Format
+Return the head pointer of the linked list after removing all duplicates.
+
+Example Input
+Input 1:
+1->1->2
+Input 2:
+1->1->2->3->3
+
+Example Output
+Output 1:
+1->2
+Output 2:
+1->2->3
+
+Example Explanation
+Explanation 1:
+Each element appear only once in 1->2.
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.next = None
+
+class Solution:
+	# @param A : head node of linked list
+	# @return the head node in the linked list
+	def deleteDuplicates(self, A):
+        if A == None:
+            return
+        t = A 
+        while t != None:
+            if t.next != None and t.val == t.next.val:
+                t.next = t.next.next
+            else:
+                t = t.next    
+        return A    
+
+#########################################################################################################################
+
+Q9. List Cycle
+
+Problem Description
+Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+Try solving it using constant additional space.
+
+Constraints:
+0 <= size of linked list <= 106
+1 <= value of nodes <= 109
+
+Example:
+Input: 
+                  ______
+                 |     |
+                 \/    |
+        1 -> 2 -> 3 -> 4
+
+Return the node corresponding to node 3. 
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    # @param A : head node of linked list
+    # @return the head node in the linked list
+    def detectCycle(self, A):
+        s = A
+        f = A
+        iscycle = False
+        while f != None and f.next != None:
+            s = s.next
+            f = f.next.next
+            if s == f:
+                iscycle = True
+                break
+
+        if iscycle == False:
+            return
+        s1 = A 
+        s2 = f
+        while s1 != s2:
+            s1 = s1.next
+            s2 = s2.next
+        return s1               
+
+#########################################################################################################################
+
+Q10. Remove Loop from Linked List
+
+Problem Description
+You are using Google Maps to help you find your way around a new place. But, you get lost and end up walking in a circle. Google Maps has a way to keep track of where you've been with the help of special sensors.These sensors notice that you're walking in a loop, and now, Google wants to create a new feature to help you figure out exactly where you started going in circles.
+Here's how we can describe the challenge in simpler terms: You have a Linked List A that shows each step of your journey, like a chain of events. Some of these steps have accidentally led you back to a place you've already been, making you walk in a loop. The goal is to find out the exact point where you first started walking in this loop, and then you want to break the loop by not going in the circle just before this point.
+
+Problem Constraints
+1 <= number of nodes <= 1000
+
+Input Format
+The first of the input contains a LinkedList, where the first number is the number of nodes N, and the next N nodes are the node value of the linked list.
+The second line of the input contains an integer which denotes the position of node where cycle starts.
+
+Output Format
+return the head of the updated linked list.
+
+Example Input
+Input 1:
+
+1 -> 2
+^    |
+| - - 
+
+Input 2:
+
+3 -> 2 -> 4 -> 5 -> 6
+          ^         |
+          |         |    
+          - - - - - -
+
+Example Output
+Output 1:
+1 -> 2 -> NULL
+Output 2:
+3 -> 2 -> 4 -> 5 -> 6 -> NULL
+
+Example Explanation
+Explanation 1:
+Chain of 1->2 is broken.
+Explanation 2:
+Chain of 4->6 is broken.
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.next = None
+
+class Solution:
+    # @param A : head node of linked list
+    # @return the head node in the linked list
+    def solve(self, A):
+        s = A
+        f = A
+        while f != None and f.next != None:
+            s = s.next
+            f = f.next.next
+            if s == f:
+                break
+
+
+        s1 = A 
+        s2 = f
+        while s1 != s2:
+            s1 = s1.next
+            s2 = s2.next
+
+        t = s1
+        while t.next != s1:
+            t = t.next
+
+        t.next = None 
+        return A   
+
+#########################################################################################################################
+
+Q11. Reorder List
+
+Problem Description
+Given a singly linked list A
+A: A0 → A1 → … → An-1 → An 
+reorder it to:
+A0 → An → A1 → An-1 → A2 → An-2 → … 
+You must do this in-place without altering the nodes' values.
+
+Problem Constraints
+1 <= |A| <= 106
+
+Input Format
+The first and the only argument of input contains a pointer to the head of the linked list A.
+
+Output Format
+Return a pointer to the head of the modified linked list.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5] 
+Input 2:
+A = [1, 2, 3, 4] 
+
+Example Output
+Output 1:
+[1, 5, 2, 4, 3] 
+Output 2:
+[1, 4, 2, 3] 
+
+Example Explanation
+Explanation 1:
+The array will be arranged to [A0, An, A1, An-1, A2].
+Explanation 2:
+The array will be arranged to [A0, An, A1, An-1, A2].
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.next = None
+
+class Solution:
+	# @param A : head node of linked list
+	# @return the head node in the linked list
+    def reverseList(self, A):
+        prev = None
+        curr = A
+        while curr != None:
+            temp = curr.next
+            curr.next = prev
+            prev = curr
+            curr = temp
+        return prev    
+
+
+	def reorderList(self, A):
+        c = 0
+        t = A
+        while t != None:
+            t = t.next
+            c+= 1 
+
+        s = A
+        first = A
+        f = A
+        if c%2 == 0:
+            while f.next.next != None:
+                s = s.next
+                f = f.next.next
+        else:
+            while f.next != None:
+                s = s.next
+                f = f.next.next
+        
+        last = s.next
+        s.next = None
+
+        last = Solution.reverseList(self, last)
+
+        temp1 = first
+        temp2 = last
+        while temp1 != None and temp2 != None:
+            next1 = temp1.next
+            next2 = temp2.next
+            
+            temp1.next = temp2
+            temp2.next = next1
+            
+            temp1 = next1
+            temp2 = next2
+
+        return first
