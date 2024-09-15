@@ -1,0 +1,761 @@
+Q1. Balanced Paranthesis
+
+Problem Description
+Given an expression string A, examine whether the pairs and the orders of “{“,”}”, ”(“,”)”, ”[“,”]” are correct in A.
+Refer to the examples for more clarity.
+
+Problem Constraints
+1 <= |A| <= 100
+
+Input Format
+The first and the only argument of input contains the string A having the parenthesis sequence.
+
+Output Format
+Return 0 if the parenthesis sequence is not balanced.
+Return 1 if the parenthesis sequence is balanced.
+
+Example Input
+Input 1:
+A = {([])}
+Input 2:
+A = (){
+Input 3:
+A = ()[] 
+
+Example Output
+Output 1:
+1 
+Output 2:
+0 
+Output 3:
+1 
+
+Example Explanation
+You can clearly see that the first and third case contain valid paranthesis.
+
+Solution -
+
+class Solution:
+	# @param A : string
+	# @return an integer
+	def solve(self, A):
+        # openb = True
+        l = []
+        opens = ("{","[","(")
+        closes = ("}","]",")")
+        # d = {"{":"}",
+        #      "[":"]",
+        #      "(":")"}
+        for i in A:
+            if i in opens:
+                l.append(i)
+            elif i in closes:
+                if len(l) == 0:
+                    return 0
+                elif((i==')' and l[-1]=='(') or (i==']' and l[-1]=='[') or (i=='}' and l[-1]=='{')):
+                    l.pop()
+
+        if(len(l)>0):
+            return 0
+        return 1            
+        
+#######################################################################################################################
+
+Q2. Double Character Trouble
+
+Problem Description
+You have a string, denoted as A.
+To transform the string, you should perform the following operation repeatedly:
+Identify the first occurrence of consecutive identical pairs of characters within the string.
+Remove this pair of identical characters from the string.
+Repeat steps 1 and 2 until there are no more consecutive identical pairs of characters.
+The final result will be the transformed string.
+
+Problem Constraints
+1 <= |A| <= 100000
+
+Input Format
+First and only argument is string A.
+
+Output Format
+Return the final string.
+
+Example Input
+Input 1:
+A = "abccbc"
+Input 2:
+A = "ab"
+
+Example Output
+Output 1:
+"ac"
+Output 2:
+"ab"
+
+Example Explanation
+Explanation 1:
+The Given string is "abccbc".
+Remove the first occurrence of consecutive identical pairs of characters "cc".
+After removing the string will be "abbc".
+Again Removing the first occurrence of consecutive identical pairs of characters "bb".
+After remvoing, the string will be "ac".
+Now, there is no consecutive identical pairs of characters.
+Therefore the string after this operation will be "ac".
+Explanation 2:
+ No removals are to be done.
+
+ Solution -
+
+ class Solution:
+    # @param A : string
+    # @return a strings
+    def solve(self, A):
+        l = []
+        n = len(A)
+        l.append(A[0])
+        for i in range(1,n):
+            if len(l) != 0:
+                if A[i] == l[-1]:
+                    l.pop()
+                else:
+                    l.append(A[i])
+            else:
+                l.append(A[i])        
+
+        return "".join(l)           
+
+#######################################################################################################################
+
+Q3. Evaluate Expression
+
+Problem Description
+An arithmetic expression is given by a string array A of size N. Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+Valid operators are +, -, *, /. Each string may be an integer or an operator.
+Note: Reverse Polish Notation is equivalent to Postfix Expression, where operators are written after their operands.
+
+Problem Constraints
+1 <= N <= 105
+
+Input Format
+The only argument given is string array A.
+
+Output Format
+Return the value of arithmetic expression formed using reverse Polish Notation.
+
+Example Input
+Input 1:
+A =   ["2", "1", "+", "3", "*"]
+Input 2:
+A = ["4", "13", "5", "/", "+"]
+
+Example Output
+Output 1:
+9
+Output 2:
+6
+
+Example Explanation
+Explaination 1:
+starting from backside:
+    * : () * ()
+    3 : () * (3)
+    + : (() + ()) * (3)
+    1 : (() + (1)) * (3)
+    2 : ((2) + (1)) * (3)
+    ((2) + (1)) * (3) = 9
+Explaination 2:
+starting from backside:
+    + : () + ()
+    / : () + (() / ())
+    5 : () + (() / (5))
+    13 : () + ((13) / (5))
+    4 : (4) + ((13) / (5))
+    (4) + ((13) / (5)) = 6
+
+Solution -
+
+class Solution:
+	# @param A : list of strings
+	# @return an integer
+	def evalRPN(self, A):
+        if len(A) == 1:
+            return int(A[0])
+        l = []
+        ans = None
+        for i in A:
+            try:
+                l.append(int(i))
+            except:
+                b = l[-1]
+                l.pop()
+                a = l[-1]
+                l.pop()
+                if i == '+':
+                    ans = a+b
+                elif i == '-':
+                    ans = a-b
+                elif i == '*':
+                    ans = a*b
+                else:
+                    ans = a/b
+                l.append(ans)
+        return int(ans)                        
+
+#######################################################################################################################
+
+Q4. Sort stack using another stack
+
+Problem Description
+Given a stack of integers A, sort it using another stack.
+Return the array of integers after sorting the stack using another stack.
+
+Problem Constraints
+1 <= |A| <= 5000
+0 <= A[i] <= 109
+
+Input Format
+The only argument is a stack given as an integer array A.
+
+Output Format
+Return the array of integers after sorting the stack using another stack.
+
+Example Input
+Input 1:
+A = [5, 4, 3, 2, 1]
+Input 2:
+A = [5, 17, 100, 11]
+
+Example Output
+Output 1:
+[1, 2, 3, 4, 5]
+Output 2:
+[5, 11, 17, 100]
+
+Example Explanation
+Explanation 1:
+Just sort the given numbers.
+Explanation 2:
+Just sort the given numbers.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return a list of integers
+    def solve(self, A):
+        B = []
+        while A :
+            x = A.pop()
+            while B and B[-1] > x :
+                y = B.pop()
+                A.append(y)
+            B.append(x)
+        return B    
+
+#######################################################################################################################
+
+Q5. Passing game
+
+Problem Description
+There is a football event going on in your city. In this event, you are given A passes and players having ids between 1 and 106.
+Initially, some player with a given id had the ball in his possession. You have to make a program to display the id of the player who possessed the ball after exactly A passes.
+
+There are two kinds of passes:
+1) ID
+2) 0
+For the first kind of pass, the player in possession of the ball passes the ball "forward" to the player with id = ID.
+For the second kind of pass, the player in possession of the ball passes the ball back to the player who had forwarded the ball to him.
+In the second kind of pass "0" just means Back Pass.
+Return the ID of the player who currently possesses the ball.
+
+Problem Constraints
+1 <= A <= 100000
+1 <= B <= 100000
+|C| = A
+
+Input Format
+The first argument of the input contains the number A.
+The second argument of the input contains the number B ( id of the player possessing the ball in the very beginning).
+The third argument is an array C of size A having (ID/0).
+
+Output Format
+Return the "ID" of the player who possesses the ball after A passes.
+
+Example Input
+Input 1:
+A = 10
+B = 23
+C = [86, 63, 60, 0, 47, 0, 99, 9, 0, 0]
+Input 2:
+A = 1
+B = 1
+C = [2]
+
+Example Output
+Output 1:
+63
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+Initially, Player having  id = 23  posses ball. 
+After pass  1,  Player having  id = 86  posses ball. 
+After pass  2,  Player having  id = 63  posses ball. 
+After pass  3,  Player having  id = 60  posses ball. 
+After pass  4,  Player having  id = 63  posses ball. 
+After pass  5,  Player having  id = 47  posses ball. 
+After pass  6,  Player having  id = 63  posses ball. 
+After pass  7,  Player having  id = 99  posses ball. 
+After pass  8,  Player having  id = 9   posses ball. 
+After pass  9,  Player having  id = 99  posses ball. 
+After pass  10, Player having  id = 63   posses ball.
+Explanation 2:
+Ball is passed to 2.
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @param B : integer
+    # @param C : list of integers
+    # @return an integer
+    def solve(self, A, B, C):
+        l = []
+        l.append(B)
+        passes = 0
+        while passes < A:
+            if C[passes] != 0:
+                l.append(C[passes])
+                # C.pop(0)
+                passes += 1
+            else:
+                l.pop()
+                # C.pop(0)
+                passes += 1
+        return l[-1]        
+
+#######################################################################################################################
+
+Q6. Infix to Postfix
+
+Problem Description
+Given string A denoting an infix expression. Convert the infix expression into a postfix expression.
+String A consists of ^, /, *, +, -, (, ) and lowercase English alphabets where lowercase English alphabets are operands and ^, /, *, +, - are operators.
+Find and return the postfix expression of A.
+NOTE:
+^ has the highest precedence.
+/ and * have equal precedence but greater than + and -.
++ and - have equal precedence and lowest precedence among given operators.
+
+Problem Constraints
+1 <= length of the string <= 500000
+
+Input Format
+The only argument given is string A.
+
+Output Format
+Return a string denoting the postfix conversion of A.
+
+Example Input
+Input 1:
+A = "x^y/(a*z)+b"
+Input 2:
+A = "a+b*(c^d-e)^(f+g*h)-i"
+
+Example Output
+Output 1:
+"xy^az*/b+"
+Output 2:
+"abcd^e-fgh*+^*+i-"
+
+Example Explanation
+Explanation 1:
+Ouput dentotes the postfix expression of the given input.
+
+Solution -
+
+class Solution:
+    # @param A : string
+    # @return a strings
+    def solve(self, A):
+        operators = { '^': 3,
+                      '/': 2,
+                      '*': 2,
+                      '+': 1,
+                      '-': 1,
+                    }
+        res = ''
+        stack = []
+
+        for i in range(len(A)):
+            cur = A[i]
+
+            if cur.isalpha():
+                res = res + A[i]
+                
+                
+            elif cur in operators:
+                if not stack:
+                    stack.append(cur)
+                else:
+                    while stack and stack[-1] != '(' and operators.get(cur) <= operators.get(stack[-1]):
+                        res = res +  stack[-1]
+                        stack.pop()
+                    stack.append(cur)
+                        
+            elif cur == '(' or cur == ')':
+                if cur == ')':
+                    while stack and stack[-1] != '(':
+                        if stack[-1] in operators:
+                            res = res + stack[-1]
+                        stack.pop()
+                    stack.pop()
+                else:
+                    stack.append(cur)
+                
+        while stack:
+            res = res + stack.pop()
+
+        return res 
+
+#######################################################################################################################
+
+Q7. Nearest Smaller Element
+
+Problem Description
+Given an array A, find the nearest smaller element G[i] for every element A[i] in the array such that the element has an index smaller than i.
+More formally,
+G[i] for an element A[i] = an element A[j] such that
+j is maximum possible AND
+j < i AND
+A[j] < A[i]
+Elements for which no smaller element exist, consider the next smaller element as -1.
+
+Problem Constraints
+1 <= |A| <= 100000
+-109 <= A[i] <= 109
+
+Input Format
+The only argument given is integer array A.
+
+Output Format
+Return the integar array G such that G[i] contains the nearest smaller number than A[i]. If no such element occurs G[i] should be -1.
+
+Example Input
+Input 1:
+A = [4, 5, 2, 10, 8]
+Input 2:
+A = [3, 2, 1]
+
+Example Output
+Output 1:
+[-1, 4, -1, 2, 2]
+Output 2:
+[-1, -1, -1]
+
+Example Explanation
+Explanation 1:
+index 1: No element less than 4 in left of 4, G[1] = -1
+index 2: A[1] is only element less than A[2], G[2] = A[1]
+index 3: No element less than 2 in left of 2, G[3] = -1
+index 4: A[3] is nearest element which is less than A[4], G[4] = A[3]
+index 4: A[3] is nearest element which is less than A[5], G[5] = A[3]
+Explanation 2:
+index 1: No element less than 3 in left of 3, G[1] = -1
+index 2: No element less than 2 in left of 2, G[2] = -1
+index 3: No element less than 1 in left of 1, G[3] = -1
+
+Solution -
+
+class Solution:
+	# @param A : list of integers
+	# @return a list of integers
+	def prevSmaller(self, A):
+		n = len(A)
+		ans = [-1]*n
+		st = []
+		st.append(A[0])
+		for i in range(1,n):
+            while len(st)>0 and st[-1]>=A[i]:
+                st.pop()
+            if len(st)>0:
+                ans[i] = st[-1]
+			st.append(A[i])
+        return ans
+#######################################################################################################################
+
+Q8. Largest Rectangle in Histogram
+
+Problem Description
+Given an array of integers A.
+A represents a histogram i.e A[i] denotes the height of the ith histogram's bar. Width of each bar is 1.
+Find the area of the largest rectangle formed by the histogram.
+
+Problem Constraints
+1 <= |A| <= 100000
+1 <= A[i] <= 10000
+
+Input Format
+The only argument given is the integer array A.
+
+Output Format
+Return the area of the largest rectangle in the histogram.
+
+Example Input
+Input 1:
+A = [2, 1, 5, 6, 2, 3]
+Input 2:
+A = [2]
+
+Example Output
+Output 1:
+10
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+The largest rectangle has area = 10 unit. Formed by A[3] to A[4].
+Explanation 2:
+Largest rectangle has area 2.
+
+Solution -
+
+class Solution:
+	# @param A : list of integers
+	# @return an integer
+
+    def smallindexleft(self, A):
+        n = len(A)
+		ans = [-1]*n
+		st = []
+		for i in range(n):
+            while len(st)>0 and A[st[-1]]>=A[i]:
+                st.pop()
+            if len(st)>0:
+                ans[i] = st[-1]
+			st.append(i)
+        return ans
+
+    def smallindexright(self, A):
+        n = len(A)
+		ans = [n]*n
+		st = []
+		for i in range(n-1,-1,-1):
+            while len(st)>0 and A[st[-1]]>=A[i]:
+                st.pop()
+            if len(st)>0:
+                ans[i] = st[-1]
+			st.append(i)
+        return ans    
+        
+	def largestRectangleArea(self, A):
+        left = self.smallindexleft(A)
+        right = self.smallindexright(A)
+        area = 0
+        n = len(A)
+        for i in range(n):
+            h = A[i]
+            p1 = left[i]
+            p2 = right[i]
+            area = max(area,(p2-p1-1)*h)
+        return area    
+
+#######################################################################################################################
+
+Q9. MAX and MIN
+
+Problem Description
+Given an array of integers A.
+The value of an array is computed as the difference between the maximum element in the array and the minimum element in the array A.
+Calculate and return the sum of values of all possible subarrays of A modulo 109+7.
+
+Problem Constraints
+1 <= |A| <= 100000
+1 <= A[i] <= 1000000
+
+Input Format
+The first and only argument given is the integer array A.
+
+Output Format
+Return the sum of values of all possible subarrays of A modulo 109+7.
+
+Example Input
+Input 1:
+A = [1]
+Input 2:
+A = [4, 7, 3, 8]
+
+Example Output
+Output 1:
+0
+Output 2:
+26
+
+Example Explanation
+Explanation 1:
+Only 1 subarray exists. Its value is 0.
+Explanation 2:
+value ( [4] ) = 4 - 4 = 0
+value ( [7] ) = 7 - 7 = 0
+value ( [3] ) = 3 - 3 = 0
+value ( [8] ) = 8 - 8 = 0
+value ( [4, 7] ) = 7 - 4 = 3
+value ( [7, 3] ) = 7 - 3 = 4
+value ( [3, 8] ) = 8 - 3 = 5
+value ( [4, 7, 3] ) = 7 - 3 = 4
+value ( [7, 3, 8] ) = 8 - 3 = 5
+value ( [4, 7, 3, 8] ) = 8 - 3 = 5
+sum of values % 10^9+7 = 26
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+
+    def leftmin(self,A,n):
+        left_arr = []
+        stack    = []
+        for i in range(n):
+            while stack and A[stack[-1]] >= A[i]:
+                stack.pop()     
+            if not stack:
+                left_arr.append(i+ 1)
+            else:
+                left_arr.append(i - stack[-1])
+            stack.append(i) 
+        stack.clear()    
+        return left_arr
+    
+    def rightmin(self,A,n):
+        right_arr = []
+        stack    = []
+        for i in range(n-1,-1,-1):
+            while stack and A[stack[-1]] > A[i]:
+                stack.pop()     
+            if not stack:
+                right_arr.append(len(A) - i)
+            else:
+                right_arr.append(stack[-1] - i)
+                
+                
+            stack.append(i)
+        stack.clear()    
+        return right_arr[::-1]  
+
+
+    def leftmax(self,A,n):
+        left_arr = []
+        stack    = []
+        for i in range(n):
+            while stack and A[stack[-1]] <= A[i]:
+                stack.pop()     
+            if not stack:
+                left_arr.append(i+ 1)
+            else:
+                left_arr.append(i - stack[-1])
+            stack.append(i) 
+        stack.clear()    
+        return left_arr
+
+    def rightmax(self,A,n):
+        right_arr = []
+        stack    = []
+        for i in range(n-1,-1,-1):
+            while stack and A[stack[-1]] < A[i]:
+                stack.pop()     
+            if not stack:
+                right_arr.append(len(A) - i)
+            else:
+                right_arr.append(stack[-1] - i)
+                
+                
+            stack.append(i)
+        stack.clear()    
+        return right_arr[::-1]  
+
+
+    def solve(self, A):
+        N = len(A) 
+        mod = 1000000007
+
+        lmin = self.leftmin(A,N)
+        rmin = self.rightmin(A,N)
+        lmax = self.leftmax(A,N)
+        rmax = self.rightmax(A,N)
+
+        ans = 0
+        min_val , max_val = 0 , 0
+        for i in range(N):
+            min_val += A[i] * lmin[i] * rmin[i]
+            max_val += A[i] * lmax[i] * rmax[i]
+
+        ans += (max_val - min_val ) % mod 
+        ans = ans  % mod
+        return ans % mod
+#######################################################################################################################
+
+Q10. Next Greater
+
+Problem Description
+Given an array A, find the next greater element G[i] for every element A[i] in the array.
+The next greater element for an element A[i] is the first greater element on the right side of A[i] in the array, A.
+
+More formally:
+G[i] for an element A[i] = an element A[j] such that 
+    j is minimum possible AND 
+    j > i AND
+    A[j] > A[i]
+Elements for which no greater element exists, consider the next greater element as -1.
+
+Problem Constraints
+1 <= |A| <= 105
+1 <= A[i] <= 107
+
+Input Format
+The first and the only argument of input contains the integer array, A.
+
+Output Format
+Return an integer array representing the next greater element for each index in A.
+
+Example Input
+Input 1:
+A = [4, 5, 2, 10] 
+Input 2:
+A = [3, 2, 1] 
+
+Example Output
+Output 1:
+[5, 10, 10, -1] 
+Output 2:
+[-1, -1, -1] 
+
+Example Explanation
+Explanation 1:
+For 4, the next greater element towards its right is 5.
+For 5 and 2, the next greater element towards their right is 10.
+For 10, there is no next greater element towards its right.
+Explanation 2:
+As the array is in descending order, there is no next greater element for all the elements. 
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @return a list of integers
+    def nextGreater(self, A):
+        n = len(A)
+        ans = [-1]*n
+        st = []
+
+        for i in range(n-1,-1,-1):
+
+            while len(st) > 0 and A[i] >= st[-1]:
+                st.pop()
+            if len(st) > 0:
+                ans[i] = st[-1]
+            st.append(A[i])
+
+        return ans
