@@ -1,0 +1,1063 @@
+Q1. Inorder Traversal
+
+Problem Description
+Given a binary tree, return the inorder traversal of its nodes' values.
+
+Problem Constraints
+1 <= number of nodes <= 105
+
+Input Format
+First and only argument is root node of the binary tree, A.
+
+Output Format
+Return an integer array denoting the inorder traversal of the given binary tree.
+
+Example Input
+Input 1:
+
+   1
+    \
+     2
+    /
+   3
+Input 2:
+
+   1
+  / \
+ 6   2
+    /
+   3
+
+
+Example Output
+Output 1:
+[1, 3, 2]
+Output 2:
+[6, 1, 3, 2]
+
+Example Explanation
+Explanation 1:
+The Inorder Traversal of the given tree is [1, 3, 2].
+Explanation 2:
+The Inorder Traversal of the given tree is [6, 1, 3, 2].
+
+Solution -
+
+class Solution:
+	# @param A : root node of tree
+	# @return a list of integers
+	def inorderTraversal(self, A):
+        st = []
+        ans = []
+        curr = A
+        while curr != None or len(st) > 0:
+            while curr != None:
+                st.append(curr)
+                curr = curr.left
+
+            curr = st[-1]
+            st.pop()
+            ans.append(curr.val)
+            curr = curr.right
+        return ans 
+
+#######################################################################################################################
+
+Q2. Level Order
+
+Problem Description
+Given a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+
+Problem Constraints
+1 <= number of nodes <= 105
+
+Input Format
+First and only argument is root node of the binary tree, A.
+
+Output Format
+Return a 2D integer array denoting the level order traversal of the given binary tree.
+
+Example Input
+Input 1:
+    3
+   / \
+  9  20
+    /  \
+   15   7
+Input 2:
+   1
+  / \
+ 6   2
+    /
+   3
+
+Example Output
+Output 1:
+ [
+   [3],
+   [9, 20],
+   [15, 7]
+ ]
+Output 2:
+ [ 
+   [1]
+   [6, 2]
+   [3]
+ ]
+
+Example Explanation
+Explanation 1:
+Return the 2D array. Each row denotes the traversal of each level.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+from collections import deque
+
+class Solution:
+	# @param A : root node of tree
+	# @return a list of list of integers
+	def solve(self, A):
+        if A == None:
+            return []
+
+        ans = []
+        q = deque()
+        q.append(A)
+
+        while len(q) > 0:
+            size = len(q)
+            level = []
+            for i in range(size):
+                cur_node = q.popleft()
+                if cur_node:
+                    q.append(cur_node.left)
+                    q.append(cur_node.right)
+
+                    level.append(cur_node.val)
+
+            if level:
+                ans.append(level)
+
+        return ans 
+
+#######################################################################################################################
+
+Q3. Left View of Binary tree
+
+Problem Description
+Given a binary tree of integers. Return an array of integers representing the left view of the Binary tree.
+Left view of a Binary Tree is a set of nodes visible when the tree is visited from Left side
+NOTE: The value comes first in the array which have lower level.
+
+Problem Constraints
+1 <= Number of nodes in binary tree <= 100000
+0 <= node values <= 109
+
+Input Format
+First and only argument is a root node of the binary tree, A.
+
+Output Format
+Return an integer array denoting the left view of the Binary tree.
+
+Example Input
+Input 1:
+
+            1
+          /   \
+         2    3
+        / \  / \
+       4   5 6  7
+      /
+     8 
+Input 2:
+
+            1
+           /  \
+          2    3
+           \
+            4
+             \
+              5
+
+
+Example Output
+Output 1:
+[1, 2, 4, 8]
+Output 2:
+[1, 2, 4, 5]
+
+Example Explanation
+Explanation 1:
+The Left view of the binary tree is returned.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+from collections import deque
+
+class Solution:
+    # @param A : root node of tree
+    # @return a list of integers
+    def solve(self, A):
+        first_el_flag=True
+
+        if A is None:
+            return
+        
+        ans=[]
+        q=deque()
+
+        q.append(A)
+        q.append(None)
+        
+        ans.append(A.val)
+        
+        while (len(q) > 1):
+            f=q.popleft()
+            if f is None:
+                first_el_flag=True
+                q.append(None)
+            else:
+                if f.left is not None:
+                    q.append(f.left)
+                    if first_el_flag:
+                        ans.append(f.left.val)
+                    first_el_flag=False
+                if f.right is not None:
+                    q.append(f.right)
+                    if first_el_flag:
+                        ans.append(f.right.val)
+                    first_el_flag=False
+        return ans
+
+#######################################################################################################################
+
+Q4. Right View of Binary tree
+
+Problem Description
+Given a binary tree of integers denoted by root A. Return an array of integers representing the right view of the Binary tree.
+Right view of a Binary Tree is a set of nodes visible when the tree is visited from Right side.
+
+Problem Constraints
+1 <= Number of nodes in binary tree <= 100000
+0 <= node values <= 10^9
+
+Input Format
+First and only argument is head of the binary tree A.
+
+Output Format
+Return an array, representing the right view of the binary tree.
+
+Example Input
+Input 1:
+            1
+          /   \
+         2    3
+        / \  / \
+       4   5 6  7
+      /
+     8 
+Input 2:
+            1
+           /  \
+          2    3
+           \
+            4
+             \
+              5
+
+Example Output
+Output 1:
+[1, 3, 7, 8]
+Output 2:
+[1, 3, 4, 5]
+
+Example Explanation
+Explanation 1:
+Right view is described.
+Explanation 2:
+Right view is described.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+from collections import deque
+
+class Solution:
+    # @param A : root node of tree
+    # @return a list of integers
+    def solve(self, A):
+        if A == None:
+            return
+        ans = []    
+        q = deque()
+        q.append(A)
+        while len(q) > 0:
+            n = len(q)
+            for i in range(n):
+                f = q.popleft()
+                if i == n-1:
+                    ans.append(f.val)
+                if f.left != None:
+                    q.append(f.left)
+                if f.right != None:
+                    q.append(f.right)
+
+        return ans            
+
+#######################################################################################################################
+
+Q5. Preorder Traversal
+
+Problem Description
+Given a binary tree, return the preorder traversal of its nodes values.
+
+Problem Constraints
+1 <= number of nodes <= 105
+
+Input Format
+First and only argument is root node of the binary tree, A.
+
+Output Format
+Return an integer array denoting the preorder traversal of the given binary tree.
+
+Example Input
+Input 1:
+   1
+    \
+     2
+    /
+   3
+Input 2:
+   1
+  / \
+ 6   2
+    /
+   3
+
+Example Output
+Output 1:
+[1, 2, 3]
+Output 2:
+[1, 6, 2, 3]
+
+Example Explanation
+Explanation 1:
+The Preoder Traversal of the given tree is [1, 2, 3].
+Explanation 2:
+The Preoder Traversal of the given tree is [1, 6, 2, 3].
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+class Solution:
+	# @param A : root node of tree
+	# @return a list of integers
+	def preorderTraversal(self, A):
+        st = []
+        ans = []
+        curr = A
+        while curr != None or len(st) > 0:
+            while curr != None:
+                st.append(curr)
+                ans.append(curr.val)
+                curr = curr.left
+
+            curr = st[-1]
+            st.pop()
+            # ans.append(curr.val)
+            curr = curr.right
+
+        return ans
+
+#######################################################################################################################
+
+Q6. Postorder Traversal
+
+Problem Description
+Given a binary tree, return the Postorder traversal of its nodes values.
+
+Problem Constraints
+1 <= number of nodes <= 105
+
+Input Format
+First and only argument is root node of the binary tree, A.
+
+Output Format
+Return an integer array denoting the Postorder traversal of the given binary tree.
+
+Example Input
+Input 1:
+   1
+    \
+     2
+    /
+   3
+Input 2:
+   1
+  / \
+ 6   2
+    /
+   3
+
+
+Example Output
+Output 1:
+[3, 2, 1]
+Output 2:
+[6, 3, 2, 1]
+
+Example Explanation
+Explanation 1:
+The Preoder Traversal of the given tree is [3, 2, 1].
+Explanation 2:
+The Preoder Traversal of the given tree is [6, 3, 2, 1].
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @return a list of integers
+    def postorderTraversal(self, A):
+        res = []
+        stack = [A]
+        while stack:
+            pop = stack.pop()
+            res.append(pop.val)
+            if pop.left:
+                stack.append(pop.left)
+            if pop.right:
+                stack.append(pop.right)
+        
+        return res[::-1]
+
+#######################################################################################################################
+
+Q7. ZigZag Level Order Traversal BT
+
+Problem Description
+Given a binary tree, return the zigzag level order traversal of its nodes values. (ie, from left to right, then right to left for the next level and alternate between).
+
+Problem Constraints
+1 <= number of nodes <= 105
+
+Input Format
+First and only argument is root node of the binary tree, A.
+
+Output Format
+Return a 2D integer array denoting the zigzag level order traversal of the given binary tree.
+
+Example Input
+Input 1:
+    3
+   / \
+  9  20
+    /  \
+   15   7
+Input 2:
+   1
+  / \
+ 6   2
+    /
+   3
+
+Example Output
+Output 1:
+ [
+   [3],
+   [20, 9],
+   [15, 7]
+ ]
+Output 2:
+ [ 
+   [1]
+   [2, 6]
+   [3]
+ ]
+
+Example Explanation
+Explanation 1:
+ Return the 2D array. Each row denotes the zigzag traversal of each level.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+from collections import deque
+
+class Solution:
+	# @param A : root node of tree
+	# @return a list of list of integers
+    def levelOrder(self, A):
+        if A == None:
+            return []
+
+        ans = []
+        q = deque()
+        q.append(A)
+
+        while len(q) > 0:
+            size = len(q)
+            level = []
+            for i in range(size):
+                cur_node = q.popleft()
+                if cur_node:
+                    q.append(cur_node.left)
+                    q.append(cur_node.right)
+
+                    level.append(cur_node.val)
+
+            if level:
+                ans.append(level)
+
+        return ans 
+
+	def zigzagLevelOrder(self, A):
+        res = self.levelOrder(A)
+        for i in range(len(res)):
+            if i%2 == 1:
+                res[i] = res[i][::-1]
+        return res        
+
+#######################################################################################################################
+
+Q8. Reverse Level Order
+
+Problem Description
+Given a binary tree, return the reverse level order traversal of its nodes values. (i.e, from left to right and from last level to starting level).
+
+Problem Constraints
+1 <= number of nodes <= 5 * 105
+1 <= node value <= 105
+
+Input Format
+First and only argument is a pointer to the root node of the Binary Tree, A.
+
+Output Format
+Return an integer array denoting the reverse level order traversal from left to right.
+
+Example Input
+Input 1:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+Input 2:
+
+   1
+  / \
+ 6   2
+    /
+   3
+
+Example Output
+Output 1:
+[15, 7, 9, 20, 3] 
+Output 2:
+[3, 6, 2, 1]
+
+Example Explanation
+Explanation 1:
+Nodes as level 3 : [15, 7]
+Nodes at level 2: [9, 20]
+Nodes at level 1: [3]
+Reverse level order traversal will be: [15, 7, 9, 20, 3]
+Explanation 2:
+Nodes as level 3 : [3]
+Nodes at level 2: [6, 2]
+Nodes at level 1: [1]
+Reverse level order traversal will be: [3, 6, 2, 1]
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+from collections import deque
+class Solution:
+    # @param A : root node of tree
+    # @return a list of integers
+    def solve(self, A):
+        ans = []
+	    if A == None:
+		    return
+        q = deque()
+        q.append(A)
+        
+        while len(q)>0:
+            n = len(q)
+            l = []
+            for _ in range(n):
+                f = q.popleft()
+                l.append(f.val)
+                if f.left != None:
+                    q.append(f.left)
+                if f.right != None:
+                    q.append(f.right)
+            ans.append(l)
+        
+        b = ans[::-1]
+        m = []
+        for i in range(len(b)):
+            for j in range(len(b[i])):
+                m.append(b[i][j])
+        return m
+#######################################################################################################################
+
+Q9. Invert the Binary Tree
+
+Problem Description
+Given a binary tree A, invert the binary tree and return it.
+Inverting refers to making the left child the right child and vice versa.
+
+Problem Constraints
+1 <= size of tree <= 100000
+
+Input Format
+First and only argument is the head of the tree A.
+
+Output Format
+Return the head of the inverted tree.
+
+Example Input
+Input 1:
+ 
+     1
+   /   \
+  2     3
+Input 2:
+ 
+     1
+   /   \
+  2     3
+ / \   / \
+4   5 6   7
+
+
+Example Output
+Output 1:
+
+     1
+   /   \
+  3     2
+Output 2:
+ 
+     1
+   /   \
+  3     2
+ / \   / \
+7   6 5   4
+
+
+Example Explanation
+Explanation 1:
+Tree has been inverted.
+Explanation 2:
+Tree has been inverted.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+
+class Solution:
+	# @param A : root node of tree
+	# @return the root node in the tree
+	def invertTree(self, A):
+        if A == None:
+			return
+		
+        A.left,A.right = A.right,A.left
+		self.invertTree(A.left)
+        self.invertTree(A.right)
+
+        return  A
+
+#######################################################################################################################
+
+Q10. Vertical Order traversal
+
+Problem Description
+Given a binary tree, return a 2-D array with vertical order traversal of it. Go through the example and image for more details.
+
+NOTE: If 2 Tree Nodes shares the same vertical level then the one with lesser depth will come first.
+
+Problem Constraints
+0 <= number of nodes <= 105
+
+Input Format
+First and only arument is a pointer to the root node of binary tree, A.
+
+Output Format
+Return a 2D array denoting the vertical order traversal of tree as shown.
+
+Example Input
+Input 1:
+      6
+    /   \
+   3     7
+  / \     \
+ 2   5     9
+Input 2:
+      1
+    /   \
+   3     7
+  /       \
+ 2         9
+
+
+Example Output
+Output 1:
+ [
+    [2],
+    [3],
+    [6, 5],
+    [7],
+    [9]
+ ]
+Output 2:
+ [
+    [2],
+    [3],
+    [1],
+    [7],
+    [9]
+ ]
+
+Example Explanation
+Explanation 1:
+First row represent the verical line 1 and so on.
+
+Solution -
+
+from collections import deque
+
+class TreeNode:
+	def init(self, x):
+		self.val = x
+		self.left = None
+		self.right = None
+
+class Solution:
+	def verticalOrderTraversal(self, A):
+        minLevel = maxLevel = 0        
+        hashmap = dict()
+        myQueue = deque()
+        myQueue.append((A, 0))
+
+        while myQueue:
+            data = myQueue.popleft()
+            level = data[1]
+            node = data[0]
+
+            if level not in hashmap:
+                hashmap[level] = [node.val]
+            else:
+                hashmap[level].append(node.val)
+
+            minLevel = min(minLevel, level)
+            maxLevel = max(maxLevel, level)
+
+            if node.left != None:
+                myQueue.append( (node.left , level-1) )
+
+            if node.right != None:
+                myQueue.append( (node.right , level+1) )
+
+        result = []
+
+        for i in range(minLevel, maxLevel+1):
+            result.append(hashmap[i])
+        
+        return result
+
+#######################################################################################################################
+
+Q11. Top View of Binary tree
+
+Problem Description
+Given a binary tree of integers denoted by root A. Return an array of integers representing the top view of the Binary tree.
+The top view of a Binary Tree is a set of nodes visible when the tree is visited from the top.
+Return the nodes in any order.
+
+Problem Constraints
+1 <= Number of nodes in binary tree <= 100000
+0 <= node values <= 10^9
+
+Input Format
+First and only argument is head of the binary tree A.
+
+Output Format
+Return an array, representing the top view of the binary tree.
+
+Example Input
+Input 1:
+            1
+          /   \
+         2    3
+        / \  / \
+       4   5 6  7
+      /
+     8 
+Input 2:
+            1
+           /  \
+          2    3
+           \
+            4
+             \
+              5
+
+Example Output
+Output 1:
+[1, 2, 4, 8, 3, 7]
+Output 2:
+[1, 2, 3]
+
+Example Explanation
+Explanation 1:
+Top view is described.
+Explanation 2:
+Top view is described.
+
+Solution -
+
+from collections import deque
+class Solution:
+    # @param A : root node of tree
+    # @return a list of integers
+    def solve(self, A):
+        d = {}
+        l = 0
+        q = deque()
+        q.append((A,0))
+        while q:
+            f = q.popleft()
+            f,l = f[0],f[1]
+            if l not in d:
+                d[l] = [f.val]
+            else:
+                d[l].append(f.val)
+
+            if f.left != None:
+                q.append((f.left,l-1))
+            if f.right != None:
+                q.append((f.right,l+1))
+
+        ans = []
+        l = sorted(d.keys())
+        for i in l:
+            ans.append(d[i][0])
+        return ans
+
+#######################################################################################################################
+
+Q12. Balanced Binary Tree
+
+Problem Description
+Given a root of binary tree A, determine if it is height-balanced.
+A height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
+
+Problem Constraints
+1 <= size of tree <= 100000
+
+Input Format
+First and only argument is the root of the tree A.
+
+Output Format
+Return 0 / 1 ( 0 for false, 1 for true ) for this problem.
+
+Example Input
+Input 1:
+    1
+   / \
+  2   3
+Input 2:
+
+       1
+      /
+     2
+    /
+   3
+
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+It is a complete binary tree.
+Explanation 2:
+Because for the root node, left subtree has depth 2 and right subtree has depth 0. 
+Difference = 2 > 1. 
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+class Solution:
+	# @param A : root node of tree
+	# @return an integer
+    def height(self,A):
+        if A == None:
+            return 0
+        l = Solution.height(self,A.left)
+        r = Solution.height(self,A.right)
+        return max(l,r) + 1
+
+	def isBalanced(self, A):
+        if A == None:
+            return 1
+        l = Solution.height(self,A.left)
+        r = Solution.height(self,A.right)
+        if abs(l-r) > 1:
+            return 0
+        return Solution.isBalanced(self, A.left) and Solution.isBalanced(self,A.right)  
+
+#######################################################################################################################
+
+Q13. Bottom View Of Binary Tree
+
+Problem Description
+Given a Binary Tree A consisting of N integer nodes, you need to print the bottom view from left to right.
+A node x is there in output if x is the bottom-most node at its horizontal distance.
+Horizontal distance of left child of a node x is equal to horizontal distance of x minus 1, and that of right child is horizontal distance of x plus 1.
+Note: If there are multiple bottom-most nodes for a horizontal distance from root, then print the later one in level traversal.
+
+Problem Constraints
+0 <= N <= 105
+
+Input Format
+First and only Argument represents the root of binary tree A.
+
+Output Format
+Return an one-dimensional integer array denoting the bottom view of A from left to right.
+
+Example Input
+Input:1
+
+                      20
+                    /    \
+                  8       22
+                /   \      \
+              5      3      25
+                    / \      
+                  10    14
+Input:2
+
+                      20
+                    /    \
+                  8       22
+                /   \    /   \
+              5      3  4    25
+                    / \      
+                  10    14
+
+
+Example Output
+Output:1
+[5, 10, 3, 14, 25]
+Output:2
+[5, 10, 4, 14, 25]
+
+Example Explanation
+Explanation:1
+Node 5 has a horizontal distance of -2 and it is the bottom-most node at this distance.
+Node 10 has a horizontal distance of -1 and it is the bottom-most node at this distance.
+Node 3 has a horizontal distance of 0 and it is the bottom-most node at this distance.
+Node 14 has a horizontal distance of 1 and it is the bottom-most node at this distance.
+Node 25 has a horizontal distance of 2 and it is the bottom-most node at this distance.
+Explanation:2
+Node 5 has a horizontal distance of -2 and it is the bottom-most node at this distance.
+Node 10 has a horizontal distance of -1 and it is the bottom-most node at this distance.
+Node 3 and Node 4 has a horizontal distance of 0 and they are the bottom-most node at this distance but we will output the one who comes later in level-order traversal so we output 4.
+Similarly for Node 14 and 25
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+from collections import deque
+class Solution:
+    # @param A : root node of tree
+    # @return a list of integers
+    def solve(self, A):
+        d = {}
+        l = 0
+        q = deque()
+        q.append((A,0))
+        while q:
+            f = q.popleft()
+            f,l = f[0],f[1]
+            if l not in d:
+                d[l] = [f.val]
+            else:
+                d[l].append(f.val)
+
+            if f.left != None:
+                q.append((f.left,l-1))
+            if f.right != None:
+                q.append((f.right,l+1))
+
+        ans = []
+        l = sorted(d.keys())
+        for i in l:
+            ans.append(d[i][-1])
+        return ans
