@@ -1,0 +1,828 @@
+Q1. Sort List
+
+Problem Description
+Sort a linked list, A in O(n log n) time.
+
+Problem Constraints
+0 <= |A| = 105
+
+Input Format
+The first and the only arugment of input contains a pointer to the head of the linked list, A.
+
+Output Format
+Return a pointer to the head of the sorted linked list.
+
+Example Input
+Input 1:
+A = [3, 4, 2, 8]
+Input 2:
+A = [1]
+
+Example Output
+Output 1:
+[2, 3, 4, 8]
+Output 2:
+[1]
+
+Example Explanation
+Explanation 1:
+The sorted form of [3, 4, 2, 8] is [2, 3, 4, 8].
+Explanation 2:
+The sorted form of [1] is [1].
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.next = None
+
+class Solution:
+	# @param A : head node of linked list
+	# @return the head node in the linked list
+    def middle(self, A) :
+        f = A
+        s = A
+        if A.next.next == None :
+            return A
+        while f != None and f.next != None :
+            s = s.next
+            f = f.next.next
+        return s
+
+    def merge(self, h1, h2) :
+        if h1.val <= h2.val :
+            h3 = h1
+            h1 = h1.next
+        else :
+            h3 = h2
+            h2 = h2.next
+        ans = h3
+        while h1 != None and h2 != None :
+            if h1.val <= h2.val :
+                h3.next = h1
+                h1 = h1.next
+            else :
+                h3.next = h2
+                h2 = h2.next
+            h3 = h3.next
+        if h1 == None and h2 != None :
+            h3.next = h2
+        elif h2 == None and h1 != None :
+            h3.next = h1
+        return ans
+
+    def sortList(self, A):
+        if A == None or A.next == None :
+            return A
+        mid = self.middle(A)
+        list2 = mid.next
+        mid.next = None
+        list1 = self.sortList(A)
+        list2 = self.sortList(list2)
+        return self.merge(list1, list2)
+
+########################################################################################################################
+
+Q2. Merge Two Sorted Lists
+
+Problem Description
+Merge two sorted linked lists, A and B, and return it as a new list.
+The new list should be made by splicing together the nodes of the first two lists and should also be sorted.
+
+Problem Constraints
+0 <= |A|, |B| <= 105
+
+Input Format
+The first argument of input contains a pointer to the head of linked list A.
+The second argument of input contains a pointer to the head of linked list B.
+
+Output Format
+Return a pointer to the head of the merged linked list.
+
+Example Input
+Input 1:
+A = 5 -> 8 -> 20
+B = 4 -> 11 -> 15
+Input 2:
+A = 1 -> 2 -> 3
+B = Null
+
+Example Output
+Output 1:
+4 -> 5 -> 8 -> 11 -> 15 -> 20
+Output 2:
+1 -> 2 -> 3
+
+Example Explanation
+Explanation 1:
+Merging A and B will result in 4 -> 5 -> 8 -> 11 -> 15 -> 20 
+Explanation 2:
+We don't need to merge as B is empty. 
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.next = None
+
+class Solution:
+	# @param A : head node of linked list
+	# @param B : head node of linked list
+	# @return the head node in the linked list
+	def mergeTwoLists(self, A, B):
+        if A == None:
+            return B
+        if B == None:
+            return A
+
+        if A.val < B.val:
+            h = A
+            t = A
+            A = A.next
+        else:
+            h = B
+            t = B
+            B = B.next
+
+        while A != None and B != None:
+            if A.val < B.val:
+                t.next = A
+                A = A.next
+                t = t.next
+            else:
+                t.next = B
+                B = B.next
+                t = t.next
+
+        if A != None:
+            t.next = A
+        if B != None:
+            t.next = B
+
+        return h            
+
+########################################################################################################################
+
+Q3. Intersection of Linked Lists
+
+Problem Description
+Write a program to find the node at which the intersection of two singly linked lists, A and B, begins. For example, the following two linked lists:
+A:          a1 → a2
+                   ↘
+                     c1 → c2 → c3
+                   ↗
+B:     b1 → b2 → b3
+NOTE:
+If the two linked lists have no intersection at all, return null.
+The linked lists must retain their original structure after the function returns.
+You may assume there are no cycles anywhere in the entire linked structure.
+Your code should preferably run in O(n) time and use only O(1) memory.
+The custom input to be given is different than the one explained in the examples. Please be careful.
+
+Problem Constraints
+0 <= |A|, |B| <= 106
+
+Input Format
+The first argument of input contains a pointer to the head of the linked list A.
+The second argument of input contains a pointer to the head of the linked list B.
+
+Output Format
+Return a pointer to the node after which the linked list is intersecting.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5]
+B = [6, 3, 4, 5]
+Input 2:
+A = [1, 2, 3]
+B = [4, 5]
+
+Example Output
+Output 1:
+[3, 4, 5]
+Output 2:
+[]
+
+Example Explanation
+Explanation 1:
+In the first example, the nodes have the same values after 3rd node in A and 2nd node in B. Thus, the linked lists are intersecting after that point. 
+Explanation 2:
+In the second example, the nodes don't have the same values, thus we can return None/Null.
+
+Solution -
+
+'''
+Definition for singly-linked list
+class ListNode:
+   def __init__(self, val):
+      self.val = val
+      self.next = None
+'''
+class Solution:
+    def getIntersectionNode(self, A, B):
+        s = set()
+        t = A
+        while t != None:
+            s.add(t)
+            t = t.next
+
+        p = B
+        while p != None:
+            if p in s:
+                break
+            p = p.next
+            
+        return p            
+
+########################################################################################################################
+
+Q4. Merge Two Sorted Lists
+
+Problem Description
+Merge two sorted linked lists, A and B, and return it as a new list.
+The new list should be made by splicing together the nodes of the first two lists and should also be sorted.
+
+Problem Constraints
+0 <= |A|, |B| <= 105
+
+Input Format
+The first argument of input contains a pointer to the head of linked list A.
+The second argument of input contains a pointer to the head of linked list B.
+
+Output Format
+Return a pointer to the head of the merged linked list.
+
+Example Input
+Input 1:
+A = 5 -> 8 -> 20
+B = 4 -> 11 -> 15
+Input 2:
+A = 1 -> 2 -> 3
+B = Null
+
+Example Output
+Output 1:
+4 -> 5 -> 8 -> 11 -> 15 -> 20
+Output 2:
+1 -> 2 -> 3
+
+Example Explanation
+Explanation 1:
+Merging A and B will result in 4 -> 5 -> 8 -> 11 -> 15 -> 20 
+Explanation 2:
+We don't need to merge as B is empty. 
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.next = None
+
+class Solution:
+	# @param A : head node of linked list
+	# @param B : head node of linked list
+	# @return the head node in the linked list
+	def mergeTwoLists(self, A, B):
+        if A == None:
+            return B
+        if B == None:
+            return A
+
+        if A.val < B.val:
+            h = A
+            t = A
+            A = A.next
+        else:
+            h = B
+            t = B
+            B = B.next
+
+        while A != None and B != None:
+            if A.val < B.val:
+                t.next = A
+                A = A.next
+                t = t.next
+            else:
+                t.next = B
+                B = B.next
+                t = t.next
+
+        if A != None:
+            t.next = A
+        if B != None:
+            t.next = B
+        return h          
+########################################################################################################################
+
+Q5. Sort List
+
+Problem Description
+Sort a linked list, A in O(n log n) time.
+
+Problem Constraints
+0 <= |A| = 105
+
+Input Format
+The first and the only arugment of input contains a pointer to the head of the linked list, A.
+
+Output Format
+Return a pointer to the head of the sorted linked list.
+
+Example Input
+Input 1:
+A = [3, 4, 2, 8]
+Input 2:
+A = [1]
+
+Example Output
+Output 1:
+[2, 3, 4, 8]
+Output 2:
+[1]
+
+Example Explanation
+Explanation 1:
+The sorted form of [3, 4, 2, 8] is [2, 3, 4, 8].
+Explanation 2:
+The sorted form of [1] is [1].
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.next = None
+
+class Solution:
+	# @param A : head node of linked list
+	# @return the head node in the linked list
+    def middle(self, A) :
+        f = A
+        s = A
+        if A.next.next == None :
+            return A
+        while f != None and f.next != None :
+            s = s.next
+            f = f.next.next
+        return s
+
+    def merge(self, h1, h2) :
+        if h1.val <= h2.val :
+            h3 = h1
+            h1 = h1.next
+        else :
+            h3 = h2
+            h2 = h2.next
+        ans = h3
+        while h1 != None and h2 != None :
+            if h1.val <= h2.val :
+                h3.next = h1
+                h1 = h1.next
+            else :
+                h3.next = h2
+                h2 = h2.next
+            h3 = h3.next
+        if h1 == None and h2 != None :
+            h3.next = h2
+        elif h2 == None and h1 != None :
+            h3.next = h1
+        return ans
+
+    def sortList(self, A):
+        if A == None or A.next == None :
+            return A
+        mid = self.middle(A)
+        list2 = mid.next
+        mid.next = None
+        list1 = self.sortList(A)
+        list2 = self.sortList(list2)
+        return self.merge(list1, list2)
+
+########################################################################################################################
+
+Q6. Palindrome List
+
+Problem Description
+Given a singly linked list A, determine if it's a palindrome. Return 1 or 0, denoting if it's a palindrome or not, respectively.
+
+Problem Constraints
+1 <= |A| <= 105
+
+Input Format
+The first and the only argument of input contains a pointer to the head of the given linked list.
+
+Output Format
+Return 0, if the linked list is not a palindrome.
+Return 1, if the linked list is a palindrome.
+
+Example Input
+Input 1:
+A = [1, 2, 2, 1]
+Input 2:
+A = [1, 3, 2]
+
+Example Output
+Output 1:
+1 
+Output 2:
+0 
+
+Example Explanation
+Explanation 1:
+The first linked list is a palindrome as [1, 2, 2, 1] is equal to its reversed form.
+Explanation 2:
+The second linked list is not a palindrom as [1, 3, 2] is not equal to [2, 3, 1].
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.next = None
+
+class Solution:
+	# @param A : head node of linked list
+	# @return an integer
+    def reverseList(self, A):
+        prev = None
+        curr = A
+        while curr != None:
+            temp = curr.next
+            curr.next = prev
+            prev = curr
+            curr = temp
+        return prev    
+
+	def lPalin(self, A):
+        if A.next == None:
+            return 1
+
+        B=ListNode(A.val)
+        temp=A.next
+        temp2=B
+        while(temp!=None):
+            temp2.next=ListNode(temp.val)
+            temp2=temp2.next
+            temp=temp.next
+
+        A_rev = self.reverseList(B)
+
+        is_pal = True
+        while A != None and A_rev != None:
+            if A.val != A_rev.val:
+                is_pal = False
+                break
+            A = A.next
+            A_rev = A_rev.next    
+        if is_pal == True:
+            return 1
+        return 0            
+
+########################################################################################################################
+
+Q7. Longest Palindromic List
+
+Problem Description
+Given a linked list of integers. Find and return the length of the longest palindrome list that exists in that linked list.
+A palindrome list is a list that reads the same backward and forward.
+
+Expected memory complexity : O(1)
+
+Problem Constraints
+1 <= length of the linked list <= 2000
+1 <= Node value <= 100
+
+Input Format
+The only argument given is head pointer of the linked list.
+
+Output Format
+Return the length of the longest palindrome list.
+
+Example Input
+Input 1:
+2 -> 3 -> 3 -> 3
+Input 2:
+2 -> 1 -> 2 -> 1 ->  2 -> 2 -> 1 -> 3 -> 2 -> 2
+
+Example Output
+Output 1:
+3
+Output 2:
+5
+
+Example Explanation
+Explanation 1:
+3 -> 3 -> 3 is largest palindromic sublist
+Explanation 2:
+2 -> 1 -> 2 -> 1 -> 2 is largest palindromic sublist.
+
+Solution -
+
+# Definition for singly-linked list.
+# class ListNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.next = None
+
+class Solution:
+    # @param A : head node of linked list
+    # @return an integer
+    def countCommon(a, b):
+        count = 0
+        while ( a != None and b != None ) :
+            if (a.val == b.val) :
+                count = count + 1
+            else:
+                break
+          
+            a = a.next
+            b = b.next
+  
+        return count 
+
+    def solve(self, A):
+        result = 0
+        prev = None
+        curr = A 
+  
+        while (curr != None) :
+            next = curr.next
+            curr.next = prev
+            result = max(result, 2 * Solution.countCommon(prev, next) + 1) 
+            result = max(result, 2 * Solution.countCommon(curr, next))  
+            prev = curr 
+            curr = next
+      
+        return result 
+
+########################################################################################################################
+
+Q8. Flatten a linked list
+
+Problem Description
+Given a linked list where every node represents a linked list and contains two pointers of its type:
+Pointer to next node in the main list (right pointer)
+Pointer to a linked list where this node is head (down pointer). All linked lists are sorted.
+You are asked to flatten the linked list into a single list. Use down pointer to link nodes of the flattened list. The flattened linked list should also be sorted.
+
+Problem Constraints
+1 <= Total nodes in the list <= 100000
+1 <= Value of node <= 109
+
+Input Format
+The only argument given is head pointer of the doubly linked list.
+
+Output Format
+Return the head pointer of the Flattened list.
+
+Example Input
+Input 1:
+   3 -> 4 -> 20 -> 20 ->30
+   |    |    |     |    |
+   7    11   22    20   31
+   |               |    |
+   7               28   39
+   |               |
+   8               39
+Input 2:
+   2 -> 4 
+   |    |       
+   7    11    
+   |            
+   7
+
+Example Output
+Output 1:
+3 -> 4 -> 7 -> 7 -> 8 -> 11 -> 20 -> 20 -> 20 -> 22 -> 28 -> 30 -> 31 -> 39 -> 39 
+Output 2:
+2 -> 4 -> 7 -> 7 -> 11
+
+
+Solution -
+
+def merge(x,y):
+    # This function takes two linked list nodes as input and merges them into a sorted linked list
+    #  with the down pointers connecting to the child nodes.
+    # It recursively traverses the linked lists and merges the nodes.
+    if x is None:
+        return y
+    if y is None:
+        return x
+    if x.val<y.val:
+        ans=x
+        ans.down=merge(x.down,y)    
+    else:
+        ans=y
+        ans.down=merge(x,y.down)
+
+    return ans    
+# @param root: ListNode
+# @return ListNode
+def flatten(root):
+    # This function takes a linked list where every node represents a linked list
+    # and contains two pointers of its type:
+    # - Pointer to next node in the main list (right pointer)
+    # - Pointer to a linked list where this node is head (down pointer). All linked lists are sorted.
+    # It recursively flattens the linked list into a single list, where down pointer links nodes of the flattened list.
+    # The flattened linked list is also sorted.
+    x=root
+
+    if x is None or x.right is None:
+        return x
+
+    return merge(x, flatten(x.right)) 
+########################################################################################################################
+
+Q9. LRU Cache
+
+Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.
+get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+set(key, value) - Set or insert the value if the key is not already present. When the cache reaches its capacity, it should invalidate the least recently used item before inserting the new item.
+The LRUCache will be initialized with an integer corresponding to its capacity. Capacity indicates the maximum number of unique keys it can hold at a time.
+Definition of "least recently used" : An access to an item is defined as a get or a set operation of the item. "Least recently used" item is the one with the oldest access time.
+NOTE: If you are using any global variables, make sure to clear them in the constructor.
+
+Example :
+Input : 
+         capacity = 2
+         set(1, 10)
+         set(5, 12)
+         get(5)        returns 12
+         get(1)        returns 10
+         get(10)       returns -1
+         set(6, 14)    this pushes out key = 5 as LRU is full. 
+         get(5)        returns -1 
+
+Solution -
+
+class ListNode:
+    def __init__(self, key, value):
+        self.key = key  # the key for the cache entry
+        self.value = value  # the value for the cache entry
+        self.prev = None  # a reference to the previous ListNode in the linked list
+        self.next = None  # a reference to the next ListNode in the linked list
+
+class LRUCache:
+
+    # @param capacity, an integer
+    def __init__(self, capacity):
+        self.capacity = capacity  # the maximum number of items the cache can hold
+        self.cache = {}  # a dictionary to store the cache entries, with keys mapping to ListNodes
+        self.head = ListNode(-1, -1)  # a dummy ListNode at the front of the linked list
+        self.tail = ListNode(-1, -1)  # a dummy ListNode at the end of the linked list
+        self.head.next = self.tail  # link the head to the tail
+        self.tail.prev = self.head  # link the tail to the head
+       
+
+    # @return an integer
+    def get(self, key):
+        if key in self.cache:  # if the key is in the cache
+            node = self.cache[key]  # get the ListNode associated with the key
+            self.remove(node)  # remove the ListNode from its current position
+            self.add(node)  # add the ListNode to the end of the linked list (since it is now the most recently used)
+            return node.value  # return the value associated with the key
+        return -1  # if the key is not in the cache, return -1
+   
+    #get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+
+    # @param key, an integer
+    # @param value, an integer
+    # @return nothing
+    def set(self, key, value):
+        if key in self.cache:  # if the key is already in the cache
+            self.remove(self.cache[key])  # remove the ListNode associated with the key from its current position
+
+        node = ListNode(key, value)  # create a new ListNode for the new cache entry
+        self.cache[key] = node  # add the ListNode to the cache dictionary
+        self.add(node)  # add the new ListNode to the end of the linked list
+
+        if len(self.cache) > self.capacity:  # if the cache is now over capacity
+            node = self.head.next  # get the ListNode at the front of the linked list (i.e. the least recently used)
+            self.remove(node)  # remove the ListNode from the linked list and the cache
+            del self.cache[node.key]
+
+    def remove(self,node):
+        prevnode = node.prev  # get the previous ListNode in the linked list
+        nextnode = node.next  # get the next ListNode in the linked list
+        prevnode.next = nextnode  # link the previous node to the next node
+        nextnode.prev = prevnode  # link the next node to the previous node
+
+    def add(self,node):
+        prevnode = self.tail.prev  # get the ListNode currently at the end of the linked list
+        prevnode.next = node  # link the previous node to the new node
+        node.prev = prevnode  # link the new node to the previous node
+
+        node.next = self.tail  # link the new node to the dummy tail
+        self.tail.prev = node  # link the dummy tail to the new node      
+
+        #NOTE:
+        # self.head and self.tail are dummy nodes that are used to make the implementation of the doubly linked list easier.
+        # They do not represent actual cache entries, but are used as sentinels to mark the beginning and end of the linked list.
+
+        # self.head.next refers to the first "real" node in the linked list
+        # (i.e. the node immediately after the self.head sentinel),
+        # while self.tail.prev refers to the last "real" node in the linked list
+        #  (i.e. the node immediately before the self.tail sentinel).
+
+        # By using dummy nodes, we can avoid having to check for special cases
+        # (such as an empty list or inserting at the beginning or end of the list)
+        #  and simplify the implementation of the linked list.      
+
+
+
+        #PROCEUDRE EXPLAINED
+
+        # This code implements an LRU (Least Recently Used) cache,
+        # which is a data structure that allows efficient access to a fixed number of recently-used items.
+        # The cache has a maximum capacity, and when new items are added and the cache is full,
+        # the least recently used item is evicted to make room for the new item.
+
+        # The LRUCache class has two main methods: get and set.
+
+        # The get method takes a key as input and returns the corresponding value
+        # if it exists in the cache, otherwise it returns -1.
+        # If the key exists in the cache, the corresponding ListNode is removed from its current position in the cache
+        # and added to the end of the list, since it is now the most recently used item.
+
+        # The set method takes a key-value pair as input and adds it to the cache.
+        # If the key already exists in the cache, its corresponding ListNode is removed from its current position
+        # and added to the end of the list. If the cache is full,
+        # the least recently used item (which is at the front of the list) is evicted before adding the new item to the cache.
+        # The remove and add helper methods are used to update the linked list when ListNodes are added or removed from the cache.
+########################################################################################################################
+
+Q0. Clone a Linked List
+
+Problem Description
+Given a doubly linked list of integers with one pointer of each node pointing to the next node (just like in a single link list) while the second pointer, however, can point to any node in the list and not just the previous node.
+You have to create a copy of this list and return the head pointer of the duplicated list.
+
+Problem Constraints
+1 <= length of the list <= 100000
+1 <= Value of node <= 100000
+
+Input Format
+The only argument given is head pointer of the doubly linked list.
+
+Output Format
+Return the head pointer of the duplicated list.
+
+Example Input
+Input 1:
+1 -> 2 -> 3 -> 4 -> 5
+random pointer of each node 
+1 -> 5 2 -> 4 3 -> 3 4 -> 2 5 -> 1
+Input 2:
+1 -> 2 -> 3 -> 4 -> 5
+random pointer of each node 
+1 -> 5 2 -> 4 3 -> 3 4 -> 2 5 -> 1
+
+Example Output
+Output 1:
+1 -> 2 -> 3 -> 4 -> 5
+random pointer of each node 
+1 -> 5 2 -> 4 3 -> 3 4 -> 2 5 -> 1
+Output 2:
+1 -> 2 -> 3 -> 4 -> 5
+random pointer of each node 
+1 -> 5 2 -> 4 3 -> 3 4 -> 2 5 -> 1
+
+Solution -
+
+"""
+class ListNode: 
+    def __init__(x):
+        self.val = x
+        self.next = None
+        self.random = None
+"""
+def clonelist(A):
+    h2 = A
+    t1 = A
+    t2 = h2
+    while t1 != None:
+        t2.next = t1.next
+        t2 = t2.next
+        t1 = t1.next
+
+    hm = dict()
+    t1 = A
+    t2 = h2
+    while t1 != None:
+        hm[t1] = t2
+        t1 = t1.next
+        t2 = t2.next
+    t1 = A
+    while t1 != None:
+        hm[t1].random = hm[t1.random]
+        t1 = t1.next
+
+    return h2
