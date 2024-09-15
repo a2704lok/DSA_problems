@@ -1,0 +1,730 @@
+Q1. Coin Sum Infinite
+
+Problem Description
+You are given a set of coins A. In how many ways can you make sum B assuming you have infinite amount of each coin in the set.
+NOTE:
+Coins in set A will be unique. Expected space complexity of this problem is O(B).
+The answer can overflow. So, return the answer % (106 + 7).
+
+Problem Constraints
+1 <= A <= 500
+1 <= A[i] <= 1000
+1 <= B <= 50000
+
+Input Format
+First argument is an integer array A representing the set.
+Second argument is an integer B.
+
+Output Format
+Return an integer denoting the number of ways.
+
+Example Input
+Input 1:
+A = [1, 2, 3]
+B = 4
+Input 2:
+A = [10]
+B = 10
+
+Example Output
+Output 1:
+4
+Output 2:
+1
+
+Example Explanation
+Explanation 1:
+The 4 possible ways are:
+{1, 1, 1, 1}
+{1, 1, 2}
+{2, 2}
+{1, 3} 
+Explanation 2:
+There is only 1 way to make sum 10.
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def coinchange2(self, A, B):
+
+        # num_ways[i] will be storing the number of solutions for
+        # sum i. We need N+1 rows as the table is constructed
+        # in bottom up manner using the base case (N = 0)
+        num_ways = [0] * (B + 1)
+        m = len(A)
+        MOD = 1000007
+        num_ways[0] = 1
+
+        for i in range(0, m):
+            for j in range(A[i], B + 1):
+                num_ways[j] += num_ways[j - A[i]]
+                num_ways[j] %= MOD
+        return num_ways[B]
+
+########################################################################################################################
+
+Q2. Edit Distance
+
+Problem Description
+Given two strings A and B, find the minimum number of steps required to convert A to B. (each operation is counted as 1 step.)
+You have the following 3 operations permitted on a word:
+Insert a character
+Delete a character
+Replace a character
+
+Problem Constraints
+1 <= length(A), length(B) <= 450
+
+Input Format
+The first argument of input contains a string, A.
+The second argument of input contains a string, B.
+
+Output Format
+Return an integer, representing the minimum number of steps required.
+
+Example Input
+Input 1:
+A = "abad"
+B = "abac"
+Input 2:
+A = "Anshuman"
+B = "Antihuman
+
+Example Output
+Output 1:
+1
+Output 2:
+2
+
+Example Explanation
+Exlanation 1:
+A = "abad" and B = "abac"
+After applying operation: Replace d with c. We get A = B.
+Explanation 2:
+A = "Anshuman" and B = "Antihuman"
+After applying operations: Replace s with t and insert i before h. We get A = B.
+
+Solution -
+
+class Solution:
+    def minDistance(self, A, B):
+        dp = [[-1 for _ in range(len(B))] for _ in range(len(A))]
+
+        def findDistance(A, B, i, j, dp):
+            if i == -1 and j == -1 :
+                return 0
+            elif i == -1 :
+                return j+1
+            elif j == -1 :
+                return i+1
+            elif dp[i][j] == -1 :
+                if A[i] == B[j]:
+                    dp[i][j] = findDistance(A, B, i-1, j-1, dp)
+                else:
+                    dp[i][j] = min(1+ findDistance(A, B, i-1, j, dp), 1+ findDistance(A, B, i, j-1, dp), 1+ findDistance(A, B, i-1,j-1, dp))
+            return dp[i][j]
+
+        return findDistance(A, B, len(A)-1, len(B)-1, dp)
+
+########################################################################################################################
+
+Q3. Longest Common Subsequence
+
+Problem Description
+Given two strings A and B. Find the longest common subsequence ( A sequence which does not need to be contiguous), which is common in both the strings.
+You need to return the length of such longest common subsequence.
+
+Problem Constraints
+1 <= Length of A, B <= 1005
+
+Input Format
+First argument is a string A.
+Second argument is a string B.
+
+Output Format
+Return an integer denoting the length of the longest common subsequence.
+
+Example Input
+Input 1:
+A = "abbcdgf"
+B = "bbadcgf"
+Input 2:
+A = "aaaaaa"
+B = "ababab"
+
+Example Output
+Output 1:
+5
+Output 2:
+3
+
+Example Explanation
+Explanation 1:
+The longest common subsequence is "bbcgf", which has a length of 5.
+Explanation 2:
+The longest common subsequence is "aaa", which has a length of 3.
+
+Solution -
+
+import sys
+sys.setrecursionlimit(10**6)
+
+class Solution:
+    # @param A : string
+    # @param B : string
+    # @return an integer
+    def solve(self, A, B):
+        n = len(A)
+        m = len(B)
+        dp = []
+
+        for i in range(m):
+            dp.append([-1]*(n))
+
+        def lcs(A,B,i,j):
+            if i < 0 or j < 0:
+                return 0
+
+            if dp[i][j] == -1:
+                if A[i] == B[j]:
+                    dp[i][j] = lcs(A,B,i-1,j-1)+1
+                else:
+                    dp[i][j] = max(lcs(A,B,i,j-1),lcs(A,B,i-1,j))
+            
+            return dp[i][j]
+        return lcs(A,B,n-1,m-1)
+
+########################################################################################################################
+
+Q4. Regular Expression Match
+
+Problem Description
+Implement wildcard pattern matching with support for ' ? ' and ' * ' for strings A and B.
+' ? ' : Matches any single character.
+' * ' : Matches any sequence of characters (including the empty sequence).
+The matching should cover the entire input string (not partial).
+
+Problem Constraints
+1 <= length(A), length(B) <= 104
+
+Input Format
+The first argument of input contains a string A.
+The second argument of input contains a string B.
+
+Output Format
+Return 1 if the patterns match else return 0.
+
+Example Input
+Input 1:
+A = "aaa"
+B = "a*"
+Input 2:
+A = "acz"
+B = "a?a"
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+Since '*' matches any sequence of characters. Last two 'a' in string A will be match by '*'.
+So, the pattern matches we return 1.
+Explanation 2:
+'?' matches any single character. First two character in string A will be match. 
+But the last character i.e 'z' != 'a'. Return 0.
+
+Solution -
+
+class Solution:
+    # @param A : string
+    # @param B : string
+    # @return an integer
+    def isMatch(self, A, B):
+        N = len(A)
+        M = len(B)
+
+        dp = [[False] * (M + 1) for _ in range(N + 1)]
+        dp[0][0] = True
+        for j in range(1, M + 1):
+            if B[j-1] == '*':
+                dp[0][j] = dp[0][j-1] 
+
+        for i in range(1, N + 1):
+            for j in range(1, M + 1):
+                if A[i-1] == B[j-1] or B[j-1] == '?':
+                    dp[i][j] = dp[i-1][j-1]
+                elif B[j-1] == '*':
+                    dp[i][j] = dp[i-1][j] or dp[i][j-1]
+                else:
+                    dp[i][j] = False
+                    
+        return int(dp[N][M])
+
+########################################################################################################################
+
+Q5. Longest Increasing Subsequence
+
+Problem Description
+Find the longest increasing subsequence of a given array of integers, A.
+In other words, find a subsequence of array in which the subsequence's elements are in strictly increasing order, and in which the subsequence is as long as possible.
+In this case, return the length of the longest increasing subsequence.
+
+Problem Constraints
+1 <= length(A) <= 2500
+0 <= A[i] <= 2500
+
+Input Format
+The first and the only argument is an integer array A.
+
+Output Format
+Return an integer representing the length of the longest increasing subsequence.
+
+Example Input
+Input 1:
+A = [1, 2, 1, 5]
+Input 2:
+A = [0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]
+
+Example Output
+Output 1:
+3
+Output 2:
+6
+
+Example Explanation
+Explanation 1:
+The longest increasing subsequence: [1, 2, 5]
+Explanation 2:
+The possible longest increasing subsequences: [0, 2, 6, 9, 13, 15] or [0, 4, 6, 9, 11, 15] or [0, 4, 6, 9, 13, 15]
+
+Solution -
+
+class Solution:
+	# @param A : tuple of integers
+	# @return an integer
+	def lis(self, A):
+        n = len(A)
+        dp = [-1]*n
+        for i in range(n):
+            val = 0
+            for j in range(i-1,-1,-1):
+                if A[j]<A[i]:
+                    val = max(dp[j],val)
+
+            dp[i] = val+1
+
+        return max(dp)
+
+########################################################################################################################
+
+Q6. Rotten Oranges
+
+Problem Description
+Given a matrix of integers A of size N x M consisting of 0, 1 or 2.
+Each cell can have three values:
+The value 0 representing an empty cell.
+The value 1 representing a fresh orange.
+The value 2 representing a rotten orange.
+Every minute, any fresh orange that is adjacent (Left, Right, Top, or Bottom) to a rotten orange becomes rotten. Return the minimum number of minutes that must elapse until no cell has a fresh orange. If this is impossible, return -1 instead.
+Note: Your solution will run on multiple test cases. If you are using global variables, make sure to clear them.
+
+Problem Constraints
+1 <= N, M <= 1000
+0 <= A[i][j] <= 2
+
+Input Format
+The first argument given is the integer matrix A.
+
+Output Format
+Return the minimum number of minutes that must elapse until no cell has a fresh orange.
+If this is impossible, return -1 instead.
+
+Example Input
+Input 1:
+A = [   [2, 1, 1]
+        [1, 1, 0]
+        [0, 1, 1]   ]
+Input 2:
+A = [   [2, 1, 1]
+        [0, 1, 1]
+        [1, 0, 1]   ]
+
+Example Output
+Output 1:
+4
+Output 2:
+-1
+
+Example Explanation
+Explanation 1:
+Minute 0: [ [2, 1, 1]
+            [1, 1, 0]
+            [0, 1, 1] ]
+Minute 1: [ [2, 2, 1]
+            [2, 1, 0]
+            [0, 1, 1] ]
+Minute 2: [ [2, 2, 2]
+            [2, 2, 0]
+            [0, 1, 1] ]
+Minute 3: [ [2, 2, 2]
+            [2, 2, 0]
+            [0, 2, 1] ]
+Minute 4: [ [2, 2, 2]
+            [2, 2, 0]
+            [0, 2, 2] ]
+At Minute 4, all the oranges are rotten.
+Explanation 2:
+The fresh orange at 2nd row and 0th column cannot be rotten, So return -1.
+
+Solution -
+
+
+########################################################################################################################
+########################################################################################################################
+#########################from collections import deque
+class Solution:
+    # @param A : list of list of integers
+    # @return an integer
+    def solve(self, A):
+        n = len(A)
+        m = len(A[0])
+        inf = 10000000000000
+        dist = [[0 for j in range(m)] for i in range(n)]
+        q = deque()
+        li = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+        for i in range(n):
+            for j in range(m):
+                if(A[i][j] == 1 or A[i][j] == 0):
+                    dist[i][j] = inf
+                else:
+                    q.append([i, j])
+        while(len(q) != 0):
+            x, y = q.popleft()
+            for k in range(4):
+                dx = x+li[k][0]
+                dy = y+li[k][1]
+                if(dx >= 0 and dy >= 0 and dx < n and dy < m and A[dx][dy] == 1 and dist[x][y] + 1 < dist[dx][dy]):
+                    dist[dx][dy] = dist[x][y] + 1
+                    q.append([dx, dy])
+        ans = 0
+        for i in range(n):
+            for j in range(m):
+                if(A[i][j] == 1):
+                    ans = max(ans, dist[i][j])
+        if(ans == inf):
+            return -1
+        return ans
+
+###############################################################################################
+
+Q7. Coloring a Cycle Graph
+
+Problem Description
+Given the number of vertices A in a Cyclic Graph.
+Your task is to determine the minimum number of colors required to color the graph so that no two Adjacent vertices have the same color.
+A cyclic graph with A vertices is a graph with A edges, such that it forms a loop. See example test case explanation for more details.
+
+Problem Constraints
+3 <= A <= 109
+
+Input Format
+First argument is an integer A denoting the number of vertices in the Cyclic Graph.
+
+Output Format
+Return an single integer denoting the minimum number of colors required to color the graph so that no two Adjacent vertices have the same color.
+
+Example Input
+Input 1:
+5
+Input 2:
+4
+
+Example Output
+Output 1:
+3
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+Color required = 3
+Explanation 2:
+Color required = 2
+
+Solution -
+
+class Solution:
+    # @param A : integer
+    # @return an integer
+    def solve(self, A):
+        if A%2==0:
+            return 2
+        return 3    
+
+########################################################################################################################
+
+Q8. Check Bipartite Graph
+
+Problem Description
+Given a undirected graph having A nodes. A matrix B of size M x 2 is given which represents the edges such that there is an edge between B[i][0] and B[i][1].
+Find whether the given graph is bipartite or not.
+A graph is bipartite if we can split it's set of nodes into two independent subsets A and B such that every edge in the graph has one node in A and another node in B
+Note:
+There are no self-loops in the graph.
+No multiple edges between two pair of vertices.
+The graph may or may not be connected.
+Nodes are Numbered from 0 to A-1.
+Your solution will run on multiple testcases. If you are using global variables make sure to clear them.
+
+Problem Constraints
+1 <= A <= 100000
+1 <= M <= min(A*(A-1)/2,200000)
+0 <= B[i][0],B[i][1] < A
+
+Input Format
+The first argument given is an integer A.
+The second argument given is the matrix B.
+
+Output Format
+Return 1 if the given graph is bipartide else return 0.
+
+Example Input
+Input 1:
+A = 2
+B = [ [0, 1] ]
+Input 2:
+A = 3
+B = [ [0, 1], [0, 2], [1, 2] ]
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+Put 0 and 1 into 2 different subsets.
+Explanation 2:
+It is impossible to break the graph down to make two different subsets for bipartite matching
+
+Solution -
+
+from collections import defaultdict, deque
+class Solution:
+    # @param A : integer
+    # @param B : list of list of integers
+    # @return an integer
+    def solve(self, A, B):
+        g = defaultdict(list)
+        for start, end in B:
+            g[start].append(end)
+            g[end].append(start)
+        visited = {}
+        for i in range(A):
+            if i not in visited:
+                color = 1
+                q = deque()
+                q.append(i)
+                visited[i] = 0
+                while q:
+                    sz = len(q)
+                    for _ in range(sz):
+                        top = q.popleft()
+                        if top in g:
+                            for neigh in g[top]:
+                                if neigh in visited:
+                                    if visited[neigh] == 1-color:
+                                        return 0
+                                else:
+                                    visited[neigh] = color
+                                    q.append(neigh)
+                    color = 1 - color
+        return 1
+########################################################################################################################
+
+Q9. Construct Roads
+
+Problem Description
+A country consist of N cities connected by N - 1 roads. King of that country want to construct maximum number of roads such that the new country formed remains bipartite country.
+Bipartite country is a country, whose cities can be partitioned into 2 sets in such a way, that for each road (u, v) that belongs to the country, u and v belong to different sets. Also, there should be no multiple roads between two cities and no self loops.
+Return the maximum number of roads king can construct. Since the answer could be large return answer % 109 + 7.
+NOTE: All cities can be visited from any city.
+
+Problem Constraints
+1 <= A <= 105
+1 <= B[i][0], B[i][1] <= N
+
+Input Format
+First argument is an integer A denoting the number of cities, N.
+Second argument is a 2D array B of size (N-1) x 2 denoting the initial roads i.e. there is a road between cities B[i][0] and B[1][1] .
+
+Output Format
+Return an integer denoting the maximum number of roads king can construct.
+
+Example Input
+Input 1:
+A = 3
+B = [
+     [1, 2]
+     [1, 3]
+   ]
+Input 2:
+A = 5
+B = [
+     [1, 3]
+     [1, 4]
+     [3, 2]
+     [3, 5]
+   ]
+
+Example Output
+Output 1:
+0
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+We can't construct any new roads such that the country remains bipartite.
+Explanation 2:
+We can add two roads between cities (4, 2) and (4, 5).
+
+Solution -
+
+from collections import deque
+class Solution:
+    # @param A : integer
+    # @param B : list of list of integers
+    # @return an integer
+    def solve(self, A, B):
+        adj_l = {}
+        for i in range(A+1):
+            adj_l[i] = []
+
+        for i in range(len(B)):
+            adj_l[B[i][0]].append(B[i][1])
+            adj_l[B[i][1]].append(B[i][0])
+
+        q = deque()
+        col = [0]*(A+1)
+        col[1] = 1
+        q.append(1)
+        while len(q)>0:
+            u = q.popleft()
+            for i in range(len(adj_l[u])):
+                v = adj_l[u][i]
+                if col[v] == 0:
+                    col[v] = 3-col[u]
+                    q.append(v)
+
+        c1 = 0
+        c2 = 0
+        for i in range(1,len(col)):
+            if col[i] == 1:
+                c1+=1
+            else:
+                c2+=1
+        return (c1*c2-len(B))%1000000007         
+
+########################################################################################################################
+
+Q10. Distance of nearest cell
+
+Problem Description
+Given a matrix of integers A of size N x M consisting of 0 or 1.
+For each cell of the matrix find the distance of nearest 1 in the matrix.
+Distance between two cells (x1, y1) and (x2, y2) is defined as |x1 - x2| + |y1 - y2|.
+Find and return a matrix B of size N x M which defines for each cell in A distance of nearest 1 in the matrix A.
+NOTE: There is atleast one 1 is present in the matrix.
+
+Problem Constraints
+1 <= N, M <= 1000
+0 <= A[i][j] <= 1
+
+Input Format
+The first argument given is the integer matrix A.
+
+Output Format
+Return the matrix B.
+
+Example Input
+Input 1:
+A = [
+     [0, 0, 0, 1]
+     [0, 0, 1, 1] 
+     [0, 1, 1, 0]
+   ]
+Input 2:
+A = [
+     [1, 0, 0]
+     [0, 0, 0]
+     [0, 0, 0]  
+   ]
+
+Example Output
+Output 1:
+[ 
+ [3, 2, 1, 0]
+ [2, 1, 0, 0]
+ [1, 0, 0, 1]   
+]
+Output 2:
+[
+ [0, 1, 2]
+ [1, 2, 3]
+ [2, 3, 4] 
+]
+
+Example Explanation
+Explanation 1:
+A[0][0], A[0][1], A[0][2] will be nearest to A[0][3].
+A[1][0], A[1][1] will be nearest to A[1][2].
+A[2][0] will be nearest to A[2][1] and A[2][3] will be nearest to A[2][2].
+Explanation 2:
+There is only a single 1. Fill the distance from that 1.
+
+Solution -
+
+from collections import deque 
+class Solution:
+    # @param A : list of list of integers
+    # @return a list of list of integers
+    def solve(self, grid):
+		N , M = len(grid) , len(grid[0])
+
+		visited = [[False]*M for _ in range(N)]
+
+		q = deque()
+		
+		for i in range(N):
+		    for j in range(M):
+                # we are appending all the Ones intially in Queue 
+		        if grid[i][j] == 1:
+		            visited[i][j] = True 
+		            q.append((i,j ,0))
+		            grid[i][j] = 0              # make it zero 
+		            
+		directions = [[1,0],[0,1],[-1,0],[0,-1]]
+		
+		while q:
+		    row , col  , count = q.popleft()
+		    
+		    for i , j in directions:
+		        cr = row + i
+		        cc = col + j 
+		        
+		        if cr < 0 or cc < 0 or cr >= N or cc >= M or visited[cr][cc] or grid[cr][cc] != 0:
+		            continue
+		        
+		        grid[cr][cc] = count + 1
+		        visited[cr][cc] = True
+		        q.append( (cr,cc , count + 1) )
+		        
+		return grid
