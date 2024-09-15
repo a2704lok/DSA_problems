@@ -1,0 +1,1065 @@
+Q1. Running Median
+
+Problem Description
+Flipkart is currently dealing with the difficulty of precisely estimating and displaying the expected delivery time for orders to a specific pin code. The existing method relies on historical delivery time data for that pin code, using the median value as the expected delivery time. As the order history expands with new entries, Flipkart aims to enhance this process by dynamically updating the expected delivery time whenever a new delivery time is added. The objective is to find the expected delivery time after each new element is incorporated into the list of delivery times. End Goal: With every addition of new delivery time, requirement is to find the median value.
+Why Median ? The median is calculated because it provides a more robust measure of the expected delivery time The median is less sensitive to outliers or extreme values than the mean. In the context of delivery times, this is crucial because occasional delays or unusually fast deliveries (outliers) can skew the mean significantly, leading to inaccurate estimations.
+Given an array of integers, A denoting the delivery times for each order. New arrays of integer B and C are formed, each time a new delivery data is encountered, append it at the end of B and append the median of array B at the end of C. Your task is to find and return the array C.
+NOTE:
+If the number of elements is N in B and N is odd, then consider the median as B[N/2] ( B must be in sorted order).
+If the number of elements is N in B and N is even, then consider the median as B[N/2-1]. ( B must be in sorted order).
+
+Problem Constraints
+1 <= length of the array <= 100000
+1 <= A[i] <= 109
+
+Input Format
+The only argument given is the integer array A.
+
+Output Format
+Return an integer array C, C[i] denotes the median of the first i delivery times.
+
+Example Input
+Input 1:
+A = [1, 2, 5, 4, 3]
+Input 2:
+A = [5, 17, 100, 11]
+
+Example Output
+Output 1:
+[1, 1, 2, 2, 3]
+Output 2:
+[5, 5, 17, 11]
+
+Example Explanation
+Explanation 1:
+Delivery Times      median
+[1]                   1
+[1, 2]                1
+[1, 2, 5]             2 
+[1, 2, 5, 4]          2
+[1, 2, 5, 4, 3]       3
+Explanation 2:
+Delivery Times     median
+[5]                  5
+[5, 17]              5
+[5, 17, 100]         17
+[5, 17, 100, 11]     11 
+
+Solution -
+
+import heapq
+
+class Solution:
+    # @param A : list of integers
+    # @return a list of integers
+    def solve(self, A):
+        B = []
+        C = []
+        max_heap = []
+        min_heap = []
+
+        for num in A:
+            # Insert the number into the appropriate heap
+            if not max_heap or num <= -max_heap[0]:
+                heapq.heappush(max_heap, -num)
+            else:
+                heapq.heappush(min_heap, num)
+
+            # Rebalance the heaps if necessary
+            if len(max_heap) > len(min_heap) + 1:
+                heapq.heappush(min_heap, -heapq.heappop(max_heap))
+            elif len(min_heap) > len(max_heap):
+                heapq.heappush(max_heap, -heapq.heappop(min_heap))
+
+            # Append the median to C      
+            median = -max_heap[0]
+            C.append(int(median))
+
+            # Append the number to B
+            B.append(num)
+
+        return C
+
+###########################################################################################################################
+
+Q2. Connect ropes
+
+Problem Description
+You are given an array A of integers that represent the lengths of ropes.
+You need to connect these ropes into one rope. The cost of joining two ropes equals the sum of their lengths.
+Find and return the minimum cost to connect these ropes into one rope.
+
+Problem Constraints
+1 <= length of the array <= 100000
+1 <= A[i] <= 1000
+
+Input Format
+The only argument given is the integer array A.
+
+Output Format
+Return an integer denoting the minimum cost to connect these ropes into one rope.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5]
+Input 2:
+A = [5, 17, 100, 11]
+
+Example Output
+Output 1:
+33
+Output 2:
+182
+
+Example Explanation
+Explanation 1:
+Given array A = [1, 2, 3, 4, 5].
+Connect the ropes in the following manner:
+1 + 2 = 3
+3 + 3 = 6
+4 + 5 = 9
+6 + 9 = 15
+So, total cost  to connect the ropes into one is 3 + 6 + 9 + 15 = 33.
+Explanation 2:
+Given array A = [5, 17, 100, 11].
+Connect the ropes in the following manner:
+5 + 11 = 16
+16 + 17 = 33
+33 + 100 = 133
+So, total cost  to connect the ropes into one is 16 + 33 + 133 = 182.
+
+Solution -
+
+import heapq
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        heapq.heapify(A)
+        ans = []
+        while len(A)>1:
+            l1 = heapq.heappop(A)
+            l2 = heapq.heappop(A)
+            x = l1+l2
+            ans.append(x)
+            heapq.heappush(A,x)
+
+        return sum(ans)    
+
+###########################################################################################################################
+
+Q3. Magician and Chocolates
+
+Problem Description
+Given N bags, each bag contains Bi chocolates. There is a kid and a magician.
+In a unit of time, the kid can choose any bag i, and eat Bi chocolates from it, then the magician will fill the ith bag with floor(Bi/2) chocolates.
+Find the maximum number of chocolates that the kid can eat in A units of time.
+NOTE:
+floor() function returns the largest integer less than or equal to a given number.
+Return your answer modulo 109+7
+
+Problem Constraints
+1 <= N <= 100000
+0 <= B[i] <= INT_MAX
+0 <= A <= 105
+
+Input Format
+The first argument is an integer A.
+The second argument is an integer array B of size N.
+
+Output Format
+Return an integer denoting the maximum number of chocolates the kid can eat in A units of time.
+
+Example Input
+Input 1:
+A = 3
+B = [6, 5]
+Input 2:
+A = 5
+b = [2, 4, 6, 8, 10]
+
+Example Output
+Output 1:
+14
+Output 2:
+33
+
+Example Explanation
+Explanation 1:
+At t = 1 kid eats 6 chocolates from bag 0, and the bag gets filled by 3 chocolates. 
+At t = 2 kid eats 5 chocolates from bag 1, and the bag gets filled by 2 chocolates. 
+At t = 3 kid eats 3 chocolates from bag 0, and the bag gets filled by 1 chocolate. 
+so, total number of chocolates eaten are 6 + 5 + 3 = 14
+Explanation 2:
+Maximum number of chocolates that can be eaten is 33.
+
+Solution -
+
+import heapq
+class Solution:
+	# @param A : integer
+	# @param B : list of integers
+	# @return an integer
+	def nchoc(self, A, B):
+        for i in range(len(B)):
+            B[i] = B[i]*(-1)
+        heapq.heapify(B)
+        ans = []
+        for _ in range(A):
+            b = heapq.heappop(B)
+            ans.append(b)
+            a = int(abs(b)/2)
+            heapq.heappush(B,-a)
+
+        return abs(sum(ans))%1000000007  
+
+###########################################################################################################################
+
+Q4. Product of 3
+
+Problem Description
+Given an integer array A of size N.
+You have to find the product of the three largest integers in array A from range 1 to i, where i goes from 1 to N.
+Return an array B where B[i] is the product of the largest 3 integers in range 1 to i in array A. If i < 3, then the integer at index i in B should be -1.
+
+Problem Constraints
+1 <= N <= 105
+0 <= A[i] <= 103
+
+Input Format
+First and only argument is an integer array A.
+
+Output Format
+Return an integer array B. B[i] denotes the product of the largest 3 integers in range 1 to i in array A.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5]
+Input 2:
+A = [10, 2, 13, 4]
+  
+Example Output
+Output 1:
+[-1, -1, 6, 24, 60]
+Output 2:
+[-1, -1, 260, 520]
+
+Example Explanation
+Explanation 1:
+For i = 1, ans = -1
+For i = 2, ans = -1
+For i = 3, ans = 1 * 2 * 3 = 6
+For i = 4, ans = 2 * 3 * 4 = 24
+For i = 5, ans = 3 * 4 * 5 = 60
+So, the output is [-1, -1, 6, 24, 60].
+Explanation 2:
+For i = 1, ans = -1
+For i = 2, ans = -1
+For i = 3, ans = 10 * 2 * 13 = 260
+For i = 4, ans = 10 * 13 * 4 = 520
+So, the output is [-1, -1, 260, 520].
+
+Solution -
+
+import heapq
+class Solution:
+    # @param A : list of integers
+    # @return a list of integers
+    def solve(self, A):
+        prod = 1
+        ans = [-1, -1]
+        for i in range(3) :
+            prod *= A[i]
+        B = A[:3]
+        ans.append(prod)
+        heapq.heapify(B)
+
+        for i in range(3, len(A)) :
+            if A[i] > B[0] :
+                prod = prod // B[0]
+                prod = prod * A[i]
+                heapq.heappop(B)
+                heapq.heappush(B, A[i])
+            ans.append(prod)
+        return ans
+
+###########################################################################################################################
+
+Q5. Maximum array sum after B negations
+
+Problem Description
+Given an array of integers A and an integer B. You must modify the array exactly B number of times. In a single modification, we can replace any one array element A[i] by -A[i].
+You need to perform these modifications in such a way that after exactly B modifications, sum of the array must be maximum.
+NOTE: You can perform the modification on the same element multiple times.
+
+Problem Constraints
+1 <= length of the array <= 5*105
+1 <= B <= 5 * 106
+-100 <= A[i] <= 100
+
+Input Format
+The first argument given is an integer array A.
+The second argument given is an integer B.
+
+Output Format
+Return an integer denoting the maximum array sum after B modifications.
+
+Example Input
+Input 1:
+A = [24, -68, -29, -9, 84]
+B = 4
+Input 2:
+A = [57, 3, -14, -87, 42, 38, 31, -7, -28, -61]
+B = 10
+  
+Example Output
+Output 1:
+196
+Output 2:
+362
+
+Example Explanation
+Explanation 1:
+Operation 1: Make -29 to 29,
+Operation 2: Make -9 to 9,
+Operation 3: Make 9 to -9,
+Operation 4: Make -68 to 68.
+Thus, the final array after 4 modifications = [24, 68, 29, -9, 84]
+Explanation 2:
+Final array after B modifications = [57, -3, 14, 87, 42, 38, 31, 7, 28, 61]
+
+Solution -
+
+import heapq
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return an integer
+    def solve(self, A, B):
+        heapq.heapify(A)
+        for _ in range(B):
+            n = heapq.heappop(A)
+            if n < 0:
+                n = abs(n)
+            else:
+                n = -n
+            heapq.heappush(A,n)
+        return sum(A)  
+
+###########################################################################################################################
+
+Q6. B Closest Points to Origin
+
+Problem Description
+You are developing a feature for Zomato that helps users find the nearest restaurants to their current location. It uses GPS to determine the user's location and has access to a database of restaurants, each with its own set of coordinates in a two-dimensional space representing their geographical location on a map. The goal is to identify the "B" closest restaurants to the user, providing a quick and convenient way to choose where to eat.
+Given a list of restaurant locations, denoted by A (each represented by its x and y coordinates on a map), and an integer B representing the number of closest restaurants to the user. The user's current location is assumed to be at the origin (0, 0).
+Here, the distance between two points on a plane is the Euclidean distance.
+You may return the answer in any order. The answer is guaranteed to be unique (except for the order that it is in.)
+NOTE: Euclidean distance between two points P1(x1, y1) and P2(x2, y2) is sqrt( (x1-x2)2 + (y1-y2)2).
+
+Problem Constraints
+1 <= B <= length of the list A <= 105
+-105 <= A[i][0] <= 105
+-105 <= A[i][1] <= 105
+
+Input Format
+The argument given is list A and an integer B.
+
+Output Format
+Return the B closest points to the origin (0, 0) in any order.
+
+Example Input
+Input 1:
+A = [ 
+     [1, 3],
+     [-2, 2] 
+   ]
+B = 1
+Input 2:
+
+A = [
+     [1, -1],
+     [2, -1]
+   ] 
+B = 1
+
+Example Output
+Output 1:
+[ [-2, 2] ]
+Output 2:
+[ [1, -1] ]
+
+Example Explanation
+Explanation 1:
+The Euclidean distance will be sqrt(10) for point [1,3] and sqrt(8) for point [-2,2].
+So one closest point will be [-2,2].
+Explanation 2:
+The Euclidean distance will be sqrt(2) for point [1,-1] and sqrt(5) for point [2,-1].
+So one closest point will be [1,-1].
+
+Solution -
+
+import heapq
+class Solution:
+    # @param A : list of list of integers
+    # @param B : integer
+    # @return a list of list of integers
+    def solve(self, A, B):
+        pq = []
+        for p in A:
+            heapq.heappush(pq, [-p[0] * p[0] - p[1] * p[1], p])
+            if len(pq) > B:
+                heapq.heappop(pq)
+        return [p for _, p in pq]
+###########################################################################################################################
+
+Q7. Ath largest element
+
+Problem Description
+Given an integer array B of size N.
+You need to find the Ath largest element in the subarray [1 to i], where i varies from 1 to N. In other words, find the Ath largest element in the sub-arrays [1 : 1], [1 : 2], [1 : 3], ...., [1 : N].
+NOTE: If any subarray [1 : i] has less than A elements, then the output should be -1 at the ith index.
+
+Problem Constraints
+1 <= N <= 100000
+1 <= A <= N
+1 <= B[i] <= INT_MAX
+
+Input Format
+The first argument is an integer A.
+The second argument is an integer array B of size N.
+
+Output Format
+Return an integer array C, where C[i] (1 <= i <= N) will have the Ath largest element in the subarray [1 : i].
+
+Example Input
+Input 1:
+A = 4  
+B = [1 2 3 4 5 6] 
+Input 2:
+A = 2
+B = [15, 20, 99, 1]
+
+Example Output
+Output 1:
+[-1, -1, -1, 1, 2, 3]
+Output 2:
+[-1, 15, 20, 20]
+
+Example Explanation
+Explanation 1:
+for i <= 3 output should be -1.
+for i = 4, Subarray [1:4] has 4 elements 1, 2, 3 and 4. So, 4th maximum element is 1.
+for i = 5, Subarray [1:5] has 5 elements 1, 2, 3, 4 and 5. So, 4th maximum element is 2.
+for i = 6, Subarray [1:6] has 6 elements 1, 2, 3, 4, 5 and 6. So, 4th maximum element is 3.
+So, output array is [-1, -1, -1, 1, 2, 3].
+Explanation 2:
+for i <= 1 output should be -1.
+for i = 2 , Subarray [1:2] has 2 elements 15 and 20. So, 2th maximum element is 15.
+for i = 3 , Subarray [1:3] has 3 elements 15, 20 and 99. So, 2th maximum element is 20.
+for i = 4 , Subarray [1:4] has 4 elements 15, 20, 99 and 1. So, 2th maximum element is 20.
+So, output array is [-1, 15, 20, 20].
+
+Soltion -
+
+import heapq
+class Solution:
+    # @param A : integer
+    # @param B : list of integers
+    # @return a list of integers
+    def solve(self, A, B):
+        min_heap = []
+        for i in range(A):
+            heapq.heappush(min_heap,B[i])
+        ans = [-1]*(A-1)
+        ans.append(min_heap[0])
+
+        for j in range(A,len(B)):
+            cur_val = B[j]
+            if cur_val > min_heap[0]:
+                heapq.heappop(min_heap)
+                heapq.heappush(min_heap,cur_val)    
+            ans.append(min_heap[0])
+        return ans
+ 
+###########################################################################################################################
+
+Q8. K Places Apart
+
+Problem Description
+N people having different priorities are standing in a queue.
+The queue follows the property that each person is standing at most B places away from its position in the sorted queue.
+Your task is to sort the queue in the increasing order of priorities.
+NOTE:
+No two persons can have the same priority.
+Use the property of the queue to sort the queue with complexity O(NlogB).
+
+Problem Constraints
+1 <= N <= 100000
+0 <= B <= N
+
+Input Format
+The first argument is an integer array A representing the priorities and initial order of N persons.
+The second argument is an integer B.
+
+Output Format
+Return an integer array representing the sorted queue.
+
+Example Input
+Input 1:
+A = [1, 40, 2, 3]
+B = 2
+Input 2:
+A = [2, 1, 17, 10, 21, 95]
+B = 1
+  
+Example Output
+Output 1:
+[1, 2, 3, 40]
+Output 2:
+[1, 2, 10, 17, 21, 95]
+
+Example Explanation
+Explanation 1:
+Given array A = [1, 40, 2, 3]
+After sorting, A = [1, 2, 3, 40].
+We can see that difference between initial position of elements amd the final position <= 2.
+Explanation 2:
+After sorting, the array becomes [1, 2, 10, 17, 21, 95].
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return a list of integers
+    def solve(self, A, B):
+        A.sort()
+        return A
+
+###########################################################################################################################
+
+Q9. Special Median
+
+Problem Description
+You are given an array A containing N numbers. This array is called special if it satisfies one of the following properties:
+There exists an element A[i] in the array such that A[i] is equal to the median of elements [A[0], A[1], ...., A[i-1]]
+There exists an element A[i] in the array such that A[i] is equal to the median of elements [A[i+1], A[i+2], ...., A[N-1]]
+The Median is the middle element in the sorted list of elements. If the number of elements is even then the median will be (sum of both middle elements) / 2.
+Return 1 if the array is special else return 0.
+NOTE:
+Do not neglect decimal point while calculating the median
+For A[0] consider only the median of elements [A[1], A[2], ..., A[N-1]] (as there are no elements to the left of it)
+For A[N-1] consider only the median of elements [A[0], A[1], ...., A[N-2]]
+
+Problem Constraints
+1 <= N <= 1000000.
+A[i] is in the range of a signed 32-bit integer.
+
+Input Format
+The first and only argument is an integer array A.
+
+Output Format
+Return 1 if the given array is special else return 0.
+
+Example Input
+Input 1:
+A = [4, 6, 8, 4]
+Input 2:
+A = [2, 7, 3, 1]
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explantion 1:
+Here, 6 is equal to the median of [8, 4].
+Explanation 2:
+No element satisfies any condition.
+
+Solution -
+
+import heapq as hq
+
+class MedianFinder:
+    def __init__(self):
+        self.minheap = []
+        self.maxheap = []
+    def addNum(self, num: int) -> None:
+        cur_val = num 
+        
+        diff = abs(len(self.minheap)) - abs(len(self.maxheap))
+        
+        if diff == 0:
+            # cur_val is  greater thann 2 half starting 
+            # if any val in coming > min val of second half 
+            if self.minheap and  cur_val > self.minheap[0]:
+                min_val = hq.heappop(self.minheap)
+                hq.heappush(self.minheap,cur_val)
+                hq.heappush(self.maxheap,-min_val)
+            else:
+                hq.heappush(self.maxheap,-cur_val) 
+        else:
+            if cur_val < -self.maxheap[0]:
+                max_val = hq.heappop(self.maxheap)
+                hq.heappush(self.minheap,-max_val)
+                hq.heappush(self.maxheap,-cur_val)
+            else:
+                hq.heappush(self.minheap,cur_val)
+                
+    def findMedian(self) -> float:
+        N  = len(self.minheap) + len(self.maxheap)
+        # check odd or even
+        if not N & 1:
+            max_val = -self.maxheap[0] 
+            min_val =  self.minheap[0]
+            total   =  max_val + min_val 
+            return (total/2)
+        else:
+            return -self.maxheap[0]        
+class Solution:
+    # @param A : list of integers
+    # @return an integer
+    def solve(self, A):
+        objA = MedianFinder()
+        objB = MedianFinder()
+        # B = A.copy()
+        B = A[::-1]
+
+        objA.addNum(A[0])
+        objB.addNum(B[0])
+        for i in range(1,len(A)):
+            param_1 = objA.findMedian()
+            param_2 = objB.findMedian()
+
+            # A - LEFT SIDE 
+            if A[i] == param_1:
+                return 1
+
+            # B - RIGHT SIDE
+            if B[i] == param_2:
+                return 1
+
+            objA.addNum(A[i])
+            objB.addNum(B[i])
+
+        return 0
+
+###########################################################################################################################
+
+Q10. Kth Smallest Element
+
+Problem Description
+Find the Bth smallest element in given array A .
+NOTE: Users should try to solve it in less than equal to B swaps.
+
+Problem Constraints
+1 <= |A| <= 100000
+1 <= B <= min(|A|, 500)
+1 <= A[i] <= 109
+
+Input Format
+The first argument is an integer array A.
+The second argument is integer B.
+
+Output Format
+Return the Bth smallest element in given array.
+
+Example Input
+Input 1:
+A = [2, 1, 4, 3, 2]
+B = 3
+Input 2:
+A = [1, 2]
+B = 2
+  
+Example Output
+Output 1:
+2
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+3rd element after sorting is 2.
+Explanation 2:
+2nd element after sorting is 2.
+
+Solution -
+
+class Solution:
+	# @param A : tuple of integers
+	# @param B : integer
+	# @return an integer
+	def kthsmallest(self, A, B):
+        A = list(A)
+        A.sort()
+        return A[B-1]
+
+###########################################################################################################################
+
+Q11. Running Median
+
+Problem Description
+Flipkart is currently dealing with the difficulty of precisely estimating and displaying the expected delivery time for orders to a specific pin code. The existing method relies on historical delivery time data for that pin code, using the median value as the expected delivery time. As the order history expands with new entries, Flipkart aims to enhance this process by dynamically updating the expected delivery time whenever a new delivery time is added. The objective is to find the expected delivery time after each new element is incorporated into the list of delivery times. End Goal: With every addition of new delivery time, requirement is to find the median value.
+Why Median ? The median is calculated because it provides a more robust measure of the expected delivery time The median is less sensitive to outliers or extreme values than the mean. In the context of delivery times, this is crucial because occasional delays or unusually fast deliveries (outliers) can skew the mean significantly, leading to inaccurate estimations.
+Given an array of integers, A denoting the delivery times for each order. New arrays of integer B and C are formed, each time a new delivery data is encountered, append it at the end of B and append the median of array B at the end of C. Your task is to find and return the array C.
+NOTE:
+If the number of elements is N in B and N is odd, then consider the median as B[N/2] ( B must be in sorted order).
+If the number of elements is N in B and N is even, then consider the median as B[N/2-1]. ( B must be in sorted order).
+
+Problem Constraints
+1 <= length of the array <= 100000
+1 <= A[i] <= 109
+
+Input Format
+The only argument given is the integer array A.
+
+Output Format
+Return an integer array C, C[i] denotes the median of the first i delivery times.
+
+Example Input
+Input 1:
+A = [1, 2, 5, 4, 3]
+Input 2:
+A = [5, 17, 100, 11]
+
+Example Output
+Output 1:
+[1, 1, 2, 2, 3]
+Output 2:
+[5, 5, 17, 11]
+
+Example Explanation
+Explanation 1:
+Delivery Times      median
+[1]                   1
+[1, 2]                1
+[1, 2, 5]             2 
+[1, 2, 5, 4]          2
+[1, 2, 5, 4, 3]       3
+Explanation 2:
+
+Delivery Times     median
+[5]                  5
+[5, 17]              5
+[5, 17, 100]         17
+[5, 17, 100, 11]     11 
+
+Solution -
+
+import heapq
+
+class Solution:
+    # @param A : list of integers
+    # @return a list of integers
+    def solve(self, A):
+        B = []
+        C = []
+        max_heap = []
+        min_heap = []
+
+        for num in A:
+            # Insert the number into the appropriate heap
+            if not max_heap or num <= -max_heap[0]:
+                heapq.heappush(max_heap, -num)
+            else:
+                heapq.heappush(min_heap, num)
+
+            # Rebalance the heaps if necessary
+            if len(max_heap) > len(min_heap) + 1:
+                heapq.heappush(min_heap, -heapq.heappop(max_heap))
+            elif len(min_heap) > len(max_heap):
+                heapq.heappush(max_heap, -heapq.heappop(min_heap))
+
+            # Append the median to C      
+            median = -max_heap[0]
+            C.append(int(median))
+
+            # Append the number to B
+            B.append(num)
+
+        return C
+
+###########################################################################################################################
+
+Q12. K Places Apart
+
+Problem Description
+N people having different priorities are standing in a queue.
+The queue follows the property that each person is standing at most B places away from its position in the sorted queue.
+Your task is to sort the queue in the increasing order of priorities.
+NOTE:
+No two persons can have the same priority.
+Use the property of the queue to sort the queue with complexity O(NlogB).
+
+Problem Constraints
+1 <= N <= 100000
+0 <= B <= N
+
+Input Format
+The first argument is an integer array A representing the priorities and initial order of N persons.
+The second argument is an integer B.
+
+Output Format
+Return an integer array representing the sorted queue.
+
+Example Input
+Input 1:
+A = [1, 40, 2, 3]
+B = 2
+Input 2:
+A = [2, 1, 17, 10, 21, 95]
+B = 1
+
+Example Output
+Output 1:
+[1, 2, 3, 40]
+Output 2:
+[1, 2, 10, 17, 21, 95]
+
+Example Explanation
+Explanation 1:
+Given array A = [1, 40, 2, 3]
+After sorting, A = [1, 2, 3, 40].
+We can see that difference between initial position of elements amd the final position <= 2.
+Explanation 2:
+After sorting, the array becomes [1, 2, 10, 17, 21, 95].
+
+Solution -
+
+class Solution:
+    # @param A : list of integers
+    # @param B : integer
+    # @return a list of integers
+    def solve(self, A, B):
+        B = sorted(A)
+        return B
+
+###########################################################################################################################
+
+Q13. Ath largest element
+
+Problem Description
+Given an integer array B of size N.
+You need to find the Ath largest element in the subarray [1 to i], where i varies from 1 to N. In other words, find the Ath largest element in the sub-arrays [1 : 1], [1 : 2], [1 : 3], ...., [1 : N].
+NOTE: If any subarray [1 : i] has less than A elements, then the output should be -1 at the ith index.
+
+Problem Constraints
+1 <= N <= 100000
+1 <= A <= N
+1 <= B[i] <= INT_MAX
+
+Input Format
+The first argument is an integer A.
+The second argument is an integer array B of size N.
+
+Output Format
+Return an integer array C, where C[i] (1 <= i <= N) will have the Ath largest element in the subarray [1 : i].
+
+Example Input
+Input 1:
+A = 4  
+B = [1 2 3 4 5 6] 
+Input 2:
+A = 2
+B = [15, 20, 99, 1]
+
+Example Output
+Output 1:
+[-1, -1, -1, 1, 2, 3]
+Output 2:
+[-1, 15, 20, 20]
+
+Example Explanation
+Explanation 1:
+for i <= 3 output should be -1.
+for i = 4, Subarray [1:4] has 4 elements 1, 2, 3 and 4. So, 4th maximum element is 1.
+for i = 5, Subarray [1:5] has 5 elements 1, 2, 3, 4 and 5. So, 4th maximum element is 2.
+for i = 6, Subarray [1:6] has 6 elements 1, 2, 3, 4, 5 and 6. So, 4th maximum element is 3.
+So, output array is [-1, -1, -1, 1, 2, 3].
+Explanation 2:
+for i <= 1 output should be -1.
+for i = 2 , Subarray [1:2] has 2 elements 15 and 20. So, 2th maximum element is 15.
+for i = 3 , Subarray [1:3] has 3 elements 15, 20 and 99. So, 2th maximum element is 20.
+for i = 4 , Subarray [1:4] has 4 elements 15, 20, 99 and 1. So, 2th maximum element is 20.
+So, output array is [-1, 15, 20, 20].
+
+Solution -
+
+import heapq
+class Solution:
+    # @param A : integer
+    # @param B : list of integers
+    # @return a list of integers
+    def solve(self, A, B):
+        min_heap = []
+        for i in range(A):
+            heapq.heappush(min_heap,B[i])
+        ans = [-1]*(A-1)
+        ans.append(min_heap[0])
+
+        for j in range(A,len(B)):
+            cur_val = B[j]
+            if cur_val > min_heap[0]:
+                heapq.heappop(min_heap)
+                heapq.heappush(min_heap,cur_val)    
+            ans.append(min_heap[0])
+        return ans
+
+###########################################################################################################################
+
+Q14. Ways to form Max Heap
+
+Problem Description
+Max Heap is a special kind of complete binary tree in which, for every node, the value present in that node is greater than the value present in its children nodes.
+Find the number of distinct Max Heap that can be made from A distinct integers.
+In short, you have to ensure the following properties for the max heap :
+Heap has to be a complete binary tree ( A complete binary tree is a binary tree in which every level, except possibly the last, is completely filled, and all nodes are as far left as possible.)
+Every node is greater than all its children.
+NOTE: If you want to know more about Heaps, please visit this link. Return your answer modulo 109 + 7.
+
+Problem Constraints
+1 <= A <= 100
+
+Input Format
+The first and only argument is an integer A.
+
+Output Format
+Return an integer denoting the number of distinct Max Heap.
+
+Example Input
+Input 1:
+A = 4
+Input 2:
+A = 10
+
+Example Output
+Output 1:
+3
+Output 2:
+3360
+
+Example Explanation
+Explanation 1:
+Let us take 1, 2, 3, 4 as our 4 distinct integers
+Following are the 3 possible max heaps from these 4 numbers :
+    4           4                     4
+  /  \         / \                   / \ 
+ 3    2   ,   2   3      and        3   1
+/            /                     /    
+ 1            1                     2
+Explanation 2:
+Number of distinct heaps possible with 10 distinct integers = 3360.
+
+Solution -
+
+from math import log2
+class Solution:
+	# @param A : integer
+	# @return an integer
+	def solve(self, A):
+        return ways(A) % (10**9 + 7)
+        
+def left_and_right_subtree_nodes(A):
+    h = int(log2(A))
+    nodes_till_penultimate_left = (1 << (h-1)) - 1
+    max_last_level_left = 1 << (h-1)
+    last_level_nodes = A - (1 << h) + 1
+    last_level_left = min(max_last_level_left, last_level_nodes)
+    left_subtree_nodes = nodes_till_penultimate_left + last_level_left
+    right_subtree_nodes = A - 1 - left_subtree_nodes
+    return left_subtree_nodes, right_subtree_nodes
+
+def ways(A):
+    if A <= 2:
+        return 1
+    if A <= 4:
+        return A-1
+    left_subtree_nodes, right_subtree_nodes = left_and_right_subtree_nodes(A)
+    return selecting_left(A-1, left_subtree_nodes) * ways(left_subtree_nodes) * ways(right_subtree_nodes)
+
+def selecting_left(n, r):
+    if n == r:
+        return 1
+    if r == 1 or r == (n-1):
+        return n
+    num = max(n-r, r) + 1
+    den = min(n-r, r)
+
+    for i in range(num+1, n+1):
+        num *= i
+
+    for i in range(den-1, 1, -1):
+        den *= i
+
+    return num // den
+###########################################################################################################################
+
+Q15. N max pair combinations
+
+Problem Description
+Given two integers arrays, A and B, of size N each.
+Find the maximum N elements from the sum combinations (Ai + Bj) formed from elements in arrays A and B.
+
+Problem Constraints
+1 <= N <= 2 * 105
+-1000 <= A[i], B[i] <= 1000
+
+Input Format
+The first argument is an integer array A.
+The second argument is an integer array B.
+  
+Output Format
+Return an integer array denoting the N maximum element in descending order.
+
+Example Input
+Input 1:
+A = [1, 4, 2, 3]
+B = [2, 5, 1, 6]
+Input 2:
+A = [2, 4, 1, 1]
+B = [-2, -3, 2, 4]
+
+Example Output
+Output 1:
+[10, 9, 9, 8]
+Output 2:
+[8, 6, 6, 5]
+
+Example Explanation
+Explanation 1:
+4 maximum elements are 10(6+4), 9(6+3), 9(5+4), 8(6+2).
+Explanation 2:
+4 maximum elements are 8(4+4), 6(4+2), 6(4+2), 5(4+1).
+
+Solution -
+
+import heapq
+
+class Solution:
+    # @param A : list of integers
+    # @param B : list of integers
+    # @return a list of integers
+    def solve(self, A, B):
+        len_A = len(A)
+        len_B = len(B)
+        n = len_A
+        Q = []
+        answer = []
+        A.sort()
+        B.sort()
+        for x in range(0, len_A):
+            Q.append((-1 * (A[x] + B[len_B - 1]), (x, len_B - 1)))
+        heapq.heapify(Q)
+        for i in range(0, n):
+            if len(Q) == 0:
+                break
+            tmp = heapq.heappop(Q)
+            answer.append(-1 * tmp[0])
+            if tmp[1][1] > 0:
+                heapq.heappush(Q, (-1 * (A[tmp[1][0]] + B[tmp[1][1] - 1]), (tmp[1][0], tmp[1][1] - 1),),)
+        return answer
