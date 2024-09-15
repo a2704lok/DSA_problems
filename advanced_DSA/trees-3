@@ -1,0 +1,1082 @@
+Q1. Recover Binary Search Tree
+
+Problem Description
+Two elements of a Binary Search Tree (BST), represented by root A are swapped by mistake. Tell us the 2 values, when swapped, will restore the Binary Search Tree (BST).
+A solution using O(n) space is pretty straightforward. Could you devise a constant space solution?
+Note: The 2 values must be returned in ascending order
+
+Problem Constraints
+1 <= size of tree <= 100000
+
+Input Format
+First and only argument is the head of the tree,A
+
+Output Format
+Return the 2 elements which need to be swapped.
+
+Example Input
+Input 1:
+         1 
+        / \ 
+       2   3
+Input 2:
+         2
+        / \
+       3   1
+
+Example Output
+Output 1:
+[2, 1]
+Output 2:
+[3, 1]
+
+Example Explanation
+Explanation 1:
+Swapping 1 and 2 will change the BST to be 
+         2
+        / \
+       1   3
+which is a valid BST 
+Explanation 2:
+Swapping 1 and 3 will change the BST to be 
+         2
+        / \
+       1   3
+which is a valid BST 
+
+Solution -
+
+class Solution:
+    # @param A : root node of tree
+    # @return a list of integers
+    def f(self, root):
+        if root.left:
+            self.f(root.left)
+        if self.prev is not None:
+            if root.val < self.prev.val:
+                self.p2 = root
+                if self.p1 is None:
+                    self.p1 = self.prev
+
+        self.prev = root
+        if root.right:
+            self.f(root.right)
+
+    def recoverTree(self, A):
+        self.prev = None
+        self.p1 = None
+        self.p2 = None
+        self.f(A)
+        return [self.p2.val, self.p1.val]
+
+#########################################################################################################################
+
+Q2. Least Common Ancestor
+
+Problem Description
+Find the lowest common ancestor in an unordered binary tree A, given two values, B and C, in the tree.
+Lowest common ancestor: the lowest common ancestor (LCA) of two nodes and w in a tree or directed acyclic graph (DAG) is the lowest (i.e., deepest) node that has both v and w as descendants.
+
+Problem Constraints
+1 <= size of tree <= 100000
+1 <= B, C <= 109
+
+Input Format
+First argument is head of tree A.
+Second argument is integer B.
+Third argument is integer C.
+
+Output Format
+Return the LCA.
+
+Example Input
+Input 1: 
+      1
+     /  \
+    2    3
+B = 2
+C = 3
+Input 2:
+      1
+     /  \
+    2    3
+   / \
+  4   5
+B = 4
+C = 5
+
+Example Output
+Output 1:
+1
+Output 2:
+2
+
+Example Explanation
+Explanation 1:
+LCA is 1.
+Explanation 2:
+LCA is 2.
+
+Solution -
+
+class Solution:
+	# @param A : root node of tree
+	# @param B : integer
+	# @param C : integer
+	# @return an integer
+	def getpath(self,node,k,l):
+        if node == None:
+            return False
+        if node.val == k:
+            l.append(node.val)
+            return True
+        if self.getpath(node.left,k,l) or self.getpath(node.right,k,l):
+            l.append(node.val)
+            return True
+        return False
+
+    def lca(self, A, B, C):
+        l_b = []
+        l_c = []
+        self.getpath(A,B,l_b)
+        self.getpath(A,C,l_c)
+
+        nb = len(l_b)
+        nc = len(l_c)
+        n = min(nb,nc)
+        for i in range(nb):
+            for j in range(nc):
+                if l_b[i] == l_c[j]:
+                    return l_b[i]
+        return -1
+
+#########################################################################################################################
+
+Q3. Node distance C in binary tree
+
+Problem Description
+Given a binary tree of with root A. All nodes in the binary tree have distinct values. You are given an integer B.
+You have to find all the nodes that are at a distance of exactly C from the node containing value B.
+Return an array of integers consisting all the nodes that are C distance from node containing value B.
+Note:
+You may return the nodes in any order.
+Your solution will run on multiple test cases, if you are using global variables make sure to clear every time .
+
+Problem Constraints
+1 <= Number of nodes in binary tree <= 100000
+0 <= Node values <= 10^9
+0 <= B <= 10^9
+0 <= C <= 100
+
+Input Format
+First argument is the root of the Binary Tree, A.
+Second argument is an integer B, which is the value of the node.
+Third argument is an integer C, which is the distance.
+
+Output Format
+Return an array of integers, consisting all the nodes that are C distance from node containing value B.
+
+Example Input
+Input 1:
+ A =      1
+         / \
+        2   3
+       / \ / \
+      4  5 6  7
+     /
+    8 
+
+ B = 3
+ C = 3
+Input 2:
+ A =      1
+         / \
+        2   3
+         \
+          4
+           \
+            5
+ B = 4
+ C = 1
+
+Example Output
+Output 1:
+[4, 5]
+Output 2:
+[2, 5]
+
+Example Explanation
+Explanation 1
+4 and 5 are the nodes which is at the distance 3, from the node whose value is 3.
+Explanation 2:
+2 and 5 are the nodes which is at the distance 1, from the node whose value is 4.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @param B : integer
+    # @param C : integer
+    # @return a list of integers
+    
+    def path(self,root,li,k):
+        if root is None:
+            return
+        if(root.val==k):
+            li.append(root)
+            return True
+        if(self.path(root.right,li,k) or self.path(root.left,li,k)):
+            li.append(root)
+            return True
+        return False
+
+    def findNodes(self,root,k,li):
+        if root is None:
+            return 0
+        if(k==0):
+            return li.append(root.val)
+        l = self.findNodes(root.left,k-1,li)
+        r = self.findNodes(root.right,k-1,li)
+    
+    def solve(self, A, B, C):
+        li = []
+        self.path(A,li,B)
+        ans = []
+        self.findNodes(li[0],C,ans)
+        for i in range(1,len(li)):
+            if(i==C):
+                ans.append(li[i].val)
+            if(li[i].left == li[i-1]):
+                self.findNodes(li[i].right,C-i-1,ans)
+            else:
+                self.findNodes(li[i].left,C-i-1,ans)
+        return ans
+
+#########################################################################################################################
+
+Q4. Common Nodes in Two BST
+
+Problem Description
+Given two BST's A and B, return the (sum of all common nodes in both A and B) % (109 +7) .
+In case there is no common node, return 0.
+NOTE:
+Try to do it one pass through the trees.
+
+Problem Constraints
+1 <= Number of nodes in the tree A and B <= 105
+1 <= Node values <= 106
+
+Input Format
+First argument represents the root of BST A.
+Second argument represents the root of BST B.
+
+Output Format
+Return an integer denoting the (sum of all common nodes in both BST's A and B) % (109 +7) .
+
+Example Input
+Input 1:
+ Tree A:
+    5
+   / \
+  2   8
+   \   \
+    3   15
+        /
+        9
+ Tree B:
+    7
+   / \
+  1  10
+   \   \
+    2  15
+       /
+      11
+Input 2:
+  Tree A:
+    7
+   / \
+  1   10
+   \   \
+    2   15
+        /
+       11
+ Tree B:
+    7
+   / \
+  1  10
+   \   \
+    2  15
+       /
+      11
+
+Example Output
+Output 1:
+17
+Output 2:
+46
+
+Example Explanation
+Explanation 1:
+Common Nodes are : 2, 15
+So answer is 2 + 15 = 17
+Explanation 2:
+Common Nodes are : 7, 2, 1, 10, 15, 11
+So answer is 7 + 2 + 1 + 10 + 15 + 11 = 46
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @param B : root node of tree
+    # @return an integer
+    def inorder(A):
+        st = []
+        ans = []
+        curr = A
+        while curr != None or len(st) > 0:
+            while curr != None:
+                st.append(curr)
+                curr = curr.left
+            curr = st[-1]
+            st.pop()
+            ans.append(curr.val)
+            curr = curr.right
+        return ans
+
+    def intersection(lst1, lst2):
+        lst3 = [value for value in lst1 if value in lst2]
+        return lst3    
+
+    def solve(self, A, B):
+        l_a = set(Solution.inorder(A))
+        l_b = set(Solution.inorder(B))
+
+        ans = l_a & l_b
+        return sum(ans)%1000000007
+
+#########################################################################################################################
+
+Q5. Distance between Nodes of BST
+
+Problem Description
+Given a binary search tree.
+Return the distance between two nodes with given two keys B and C. It may be assumed that both keys exist in BST.
+NOTE: Distance between two nodes is number of edges between them.
+
+Problem Constraints
+1 <= Number of nodes in binary tree <= 1000000
+0 <= node values <= 109
+
+Input Format
+First argument is a root node of the binary tree, A.
+Second argument is an integer B.
+Third argument is an integer C.
+
+Output Format
+Return an integer denoting the distance between two nodes with given two keys B and C
+
+Example Input
+Input 1:    
+         5
+       /   \
+      2     8
+     / \   / \
+    1   4 6   11
+ B = 2
+ C = 11
+Input 2:
+         6
+       /   \
+      2     9
+     / \   / \
+    1   4 7   10
+ B = 2
+ C = 6
+
+Example Output
+Output 1:
+3
+Output 2:
+1
+
+Example Explanation
+Explanation 1:
+Path between 2 and 11 is: 2 -> 5 -> 8 -> 11. Distance will be 3.
+Explanation 2:
+Path between 2 and 6 is: 2 -> 6. Distance will be 1
+
+Solution -
+
+class Solution:
+    # @param A : root node of tree
+    # @param B : integer
+    # @param C : integer
+    # @return an integer
+   
+    def lca(self,A,B,C):
+        curr=A
+        while curr:
+            if B>curr.val and C>curr.val:
+                curr=curr.right
+            elif B<curr.val and C<curr.val:
+                curr=curr.left
+            else:
+                return curr
+               
+    def findDist(self,root,nodeVal,dist):
+        while root:
+            if root.val==nodeVal:
+                return dist
+            elif nodeVal>root.val:
+                root=root.right
+                dist+=1
+            else:
+                root=root.left
+                dist+=1
+
+    def solve(self, A, B, C):
+        lca=self.lca(A,B,C)
+        bDist=self.findDist(lca,B,0)
+        cDist=self.findDist(lca,C,0)
+   
+        return bDist+cDist
+
+#########################################################################################################################
+
+Q6. Identical Binary Trees
+
+Problem Description
+Given two binary trees, check if they are equal or not.
+Two binary trees are considered equal if they are structurally identical and the nodes have the same value.
+
+Problem Constraints
+1 <= number of nodes <= 105
+
+Input Format
+The first argument is a root node of the first tree, A.
+The second argument is a root node of the second tree, B.
+
+Output Format
+Return 0 / 1 ( 0 for false, 1 for true ) for this problem.
+
+Example Input
+Input 1:
+   1       1
+  / \     / \
+ 2   3   2   3
+Input 2:
+   1       1
+  / \     / \
+ 2   3   3   3
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+Both trees are structurally identical and the nodes have the same value.
+Explanation 2:
+Values of the left child of the root node of the trees are different.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+class Solution:
+	# @param A : root node of tree
+	# @param B : root node of tree
+	# @return an integer
+	def isSameTree(self, A, B):
+
+
+        if A is None and B is None:
+            return 1
+        if A==None or B==None or A.val!=B.val:
+            return 0
+        return(self.isSameTree(A.left,B.left) and self.isSameTree(A.right,B.right))
+
+#########################################################################################################################
+
+Q7. Next Pointer Binary Tree
+
+Problem Description
+Given a binary tree,
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+Initially, all next pointers are set to NULL.
+Assume perfect binary tree.
+
+Problem Constraints
+1 <= Number of nodes in binary tree <= 100000
+0 <= node values <= 10^9
+
+Input Format
+First and only argument is head of the binary tree A.
+
+Output Format
+Return the head of the binary tree after the changes are made.
+
+Example Input
+Input 1: 
+     1
+    /  \
+   2    3
+Input 2:
+        1
+       /  \
+      2    5
+     / \  / \
+    3  4  6  7
+
+Example Output
+Output 1: 
+        1 -> NULL
+       /  \
+      2 -> 3 -> NULL
+Output 2:
+         1 -> NULL
+       /  \
+      2 -> 5 -> NULL
+     / \  / \
+    3->4->6->7 -> NULL
+
+Example Explanation
+Explanation 1:
+Next pointers are set as given in the output.
+Explanation 2:
+Next pointers are set as given in the output.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeLinkNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+#         self.next = None
+
+class Solution:
+    # @param root, a tree node
+    # @return nothing
+    def connect(self, root):
+        if root == None:
+            return
+
+        t = root
+        while t.left != None:
+            s = t
+            while t != None:
+                t.left.next = t.right
+                if t.next != None:
+                    t.right.next = t.next.left
+                t = t.next
+
+            t = s.left
+        return root            
+
+#########################################################################################################################
+
+Q8. Kth Smallest Element In BST
+
+Problem Description
+Given a binary search tree represented by root A, write a function to find the Bth smallest element in the tree.
+
+Problem Constraints
+1 <= Number of nodes in binary tree <= 100000
+0 <= node values <= 10^9
+
+Input Format
+First and only argument is head of the binary tree A.
+
+Output Format
+Return an integer, representing the Bth element.
+
+Example Input
+Input 1: 
+            2
+          /   \
+         1    3
+B = 2
+Input 2:
+            3
+           /
+          2
+         /
+        1
+B = 1
+
+Example Output
+Output 1:
+2
+Output 2:
+1
+
+Example Explanation
+Explanation 1:
+2nd element is 2.
+Explanation 2:
+1st element is 1.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+class Solution:
+	# @param A : root node of tree
+	# @param B : integer
+	# @return an integer
+	def kthsmallest(self, A, B):
+        current = A
+        result = []
+        stack = []
+        while (len(stack) > 0 or current != None):
+            while current != None:
+                stack.append(current)
+                current = current.left
+            current = stack.pop()
+            result.append(current.val)
+            current = current.right
+        return result[B-1]
+#########################################################################################################################
+
+Q9. Path Sum
+
+Problem Description
+Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+
+Problem Constraints
+1 <= number of nodes <= 105
+-100000 <= B, value of nodes <= 100000
+
+Input Format
+First argument is a root node of the binary tree, A.
+Second argument is an integer B denoting the sum.
+
+Output Format
+Return 1, if there exist root-to-leaf path such that adding up all the values along the path equals the given sum. Else, return 0.
+
+Example Input
+Input 1:
+ Tree:    5
+         / \
+        4   8
+       /   / \
+      11  13  4
+     /  \      \
+    7    2      1
+
+ B = 22
+Input 2:
+ Tree:    5
+         / \
+        4   8
+       /   / \
+     -11 -13  4
+ B = -1
+
+Example Output
+Output 1:
+1
+Output 2:
+0
+
+Example Explanation
+Explanation 1:
+There exist a root-to-leaf path 5 -> 4 -> 11 -> 2 which has sum 22. So, return 1.
+Explanation 2:
+There is no path which has sum -1.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+class Solution:
+	# @param A : root node of tree
+	# @param B : integer
+	# @return an integer
+	def leafPathSum(self, A, B):
+        if A == None:
+            return False
+        if A.left == None and A.right == None and A.val == B:
+            return True 
+        return self.leafPathSum(A.left, B-A.val) or self.leafPathSum(A.right, B-A.val)
+
+    def hasPathSum(self, A, B):
+        if self.leafPathSum(A,B):
+            return 1
+        return 0
+
+#########################################################################################################################
+
+Q10. Max Sum Path in Binary Tree
+
+Problem Description
+Given a binary tree T, find the maximum path sum.
+The path may start and end at any node in the tree.
+Note: A maximum sum path is any path which has the maximum sum of the nodes lying on the path.
+
+Problem Constraints
+1 <= Number of Nodes <= 7e4
+-1000 <= Value of Node in T <= 1000
+
+Input Format
+The first and the only argument contains a pointer to the root of T, A.
+
+Output Format
+Return an integer representing the maximum sum path.
+
+Example Input
+Input 1:  
+    1
+   / \
+  2   3
+Input 2:
+       20
+      /  \
+   -10   20
+        /  \
+      -10  -50
+
+Example Output
+Output 1:
+6
+Output 2:
+40
+
+Example Explanation
+Explanation 1:
+The path with maximum sum is: 2 -> 1 -> 3
+Explanation 2:
+The path with maximum sum is: 20 -> 20
+
+Solution -
+
+class Solution:
+    # @param A : root node of tree
+    # @return an integer
+    def maxPathSum(self, root):
+        maxx = [float('-inf')]
+
+        def mp(root):
+            if not root:
+                return 0
+            mp_left = mp(root.left)
+            mp_right = mp(root.right)
+            curr = max(root.val, root.val+max(mp_left, mp_right))
+            maxx[0] = max(maxx[0], max(curr, mp_left+mp_right+root.val))
+            return curr
+        mp(root)
+        return maxx[0]
+
+#########################################################################################################################
+
+Q11. Max Depth of Binary Tree
+
+Emma is a biologist who is researching the hierarchy of a new species of ants. She observed that the ants follow a unique pattern of hierarchy and their hierarchy can be represented as a binary tree. She wants to find the depth of the binary tree to understand the complexity of their social structure. The maximum depth of the binary tree is the maximum number of nodes from the root to the farthest leaf node.
+NOTE : The path has to end on a leaf node.
+
+Input Format:
+The only argument A is the root node of the tree
+
+Output Format:
+Return an integer
+
+Example Input:
+Input 1:
+  1
+   \
+    2
+Input 2:
+   1
+  / \
+ 2   3
+  \
+   4
+
+Example Output:
+Output 1:
+2
+Output 2:
+3
+
+Example Explanation
+Explanation 1:
+The max depth in the tree is 2 from node 1 to node 2
+Explanation 2:
+The max depth in the tree is 3 from node 1 to node 4
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#	def __init__(self, x):
+#		self.val = x
+#		self.left = None
+#		self.right = None
+
+class Solution:
+	# @param A : root node of tree
+	# @return an integer
+	def maxDepth(self, A):
+        if A is None:
+            return 0
+        l = self.maxDepth(A.left)    
+        r = self.maxDepth(A.right)
+        return max(l,r)+1
+
+#########################################################################################################################
+
+Q12. Diameter of binary tree
+
+Problem Description
+Given a Binary Tree A consisting of N integer nodes, you need to find the diameter of the tree.
+The diameter of a tree is the number of edges on the longest path between two nodes in the tree.
+
+Problem Constraints
+0 <= N <= 105
+
+Input Format
+First and only Argument represents the root of binary tree A.
+
+Output Format
+Return an single integer denoting the diameter of the tree.
+
+Example Input
+Input 1:
+           1
+         /   \
+        2     3
+       / \
+      4   5
+Input 2:
+            1
+          /   \
+         2     3
+        / \     \
+       4   5     6
+
+Example Output
+Output 1:
+3
+Output 2:
+4
+
+Example Explanation
+Explanation 1:
+Longest Path in the tree is 4 -> 2 -> 1 -> 3 and the number of edges in this path is 3 so diameter is 3.
+Explanation 2:
+Longest Path in the tree is 4 -> 2 -> 1 -> 3 -> 6 and the number of edges in this path is 4 so diameter is 4.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+class Solution:
+    # @param A : root node of tree
+    # @return an integer
+    def __init__(self):
+        self.diameter = float("-inf")
+    def solve(self, A):
+        self.findDiameter(A)
+        return self.diameter
+    def findDiameter(self,root):
+        if root==None:
+            return 0
+        lh = self.findDiameter(root.left)
+        rh = self.findDiameter(root.right)
+        self.diameter = max(self.diameter,lh+rh)
+        return 1+max(lh,rh)
+
+#########################################################################################################################
+
+Q13. Deserialize Binary Tree
+
+Problem Description
+You are given an integer array A denoting the Level Order Traversal of the Binary Tree.
+You have to Deserialize the given Traversal in the Binary Tree and return the root of the Binary Tree.
+NOTE:
+In the array, the NULL/None child is denoted by -1.
+For more clarification check the Example Input.
+
+Problem Constraints
+1 <= number of nodes <= 105
+-1 <= A[i] <= 105
+
+Input Format
+Only argument is an integer array A denoting the Level Order Traversal of the Binary Tree.
+
+Output Format
+Return the root node of the Binary Tree.
+
+Example Input
+Input 1:
+A = [1, 2, 3, 4, 5, -1, -1, -1, -1, -1, -1]
+Input 2:
+A = [1, 2, 3, 4, 5, -1, 6, -1, -1, -1, -1, -1, -1]
+
+Example Output
+Output 1:
+           1
+         /   \
+        2     3
+       / \
+      4   5
+Output 2:
+            1
+          /   \
+         2     3
+        / \ .   \
+       4   5 .   6
+
+Example Explanation
+Explanation 1:
+Each element of the array denotes the value of the node. If the val is -1 then it is the NULL/None child.
+Since 3, 4 and 5 each has both NULL child we had represented that using -1.
+Explanation 2:
+Each element of the array denotes the value of the node. If the val is -1 then it is the NULL/None child.
+Since 3 has left child as NULL while 4 and 5 each has both NULL child.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+import sys
+sys.setrecursionlimit(10**6)
+from collections import deque
+
+class Solution:
+    # @param A : list of integers
+    # @return the root node in the tree
+    def solve(self, A):
+        root = TreeNode(A[0])
+        q = deque()
+        q.append(root)
+        i = 1
+        while len(q)>0:
+            temp = q.popleft()
+            if A[i] != -1:
+                temp.left = TreeNode(A[i])
+                q.append(temp.left)
+            if A[i+1] != -1:
+                temp.right = TreeNode(A[i+1])
+                q.append(temp.right)
+            i = i+2
+            
+        return root
+
+#########################################################################################################################
+
+Q14. Serialize Binary Tree
+
+Problem Description
+Given the root node of a Binary Tree denoted by A. You have to Serialize the given Binary Tree in the described format.
+Serialize means encode it into a integer array denoting the Level Order Traversal of the given Binary Tree.
+NOTE:
+In the array, the NULL/None child is denoted by -1.
+For more clarification check the Example Input.
+
+Problem Constraints
+1 <= number of nodes <= 105
+
+Input Format
+Only argument is a A denoting the root node of a Binary Tree.
+
+Output Format
+Return an integer array denoting the Level Order Traversal of the given Binary Tree.
+
+Example Input
+Input 1:
+           1
+         /   \
+        2     3
+       / \
+      4   5
+Input 2:
+            1
+          /   \
+         2     3
+        / \     \
+       4   5     6
+
+Example Output
+Output 1:
+[1, 2, 3, 4, 5, -1, -1, -1, -1, -1, -1]
+Output 2:
+[1, 2, 3, 4, 5, -1, 6, -1, -1, -1, -1, -1, -1]
+
+Example Explanation
+Explanation 1:
+The Level Order Traversal of the given tree will be [1, 2, 3, 4, 5 , -1, -1, -1, -1, -1, -1].
+Since 3, 4 and 5 each has both NULL child we had represented that using -1.
+Explanation 2:
+ The Level Order Traversal of the given tree will be [1, 2, 3, 4, 5, -1, 6, -1, -1, -1, -1, -1, -1].
+ Since 3 has left child as NULL while 4 and 5 each has both NULL child.
+
+Solution -
+
+# Definition for a  binary tree node
+# class TreeNode:
+#    def __init__(self, x):
+#        self.val = x
+#        self.left = None
+#        self.right = None
+
+from collections import deque
+
+class Solution:
+    # @param A : root node of tree
+    # @return a list of integers
+    def solve(self, A):
+        q = deque()
+        ans = []
+        q.append(A)
+        while len(q)>0:
+            temp = q.popleft()
+            if temp != None:
+                ans.append(temp.val)
+                q.append(temp.left)
+                q.append(temp.right)
+            else:
+                ans.append(-1)
+        return ans            
