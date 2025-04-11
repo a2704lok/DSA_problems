@@ -45,6 +45,28 @@ class Solution:
         x = " ".join(l[::-1])
         return x.strip()
 
+
+
+other solution - 
+def reverse(l,i,j):
+    while i <= j:
+        l[i], l[j] = l[j], l[i]
+        i+=1
+        j-=1
+    return l
+
+def solution(st):
+    l = list(st)
+    reverse(l,0,len(l)-1)
+    i = 0
+    j = 0
+    for j in range(len(l)):
+        if l[j] == ' ':
+            reverse(l,i,j-1)
+            i = j+1
+        if j == len(l)-1:
+            reverse(l,i,j)
+    return l
 ########################################################################################################################
 
 Q2. Simple Reverse
