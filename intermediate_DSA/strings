@@ -157,6 +157,16 @@ class Solution:
             l.append(i.lower())
         return l
 
+
+other solution - 
+for i in range(len(A)):
+    if ord(A[i]) > 64 or ord(A[i]) < 97:
+        A[i] = (chr(ord(A[i]) | (1<<5)))
+    else:
+        continue
+    
+print(A)
+
 ########################################################################################################################
 
 Q4. toupper()
