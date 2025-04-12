@@ -231,6 +231,18 @@ class Solution:
         ans = "".join(a_s)
         return ans
 
+another sol - 
+for i in range(len(A)):
+    A[i] = str(A[i])
+    
+A.sort(reverse = True)
+
+for i in range(len(A)-1):
+    if int(A[i]+A[i+1]) < int(A[i+1]+A[i]):
+        A[i],A[i+1] = A[i+1],A[i]
+
+print("".join(A))
+
 #####################################################################################################################
 
 Q5. Elements Removal
