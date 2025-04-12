@@ -391,6 +391,16 @@ class Solution:
             return 1
         return 0
 
+recursive way - 
+def digit_sum(n):
+    if n>0 and n<=9:
+        return n
+    d = 0
+    while n>0:
+        d += n%10
+        n = n//10
+    return digit_sum(d)
+
 #######################################################################################################################
 
 Q9. Kth Symbol
